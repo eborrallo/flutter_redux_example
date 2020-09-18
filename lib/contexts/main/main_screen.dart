@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_redux_boilerplate/presentation/platform_adaptive.dart';
+import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/main_drawer.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/discover_tab.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/news_tab.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/stats_tab.dart';
 import 'package:flutter_redux_boilerplate/styles/texts.dart';
-import 'package:flutter_redux_boilerplate/screens/main_tabs/news_tab.dart';
-import 'package:flutter_redux_boilerplate/screens/main_tabs/stats_tab.dart';
-import 'package:flutter_redux_boilerplate/screens/main_tabs/discover_tab.dart';
-import 'package:flutter_redux_boilerplate/screens/main_drawer.dart';
-
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key}) : super(key: key);

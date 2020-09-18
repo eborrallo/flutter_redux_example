@@ -1,6 +1,5 @@
+import 'package:flutter_redux_boilerplate/contexts/auth/auth_actions.dart';
 import 'package:redux/redux.dart';
-
-import 'package:flutter_redux_boilerplate/actions/auth_actions.dart';
 import 'package:flutter_redux_boilerplate/models/auth_state.dart';
 
 Reducer<AuthState> authReducer = combineReducers([

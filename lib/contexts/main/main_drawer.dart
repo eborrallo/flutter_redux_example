@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_boilerplate/contexts/auth/auth_actions.dart';
+import 'package:flutter_redux_boilerplate/redux/app_state.dart';
 import 'package:flutter_redux_boilerplate/styles/colors.dart';
-import 'package:flutter_redux_boilerplate/models/app_state.dart';
 
 class MainDrawer extends StatelessWidget {
     

@@ -1,6 +1,5 @@
+import 'package:flutter_redux_boilerplate/contexts/auth/auth_state.dart';
 import 'package:meta/meta.dart';
-
-import 'package:flutter_redux_boilerplate/models/auth_state.dart';
 
 @immutable
 class AppState {

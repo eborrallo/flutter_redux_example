@@ -5,11 +5,10 @@ import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
 import 'package:flutter_redux_boilerplate/contexts/auth/login/login_screen.dart';
 import 'package:flutter_redux_boilerplate/contexts/loading/loading_screen.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_screen.dart';
+import 'package:flutter_redux_boilerplate/redux/app_state.dart';
 import 'package:flutter_redux_boilerplate/redux/store.dart';
 import 'package:redux_persist_flutter/redux_persist_flutter.dart';
 import 'package:flutter_redux_boilerplate/redux/middleware.dart';
-import 'package:flutter_redux_boilerplate/models/app_state.dart';
-
 
 void main() {
       WidgetsFlutterBinding.ensureInitialized();

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
 import 'package:flutter_redux_boilerplate/contexts/auth/auth_actions.dart';
+import 'package:flutter_redux_boilerplate/redux/app_state.dart';
 import 'package:redux/redux.dart';
-import 'package:flutter_redux_boilerplate/models/app_state.dart';
+
 
 
 class LoginForm extends StatefulWidget {

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/contexts/auth/aut_thunk.dart';
 import 'package:flutter_redux_boilerplate/redux/app_state.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux_boilerplate/models/user.dart';
 
 
-class UserLoginRequest {}
+
+class UserLoginRequest {
+  UserLoginRequest(Store<dynamic> store, username, password) {
+          store.dispatch(getSomething());
+  }
+}
 
 class UserLoginSuccess {
     final User user;
@@ -22,7 +28,7 @@ class UserLogout {}
 
 final Function login = (BuildContext context, String username, String password) {
     return (Store<AppState> store) {
-        store.dispatch(new UserLoginRequest());
+       // store.dispatch(new UserLoginRequest());
         if (username == 'asd' && password == 'asd') {
             store.dispatch(new UserLoginSuccess(new User('placeholder_token', 'placeholder_id')));
             Navigator.of(context).pushNamedAndRemoveUntil('/main', (_) => false);
@@ -38,3 +44,4 @@ final Function logout = (BuildContext context) {
         Navigator.of(context).pushNamedAndRemoveUntil('/login', (_) => false);
     };
 };
+

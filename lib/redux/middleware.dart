@@ -11,5 +11,5 @@ final persistor = new Persistor<AppState>(storage: new FlutterStorage('redux-app
 List<Middleware<AppState>> createMiddleware() => <Middleware<AppState>>[
     thunkMiddleware,
     persistor.createMiddleware(),
-    new LoggingMiddleware.printer(),
+ //   new LoggingMiddleware.printer(),
 ];

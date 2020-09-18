@@ -31,7 +31,7 @@ class _LoginFormState extends State<LoginForm> {
         return new StoreConnector<AppState, dynamic>(
             converter: (Store<AppState> store) {
                 return (BuildContext context, String username, String password) => 
-                    store.dispatch(login(context, username, password));
+                    store.dispatch(UserLoginRequest(store, username, password));
             },
             builder: (BuildContext context, loginAction) {
                 return new Form(

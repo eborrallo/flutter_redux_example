@@ -1,5 +1,5 @@
-# flutter_redux_boilerplate
-
+# flutter_redux_boilerplate [FORKED FROM https://github.com/FranPitri/flutter_redux_boilerplate]
+ 
 A Flutter application boilerplate, with Redux included.
 
 ## Motivation

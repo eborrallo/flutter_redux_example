@@ -10,7 +10,7 @@ Reducer<AuthState> authReducer = combineReducers([
 ]);
 
 AuthState userLoginRequestReducer(AuthState auth, UserLoginRequest action) {
-    print('holaaa');
+    print('Auth reducer');
     return auth.copyWith(
         isAuthenticated: false,
         isAuthenticating: true,

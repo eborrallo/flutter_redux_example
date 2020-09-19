@@ -4,7 +4,9 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux_boilerplate/models/user.dart';
 
 class UserLoginRequest {
-  UserLoginRequest();
+  UserLoginRequest(){
+    print('you run the action UserLoginRequest ');
+  }
 }
 
 class UserLoginSuccess {

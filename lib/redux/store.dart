@@ -7,7 +7,7 @@ Store<AppState> createStore() {
     Store<AppState> store = new Store(
         appReducer,
         initialState: new AppState(),
-        middleware: createMiddleware(),
+        middleware: createMiddleware()
     );
     persistor.load(store);
 

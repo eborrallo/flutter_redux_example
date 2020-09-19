@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
-import 'package:flutter_redux_boilerplate/contexts/auth/auth_actions.dart';
+import 'package:flutter_redux_boilerplate/contexts/auth/aut_thunk.dart';
 import 'package:flutter_redux_boilerplate/redux/app_state.dart';
 import 'package:redux/redux.dart';
 
@@ -31,7 +31,7 @@ class _LoginFormState extends State<LoginForm> {
         return new StoreConnector<AppState, dynamic>(
             converter: (Store<AppState> store) {
                 return (BuildContext context, String username, String password) => 
-                    store.dispatch(UserLoginRequest(store, username, password));
+                    store.dispatch(getSomething());
             },
             builder: (BuildContext context, loginAction) {
                 return new Form(

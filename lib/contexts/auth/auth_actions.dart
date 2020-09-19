@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_boilerplate/contexts/auth/aut_thunk.dart';
 import 'package:flutter_redux_boilerplate/redux/app_state.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux_boilerplate/models/user.dart';
 
-
-
 class UserLoginRequest {
-  UserLoginRequest(Store<dynamic> store, username, password) {
-          store.dispatch(getSomething());
-  }
+  UserLoginRequest();
 }
 
 class UserLoginSuccess {

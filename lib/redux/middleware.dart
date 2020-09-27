@@ -1,4 +1,5 @@
 import 'package:flutter_redux_boilerplate/contexts/auth/aut_middleware.dart';
+import 'package:flutter_redux_boilerplate/contexts/auth/sign_up/sign_up_midleware.dart';
 import 'package:flutter_redux_boilerplate/redux/app_state.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
@@ -13,4 +14,5 @@ List<Middleware<AppState>> createMiddleware() => <Middleware<AppState>>[
     persistor.createMiddleware(),
     new LoggingMiddleware.printer()
 ]
-..addAll(createStoreAuthMiddleware());
+..addAll(createStoreAuthMiddleware())
+..addAll(createStoreSignUpMiddleware());

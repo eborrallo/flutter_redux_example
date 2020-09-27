@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
 import 'package:flutter_redux_boilerplate/contexts/auth/login/login_screen.dart';
+import 'package:flutter_redux_boilerplate/contexts/auth/sign_up/sign_up_screen.dart';
 import 'package:flutter_redux_boilerplate/contexts/loading/loading_screen.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_screen.dart';
 import 'package:flutter_redux_boilerplate/redux/app_state.dart';
@@ -39,7 +40,8 @@ class ReduxApp extends StatelessWidget {
                         builder: (BuildContext context, isAuthenticated) => isAuthenticated ? new MainScreen() : new LoginScreen()
                     ),
                     '/login': (BuildContext context) => new LoginScreen(),
-                    '/main': (BuildContext context) => new MainScreen()
+                    '/main': (BuildContext context) => new MainScreen(),
+                    '/signUp': (BuildContext context) => new SignUpScreen(),
                 }
                 )
             ),

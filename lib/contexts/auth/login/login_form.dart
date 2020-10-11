@@ -6,7 +6,6 @@ import 'package:flutter_redux_boilerplate/redux/app_state.dart';
 import 'package:redux/redux.dart';
 import '../../../redux/app_state.dart';
 
-
 class LoginForm extends StatefulWidget {
   @override
   _LoginFormState createState() => new _LoginFormState();
@@ -42,7 +41,7 @@ class _LoginFormState extends State<LoginForm> {
                   return store.state.signUp.username;
                 },
                 builder: (BuildContext context, username) => new TextFormField(
-                      initialValue: username,
+                      controller: TextEditingController(text: username),
                       decoration: new InputDecoration(labelText: 'Username'),
                       validator: (val) =>
                           val.isEmpty ? 'Please enter your username.' : null,
@@ -63,7 +62,7 @@ class _LoginFormState extends State<LoginForm> {
                   loginAction(context, _username, _password);
                 },
                 icon: new Icon(Icons.done),
-                child: new Text('Log Inn'),
+                child: new Text('Log In'),
               ),
             ),
             new Padding(

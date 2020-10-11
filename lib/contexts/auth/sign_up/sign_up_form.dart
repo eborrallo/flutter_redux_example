@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
-import 'package:flutter_redux_boilerplate/contexts/auth/auth_actions.dart';
 import 'package:flutter_redux_boilerplate/contexts/auth/sign_up/sign_up_actions.dart';
 import 'package:flutter_redux_boilerplate/redux/app_state.dart';
 import 'package:redux/redux.dart';
@@ -16,7 +15,6 @@ class _SignUpFormState extends State<SignUpForm> {
 
   String _username;
   String _password;
-  String _confirm_passw;
 
   void _submit() {
     final form = formKey.currentState;
@@ -31,7 +29,7 @@ class _SignUpFormState extends State<SignUpForm> {
     return new StoreConnector<AppState, dynamic>(
         converter: (Store<AppState> store) {
       return (BuildContext context, String username, String password) =>
-          store.dispatch(new UserSignUpRequest( username, password));
+          store.dispatch(new UserSignUpRequest(username, password));
     }, builder: (BuildContext context, signUpAction) {
       return new Form(
         key: formKey,
@@ -45,16 +43,27 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             new TextFormField(
               decoration: new InputDecoration(labelText: 'Password'),
-              validator: (val) =>
-                  val.isEmpty ? 'Please enter your password.' : null,
+              validator: (val) {
+                _password = val;
+                return val.isEmpty ? 'Please enter your password.' : null;
+              },
               onSaved: (val) => _password = val,
               obscureText: true,
             ),
             new TextFormField(
               decoration: new InputDecoration(labelText: 'CONFIRM Password'),
-              validator: (val) =>
-                  val.isEmpty ? 'Please enter your password again.' : null,
-              onSaved: (val) => _confirm_passw = val,
+              validator: (val) {
+                var message;
+                message = message == null
+                    ? val.isEmpty ? 'Please enter your password again.' : null
+                    : message;
+                message = message == null
+                    ? _password != val
+                        ? 'Please enter the same password.'
+                        : null
+                    : message;
+                return message;
+              },
               obscureText: true,
             ),
             new Padding(

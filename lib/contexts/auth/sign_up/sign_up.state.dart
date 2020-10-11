@@ -1,7 +1,5 @@
 import 'package:meta/meta.dart';
 
-import 'package:flutter_redux_boilerplate/models/user.dart';
-
 @immutable
 class SignUpState {
   // properties

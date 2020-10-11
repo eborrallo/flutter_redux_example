@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_boilerplate/contexts/auth/login/login_form.dart';
-
-
 import 'package:flutter_redux_boilerplate/styles/colors.dart';
-
 import 'sign_up_form.dart';
 
 class SignUpScreen extends StatelessWidget {

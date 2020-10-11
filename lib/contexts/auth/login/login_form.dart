@@ -4,9 +4,8 @@ import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
 import 'package:flutter_redux_boilerplate/contexts/auth/auth_actions.dart';
 import 'package:flutter_redux_boilerplate/redux/app_state.dart';
 import 'package:redux/redux.dart';
+import '../../../redux/app_state.dart';
 
-import '../../../redux/app_state.dart';
-import '../../../redux/app_state.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -64,7 +63,7 @@ class _LoginFormState extends State<LoginForm> {
                   loginAction(context, _username, _password);
                 },
                 icon: new Icon(Icons.done),
-                child: new Text('Log In'),
+                child: new Text('Log Inn'),
               ),
             ),
             new Padding(

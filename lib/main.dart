@@ -5,12 +5,15 @@ import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
 import 'package:flutter_redux_boilerplate/contexts/auth/login/login_screen.dart';
 import 'package:flutter_redux_boilerplate/contexts/auth/sign_up/sign_up_screen.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_screen.dart';
+import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/redux/app_state.dart';
 import 'package:flutter_redux_boilerplate/redux/store.dart';
+import 'package:injectable/injectable.dart';
 import 'package:redux/redux.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  configureInjection(Environment.dev);
   final store = await createStore();
   return runApp(new ReduxApp(store: store));
 }

@@ -51,7 +51,7 @@ class _SignUpFormState extends State<SignUpForm> {
               obscureText: true,
             ),
             new TextFormField(
-              decoration: new InputDecoration(labelText: 'CONFIRM Password'),
+              decoration: new InputDecoration(labelText: 'Confirm password'),
               validator: (val) {
                 var message;
                 message = message == null

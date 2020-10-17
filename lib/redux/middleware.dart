@@ -13,7 +13,7 @@ final persistor = new Persistor<AppState>(
 // Set up middlewares
 List<Middleware<AppState>> createMiddleware() => <Middleware<AppState>>[
       persistor.createMiddleware(),
-      new LoggingMiddleware.printer()
+      new LoggingMiddleware.printer(),
     ]
       ..addAll(createStoreAuthMiddleware())
       ..addAll(createStoreSignUpMiddleware());

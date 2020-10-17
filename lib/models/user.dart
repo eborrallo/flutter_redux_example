@@ -1,21 +1,21 @@
 class User {
-    final String token;
-    final String id;
+    final String email;
+    final String uid;
 
-    User(this.token, this.id);
+    User(this.email, this.uid);
 
     Map<String, dynamic> toJSON() => <String, dynamic>{
-        'token': this.token,
-        'id': this.id
+        'email': this.email,
+        'uid': this.uid
     };
 
     factory User.fromJSON(Map<String, dynamic> json) => new User(
-        json['token'],
-        json['id'],
+        json['email'],
+        json['uid'],
     );
 
     @override
     String toString() {
-        return '{token: $token, id: $id}';
+        return '{email: $email, uid: $uid}';
     }
 }

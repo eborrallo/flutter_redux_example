@@ -20,5 +20,7 @@ AuthState userAuthFailureReducer(AuthState auth, LoginFailure action) {
 }
 
 AuthState userLogoutReducer(AuthState auth, UserLogout action) {
-  return new AuthState();
+  print('asd');
+  return  auth.copyWith(
+      isAuthenticated: false, isAuthenticating: false);
 }

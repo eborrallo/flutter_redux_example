@@ -30,7 +30,7 @@ class _LoginFormState extends State<LoginForm> {
     return new StoreConnector<AppState, dynamic>(
         converter: (Store<AppState> store) {
       return (BuildContext context, String username, String password) =>
-          store.dispatch(new LoginRequest());
+          store.dispatch(new LoginRequest(username,password));
     }, builder: (BuildContext context, loginAction) {
       return new Form(
         key: formKey,
@@ -47,13 +47,18 @@ class _LoginFormState extends State<LoginForm> {
                           val.isEmpty ? 'Please enter your username.' : null,
                       onSaved: (val) => _username = val,
                     )),
-            new TextFormField(
-              decoration: new InputDecoration(labelText: 'Password'),
-              validator: (val) =>
-                  val.isEmpty ? 'Please enter your password.' : null,
-              onSaved: (val) => _password = val,
-              obscureText: true,
-            ),
+            StoreConnector<AppState, String>(
+                converter: (store) {
+                  return store.state.signUp.password;
+                },
+                builder: (BuildContext context, password) => new TextFormField(
+                      controller: TextEditingController(text: password),
+                      decoration: new InputDecoration(labelText: 'Password'),
+                      validator: (val) =>
+                          val.isEmpty ? 'Please enter your password.' : null,
+                      onSaved: (val) => _password = val,
+                      obscureText: true,
+                    )),
             new Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[

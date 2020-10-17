@@ -4,11 +4,11 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton 
 class FirebaseUserMapper {
-  User toDomain(f.FirebaseUser _) {
+  User toDomain(f.User _) {
     return _ == null
         ? null
         : new User(
-            _.uid,
+            _.email,
             _.uid,
           );
   }

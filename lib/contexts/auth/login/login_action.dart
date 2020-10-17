@@ -1,9 +1,11 @@
 import 'package:flutter_redux_boilerplate/models/user.dart';
 
 class LoginRequest {
-  LoginRequest(){
-    print('you run the action UserLoginRequest ');
-  }
+   final String username;
+  final String password;
+
+  LoginRequest(this.username, this.password);
+
 }
 
 class LoginSuccess {

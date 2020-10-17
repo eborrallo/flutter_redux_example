@@ -11,7 +11,7 @@ class MainDrawer extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
         return new StoreConnector<AppState, dynamic>(
-            converter: (store) => (BuildContext context) { store.dispatch(logout(context)); },
+            converter: (store) => (BuildContext context) { store.dispatch(new UserLogout()); },
             builder: (BuildContext context, logout) => new Drawer(
                 child: new ListView(
                     children: <Widget>[

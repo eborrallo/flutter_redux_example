@@ -11,9 +11,9 @@ final persistor = new Persistor<AppState>(
     serializer:JsonSerializer<AppState>( AppState.rehydrationJSON));
 
 // Set up middlewares
-List<Middleware<AppState>> createMiddleware() => <Middleware<AppState>>[
+List<Middleware<AppState>> createMiddleware(navigatorKey) => <Middleware<AppState>>[
       persistor.createMiddleware(),
       new LoggingMiddleware.printer(),
     ]
-      ..addAll(createStoreAuthMiddleware())
+      ..addAll(createStoreAuthMiddleware(navigatorKey))
       ..addAll(createStoreSignUpMiddleware());

@@ -16,14 +16,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   configureInjection(Environment.dev);
-  final store = await createStore();
-  return runApp(new ReduxApp(store: store));
+  final GlobalKey<NavigatorState> navigatorKey =
+      new GlobalKey<NavigatorState>();
+
+  final store = await createStore(navigatorKey);
+  return runApp(new ReduxApp(store: store, navigatorKey: navigatorKey));
 }
 
 class ReduxApp extends StatelessWidget {
   final Store<AppState> store;
-
-  const ReduxApp({Key key, this.store}) : super(key: key);
+  final GlobalKey<NavigatorState> navigatorKey;
+  const ReduxApp({Key key, this.store, this.navigatorKey}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +37,7 @@ class ReduxApp extends StatelessWidget {
             theme: defaultTargetPlatform == TargetPlatform.iOS
                 ? kIOSTheme
                 : kDefaultTheme,
+            navigatorKey: navigatorKey,
             routes: <String, WidgetBuilder>{
               '/': (BuildContext context) =>
                   new StoreConnector<AppState, dynamic>(

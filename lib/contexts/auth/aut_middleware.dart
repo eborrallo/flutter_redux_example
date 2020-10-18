@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/contexts/auth/auth_actions.dart';
 import 'package:flutter_redux_boilerplate/contexts/auth/login/login_action.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/redux/app_state.dart';
@@ -16,7 +17,16 @@ class AuthMiddleware {
     this
         .auth
         .signInWithEmailAndPassword(action.username, action.password)
-        .then((value) => store.dispatch(LoginSuccess(value)));
+        .then((value) {
+      store.dispatch(LoginSuccess(value));
+      this.navigatorKey.currentState.pushNamed('/main');
+    });
+
+    next(action);
+  }
+
+  logout(Store<AppState> store, UserLogout action, NextDispatcher next) async {
+    this.navigatorKey.currentState.pushNamed('/');
 
     next(action);
   }
@@ -24,8 +34,9 @@ class AuthMiddleware {
 
 List<Middleware<AppState>> createStoreAuthMiddleware(navigatorKey) {
   AuthMiddleware middleware = getIt<AuthMiddleware>();
-  middleware.navigatorKey=navigatorKey;
+  middleware.navigatorKey = navigatorKey;
   return [
     TypedMiddleware<AppState, LoginRequest>(middleware.login),
+    TypedMiddleware<AppState, UserLogout>(middleware.logout),
   ];
 }

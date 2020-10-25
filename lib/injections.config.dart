@@ -12,6 +12,7 @@ import 'services/firebase/FirebaseAuthentification.dart';
 import 'contexts/auth/aut_middleware.dart';
 import 'services/firebase/FirebaseInjectableModule.dart';
 import 'services/firebase/FirebaseUserMapper.dart';
+import 'contexts/navigation/navigation_middleware.dart';
 import 'contexts/auth/sign_up/sign_up_midleware.dart';
 
 /// adds generated dependencies
@@ -26,6 +27,7 @@ GetIt $initGetIt(
   final firebaseInjectableModule = _$FirebaseInjectableModule();
   gh.lazySingleton<FirebaseAuth>(() => firebaseInjectableModule.firebaseAuth);
   gh.lazySingleton<FirebaseUserMapper>(() => FirebaseUserMapper());
+  gh.factory<NavigationMiddleware>(() => NavigationMiddleware());
   gh.lazySingleton<Auth>(() =>
       FirebaseAuthentification(get<FirebaseAuth>(), get<FirebaseUserMapper>()));
   gh.factory<AuthMiddleware>(() => AuthMiddleware(get<Auth>()));

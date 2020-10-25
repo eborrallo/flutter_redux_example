@@ -1,2 +1,3 @@
 class UserLogout {}
+class IsAuthenticifated {}
 

@@ -13,6 +13,7 @@ import 'package:flutter_redux_boilerplate/redux/store.dart';
 import 'package:injectable/injectable.dart';
 import 'package:redux/redux.dart';
 
+Store<AppState> store;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -20,7 +21,7 @@ void main() async {
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
 
-  final store = await createStore(navigatorKey);
+  store = await createStore(navigatorKey);
   return runApp(new ReduxApp(store: store, navigatorKey: navigatorKey));
 }
 
@@ -28,6 +29,18 @@ class ReduxApp extends StatelessWidget {
   final Store<AppState> store;
   final GlobalKey<NavigatorState> navigatorKey;
   const ReduxApp({Key key, this.store, this.navigatorKey}) : super(key: key);
+
+  onGenerateRoutes(settings) {
+    print(settings);
+    if (settings.name == "/main") {
+      return PageRouteBuilder(
+        pageBuilder: (_, __, ___) => LoadingScreen(),
+        transitionsBuilder: (_, anim, __, child) {
+          return FadeTransition(opacity: anim, child: child);
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +52,18 @@ class ReduxApp extends StatelessWidget {
                 ? kIOSTheme
                 : kDefaultTheme,
             navigatorKey: navigatorKey,
+           // onGenerateRoute: (settings) => onGenerateRoutes(settings),
             routes: <String, WidgetBuilder>{
-              '/': (BuildContext context) =>
+              '/': (BuildContext context) => new LoadingScreen(),
+
+              /* (BuildContext context) =>
                   new StoreConnector<AppState, dynamic>(
                       converter: (store) => store.state.auth.isAuthenticated,
                       builder: (BuildContext context, isAuthenticated) =>
                           isAuthenticated
                               ? new MainScreen()
                               : new LoginScreen()),
+              */
               '/login': (BuildContext context) => new LoginScreen(),
               '/main': (BuildContext context) => new MainScreen(),
               '/signUp': (BuildContext context) => new SignUpScreen(),

@@ -30,40 +30,18 @@ class ReduxApp extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   const ReduxApp({Key key, this.store, this.navigatorKey}) : super(key: key);
 
-  onGenerateRoutes(settings) {
-    print(settings);
-    if (settings.name == "/main") {
-      return PageRouteBuilder(
-        pageBuilder: (_, __, ___) => LoadingScreen(),
-        transitionsBuilder: (_, anim, __, child) {
-          return FadeTransition(opacity: anim, child: child);
-        },
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
         store: store,
         child: new MaterialApp(
             title: 'ReduxApp',
-            theme: defaultTargetPlatform == TargetPlatform.iOS
-                ? kIOSTheme
-                : kDefaultTheme,
+            theme: new ThemeData(
+                primarySwatch: Colors.grey,),
+            // theme: defaultTargetPlatform == TargetPlatform.iOS? kIOSTheme                : kDefaultTheme,
             navigatorKey: navigatorKey,
-           // onGenerateRoute: (settings) => onGenerateRoutes(settings),
             routes: <String, WidgetBuilder>{
               '/': (BuildContext context) => new LoadingScreen(),
-
-              /* (BuildContext context) =>
-                  new StoreConnector<AppState, dynamic>(
-                      converter: (store) => store.state.auth.isAuthenticated,
-                      builder: (BuildContext context, isAuthenticated) =>
-                          isAuthenticated
-                              ? new MainScreen()
-                              : new LoginScreen()),
-              */
               '/login': (BuildContext context) => new LoginScreen(),
               '/main': (BuildContext context) => new MainScreen(),
               '/signUp': (BuildContext context) => new SignUpScreen(),

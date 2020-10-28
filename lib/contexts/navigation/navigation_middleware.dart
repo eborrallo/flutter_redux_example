@@ -36,44 +36,47 @@ class NavigationMiddleware {
       Store<AppState> store,
       NavigateToNextAndReplace action,
       NextDispatcher next) {
-    this.navigatorKey.currentState.pushReplacement(this._navigate(action.destination));
+    this
+        .navigatorKey
+        .currentState
+        .pushReplacement(this._navigate(action.destination,type: action.pageTransition));
     next(action);
   }
 
   Middleware<AppState> _navigateBackMiddleware(
-      Store<AppState> store, action, NextDispatcher next ) {
+      Store<AppState> store, action, NextDispatcher next) {
     //final currentActivePages = store.state.activePages;
     //if (currentActivePages.length == 1) SystemChannels.platform.invokeMethod('SystemNavigator.pop');
     this.navigatorKey.currentState.pop();
     next(action);
   }
 
-  _navigate( String page, 
-  {PageTransitionType type = PageTransitionType.leftToRight,
-  Alignment alignment = Alignment.bottomCenter ,
-  Curve curve= Curves.ease ,
-  Duration duration= duration }) {
+  _navigate(String page,
+      {PageTransitionType type = PageTransitionType.leftToRight,
+      Alignment alignment = Alignment.bottomCenter,
+      Curve curve = Curves.ease,
+      Duration duration = duration}) {
     Widget screen;
     switch (page) {
       case 'login':
-        screen=  LoginScreen();
+        screen = LoginScreen();
         break;
       case 'signUp':
-        screen=  SignUpScreen();
+        screen = SignUpScreen();
         break;
       case 'main':
-        screen=   MainScreen();
+        screen = MainScreen();
         break;
       default:
-        screen=  LoadingScreen();
+        screen = LoadingScreen();
         break;
     }
     return PageTransition(
-                type:type,
-                alignment:alignment,
-                child: screen,
-                curve: curve,
-                duration:duration);
+        type: type,
+        alignment: alignment,
+        child: screen,
+        curve: curve,
+        duration: duration);
   }
 }
 

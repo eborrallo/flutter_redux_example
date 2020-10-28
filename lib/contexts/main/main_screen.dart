@@ -1,92 +1,122 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/fab_bottom_app_bar.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/fab_with_icons.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/layout.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_drawer.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/discover_tab.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/news_tab.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/stats_tab.dart';
-import 'package:flutter_redux_boilerplate/styles/texts.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key}) : super(key: key);
 
   @override
   State<MainScreen> createState() => new MainScreenState();
-
 }
+
 class MainScreenState extends State<MainScreen> {
-    
-    PageController _tabController;
-    String _title;
-    int _index;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  PageController _tabController;
+  String _title;
+  int _index;
 
-    @override
-    void initState() {
-        super.initState();
-        _tabController = new PageController();
-        _title = TabItems[0].title;
-        _index = 0;
-    }
+  @override
+  void initState() {
+    super.initState();
+    _tabController = new PageController();
+    _title = TabItems[0].text;
+    _index = 0;
+  }
 
-    @override
-    Widget build(BuildContext context) {
-        return new Scaffold(
-            
-            appBar: new PlatformAdaptiveAppBar(
-                title: new Text(_title),
-                platform: Theme.of(context).platform
-            ),
-            
-            bottomNavigationBar: new PlatformAdaptiveBottomBar(
-                currentIndex: _index,
-                onTap: onTap,
-                items: TabItems.map((TabItem item) {
-                    return new BottomNavigationBarItem(
-                        title: new Text(
-                            item.title,
-                            style: textStyles['bottom_label'],
-                        ),
-                        icon: new Icon(item.icon),
-                    );
-                }).toList(),
-            ),
 
-            body: new PageView(
-                controller: _tabController,
-                onPageChanged: onTabChanged,
-                children: <Widget>[
-                    new NewsTab(),
-                    new StatsTab(),
-                    new DiscoverTab()
-                ],
-            ),
-
-            drawer: new MainDrawer(),
+  Widget _buildFab(BuildContext context) {
+    final icons = [Icons.sms, Icons.mail, Icons.phone];
+    return AnchoredOverlay(
+      showOverlay: true,
+      overlayBuilder: (context, offset) {
+        return CenterAbout(
+          position: Offset(offset.dx, offset.dy - icons.length * 35.0),
+          child: FabWithIcons(
+            icons: icons,
+            onIconTapped: (int) {},
+          ),
         );
-    }
+      },
+      child:  FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: Colors.transparent,
+          child: Icon(
+            Icons.add,
+            color: Colors.transparent,
+          ),
+          elevation: 0,
+        ),
+      
+    );
+  }
 
-    void onTap(int tab){
-        _tabController.jumpToPage(tab);
-    }
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      key: _scaffoldKey,
+      extendBodyBehindAppBar: true,
+      appBar: new PlatformAdaptiveAppBar(
+        title: new Text(
+          _title,
+          style: TextStyle(color: Colors.black),
+        ),
+        platform: Theme.of(context).platform,
+        backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          color: Colors.black,
+          onPressed: () {
+            _scaffoldKey.currentState.openDrawer();
+          },
+        ),
+      ),
+      bottomNavigationBar: FABBottomAppBar(
+          color: Colors.grey,
+          selectedColor: Colors.blue,
+          notchedShape: CircularNotchedRectangle(),
+          onTabSelected: onTap,
+          items: TabItems),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: _buildFab(context),
+      body: new PageView(
+        controller: _tabController,
+        onPageChanged: onTabChanged,
+        children: <Widget>[
+          new NewsTab(),
+          new StatsTab(),
+          new DiscoverTab(),
+          new DiscoverTab(),
+          new DiscoverTab(),
+        ],
+      ),
+      drawer: new MainDrawer(),
+    );
+  }
 
-    void onTabChanged(int tab) {
-        setState((){
-            this._index = tab;
-        });
-        
-        this._title = TabItems[tab].title;
-    }
+  void onTap(int tab) {
+    _tabController.jumpToPage(tab);
+  }
 
+  void onTabChanged(int tab) {
+    setState(() {
+      this._index = tab;
+    });
+
+    this._title = TabItems[tab].text;
+  }
 }
 
-class TabItem {
-    final String title;
-    final IconData icon;
-
-    const TabItem({ this.title, this.icon });
-}
-
-const List<TabItem> TabItems = const <TabItem>[
-    const TabItem(title: 'News', icon: Icons.assignment),
-    const TabItem(title: 'Statistics', icon: Icons.timeline),
-    const TabItem(title: 'Discover', icon: Icons.group_work)
+List<FABBottomAppBarItem> TabItems = <FABBottomAppBarItem>[
+  FABBottomAppBarItem(text: 'Home', iconData: Icons.home),
+  FABBottomAppBarItem(text: 'Task', iconData: Icons.work),
+  FABBottomAppBarItem(text: 'Calendar', iconData: Icons.calendar_today),
+  FABBottomAppBarItem(text: 'Profile', iconData: Icons.person),
 ];

@@ -5,9 +5,12 @@ class DiscoverTab extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        return new Center(
+        return 
+         new Container(
+        color: Color.fromRGBO( 245, 245, 245,1),
+        child: new Center(
             child: new Text('discover'),
-        );
+        ));
     }
 
 }

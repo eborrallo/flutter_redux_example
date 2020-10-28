@@ -30,7 +30,8 @@ class PlatformAdaptiveAppBar extends AppBar {
     Color backgroundColor,
     bool centerTitle,
     IconThemeData iconTheme,
-    TextTheme textTheme
+    TextTheme textTheme,
+    Widget leading
   })
       : super(
           key: key,
@@ -41,7 +42,8 @@ class PlatformAdaptiveAppBar extends AppBar {
           backgroundColor: backgroundColor,
           centerTitle: centerTitle ?? true,
           iconTheme: iconTheme,
-          textTheme: textTheme
+          textTheme: textTheme,
+          leading:leading
         );
 }
 
@@ -83,6 +85,8 @@ class PlatformAdaptiveBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Theme.of(context).platform == TargetPlatform.iOS) {
       return new CupertinoTabBar(
+        border:Border() ,
+        backgroundColor: Colors.white,
         activeColor: activeColor,
         currentIndex: currentIndex,
         onTap: onTap,

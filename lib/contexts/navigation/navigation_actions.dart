@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 
 class NavigateToNext {
@@ -11,9 +12,10 @@ class NavigateToNext {
 
 class NavigateToNextAndReplace {
 
-  NavigateToNextAndReplace({@required this.destination});
+  NavigateToNextAndReplace( {@required this.destination, this.pageTransition});
 
   final String destination;
+  final PageTransitionType pageTransition;
 
 }
 

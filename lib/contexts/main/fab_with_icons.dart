@@ -65,6 +65,8 @@ final GlobalKey<InOutAnimationState> inOutAnimation =
     
     return InOutAnimation(
       key: inOutAnimation,
+      inDefinition: ZoomInAnimation(),
+      outDefinition: ZoomOutAnimation(),
       child: FloatingActionButton(
         onPressed: () {
           if (_controller.isDismissed) {
@@ -81,8 +83,7 @@ final GlobalKey<InOutAnimationState> inOutAnimation =
         backgroundColor: Colors.blue,
         elevation: 2.0,
       ),
-      inDefinition: ZoomInAnimation(),
-      outDefinition: ZoomOutAnimation(),
+      
     );
   }
 

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/fab_bottom_app_bar.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/fab_with_icons.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/layout.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_drawer.dart';
-import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/discover_tab.dart';
-import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/news_tab.dart';
-import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/stats_tab.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/calednar_tab.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/home_tab.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/profile_tab.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/task_tab.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key}) : super(key: key);
@@ -90,11 +89,10 @@ class MainScreenState extends State<MainScreen> {
         controller: _tabController,
         onPageChanged: onTabChanged,
         children: <Widget>[
-          new NewsTab(),
-          new StatsTab(),
-          new DiscoverTab(),
-          new DiscoverTab(),
-          new DiscoverTab(),
+          new HomeTab(),
+          new TaskTab(),
+          new CalendarTab(),
+          new ProfileTab(),
         ],
       ),
       drawer: new MainDrawer(),

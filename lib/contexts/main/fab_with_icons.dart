@@ -3,26 +3,19 @@ import 'package:flutter_animator/flutter_animator.dart';
 
 // https://stackoverflow.com/questions/46480221/flutter-floating-action-button-with-speed-dail
 class FabWithIcons extends StatefulWidget {
-  FabWithIcons({this.icons, this.onIconTapped});
+  FabWithIcons({this.icons, this.onIconTapped, this.controller});
   final List<IconData> icons;
   ValueChanged<int> onIconTapped;
+    AnimationController controller;
+
   @override
   State createState() => FabWithIconsState();
 }
 
 class FabWithIconsState extends State<FabWithIcons>
     with TickerProviderStateMixin {
-  AnimationController _controller;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 250),
-    );
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,9 +24,6 @@ class FabWithIconsState extends State<FabWithIcons>
       children: List.generate(widget.icons.length, (int index) {
         return _buildChild(index);
       }).toList()
-        ..add(
-          _buildFab(),
-        ),
     );
   }
 
@@ -46,7 +36,7 @@ class FabWithIconsState extends State<FabWithIcons>
       alignment: FractionalOffset.topCenter,
       child: ScaleTransition(
         scale: CurvedAnimation(
-          parent: _controller,
+          parent: widget.controller,
           curve: Interval(0.0, 1.0 - index / widget.icons.length / 2.0,
               curve: Curves.easeOut),
         ),
@@ -59,36 +49,11 @@ class FabWithIconsState extends State<FabWithIcons>
       ),
     );
   }
-final GlobalKey<InOutAnimationState> inOutAnimation =
-        GlobalKey<InOutAnimationState>();
-  Widget _buildFab() {
-    
-    return InOutAnimation(
-      key: inOutAnimation,
-      inDefinition: ZoomInAnimation(),
-      outDefinition: ZoomOutAnimation(),
-      child: FloatingActionButton(
-        onPressed: () {
-          if (_controller.isDismissed) {
-            _controller.forward();
-          } else {
-            _controller.reverse();
-          }
-        },
-        tooltip: 'Increment',
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.blue,
-        elevation: 2.0,
-      ),
-      
-    );
-  }
+
+
 
   void _onTapped(int index) {
-    _controller.reverse();
+    widget.controller.reverse();
     widget.onIconTapped(index);
   }
 }

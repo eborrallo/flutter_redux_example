@@ -120,7 +120,7 @@ class HomeTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         new Padding(
-          padding: EdgeInsets.only(left: 21.0, top: 140),
+          padding: EdgeInsets.only(left: 21.0, top: 21),
           child: new Text(
             'On progress',
             style: TextStyle(

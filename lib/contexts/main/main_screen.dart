@@ -98,7 +98,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return new Scaffold(
       key: _scaffoldKey,
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
       appBar: new PlatformAdaptiveAppBar(
         title: new Text(
           _title,

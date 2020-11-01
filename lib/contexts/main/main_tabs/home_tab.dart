@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_boilerplate/contexts/main/circular_progress_item.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/animated_list_item.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/widgets/circular_progress_item.dart';
 
 class HomeTab extends StatelessWidget {
   HomeTab({Key key}) : super(key: key);

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
-import 'package:flutter_redux_boilerplate/contexts/main/fab_bottom_app_bar.dart';
-import 'package:flutter_redux_boilerplate/contexts/main/fab_with_icons.dart';
-import 'package:flutter_redux_boilerplate/contexts/main/layout.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_drawer.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/calednar_tab.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/home_tab.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/profile_tab.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/task_tab.dart';
 import 'dart:math';
+
+import 'package:flutter_redux_boilerplate/contexts/main/widgets/fab_bottom_app_bar.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/widgets/fab_with_icons.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/widgets/layout.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key}) : super(key: key);

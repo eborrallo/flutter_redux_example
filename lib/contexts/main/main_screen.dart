@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
-import 'package:flutter_redux_boilerplate/contexts/main/fab_bottom_app_bar.dart';
-import 'package:flutter_redux_boilerplate/contexts/main/fab_with_icons.dart';
-import 'package:flutter_redux_boilerplate/contexts/main/layout.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_drawer.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/calendar/calendar_tab.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/home_tab.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/profile_tab.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/task_tab.dart';
 import 'dart:math';
+
+import 'package:flutter_redux_boilerplate/contexts/main/widgets/fab_bottom_app_bar.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/widgets/fab_with_icons.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/widgets/layout.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key}) : super(key: key);
@@ -24,19 +25,35 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       GlobalKey<InOutAnimationState>();
   PageController _tabController;
   AnimationController _controller;
-  String _title;
+  Widget appbarTitle;
+  Icon appbarActionIcon;
   int _index;
 
+  Animatable<Color> background = TweenSequence<Color>(
+    [
+      TweenSequenceItem(
+        weight: 1.0,
+        tween: ColorTween(
+          begin: Colors.blue,
+          end: Colors.purple,
+        ),
+      ),
+    ],
+  );
   @override
   void initState() {
     super.initState();
     _tabController = new PageController();
-    _title = TabItems[0].text;
-    _index = 0;
     _controller = new AnimationController(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 100),
       vsync: this,
     );
+    this._index = 0;
+    appbarTitle = Text(
+      TabItems[this._index].text,
+      style: TextStyle(color: Colors.black),
+    );
+    appbarActionIcon = Icon(Icons.search);
   }
 
   Widget _buildFab(BuildContext context) {
@@ -58,21 +75,22 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           key: inOutAnimation,
           inDefinition: ZoomInAnimation(),
           outDefinition: ZoomOutAnimation(),
-          child: new FloatingActionButton(
-            onPressed: () {
-              if (_controller.isDismissed) {
-                _controller.forward();
-              } else {
-                _controller.reverse();
-              }
-            },
-            backgroundColor: Colors.blue,
-            child: new AnimatedBuilder(
-              animation: _controller,
-              builder: (BuildContext context, Widget child) {
-                return new Transform(
+          child: new AnimatedBuilder(
+            animation: _controller,
+            builder: (BuildContext context, Widget child) {
+              return new FloatingActionButton(
+                onPressed: () {
+                  if (_controller.isDismissed) {
+                    _controller.forward();
+                  } else {
+                    _controller.reverse();
+                  }
+                },
+                backgroundColor: background
+                    .evaluate(AlwaysStoppedAnimation(_controller.value)),
+                child: new Transform(
                   transform:
-                      new Matrix4.rotationZ(_controller.value * 0.75 * pi),
+                      new Matrix4.rotationZ(_controller.value * 0.25 * pi),
                   alignment: FractionalOffset.center,
                   child: _controller.isDismissed
                       ? new Icon(
@@ -85,10 +103,10 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           size: 30,
                           color: Colors.white,
                         ),
-                );
-              },
-            ),
-            elevation: 0,
+                ),
+                elevation: 0,
+              );
+            },
           ),
         ));
   }
@@ -99,16 +117,58 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       key: _scaffoldKey,
       extendBodyBehindAppBar: false,
       appBar: new PlatformAdaptiveAppBar(
-        title: new Text(
-          _title,
-          style: TextStyle(color: Colors.black),
-        ),
+        actions: (this._index == 1
+            ? [
+                IconButton(
+                  icon: appbarActionIcon,
+                  onPressed: () {
+                    setState(() {
+                      if (this.appbarActionIcon.icon == Icons.search) {
+                        this.appbarTitle = TextFormField(
+                          textAlign: TextAlign.center,
+                          cursorColor: Colors.black,
+                          decoration: new InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              contentPadding: EdgeInsets.only(
+                                  left: 15, bottom: 11, top: 11, right: 15),
+                              hintText: 'Search your task'),
+                        );
+                        this.appbarActionIcon = Icon(Icons.cancel);
+                      } else {
+                        this.appbarTitle = Text(
+                          TabItems[this._index].text,
+                          style: TextStyle(color: Colors.black),
+                        );
+                        this.appbarActionIcon = Icon(Icons.search);
+                      }
+                    });
+                  },
+                )
+              ]
+            : [])
+          ..addAll([
+            Container(
+              width: 60,
+              height: 60,
+              padding: EdgeInsets.only(right: 21),
+              child: CircleAvatar(
+                backgroundColor: Colors.blue,
+                child: Text('AH'),
+              ),
+            )
+          ]),
+        title: appbarTitle,
         platform: Theme.of(context).platform,
         backgroundColor: Color.fromRGBO(245, 245, 245, 1),
         leading: IconButton(
           icon: Icon(Icons.menu),
           color: Colors.black,
           onPressed: () {
+            _controller.reverse();
             _scaffoldKey.currentState.openDrawer();
           },
         ),
@@ -141,17 +201,23 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   }
 
   void onTabChanged(int tab) {
+    _controller.reverse();
     setState(() {
       this._index = tab;
+      appbarTitle = new Text(
+        TabItems[tab].text,
+        style: TextStyle(color: Colors.black),
+      );
     });
-
-    this._title = TabItems[tab].text;
   }
 }
 
 List<FABBottomAppBarItem> TabItems = <FABBottomAppBarItem>[
   FABBottomAppBarItem(text: 'Home', iconData: Icons.home),
-  FABBottomAppBarItem(text: 'Task', iconData: Icons.work),
+  FABBottomAppBarItem(
+    text: 'Task',
+    iconData: Icons.work,
+  ),
   FABBottomAppBarItem(text: 'Calendar', iconData: Icons.calendar_today),
   FABBottomAppBarItem(text: 'Profile', iconData: Icons.person),
 ];

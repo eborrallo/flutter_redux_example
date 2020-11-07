@@ -25,20 +25,9 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       GlobalKey<InOutAnimationState>();
   PageController _tabController;
   AnimationController _controller;
-  String _title;
+  Widget appbarTitle;
+  Icon appbarActionIcon;
   int _index;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = new PageController();
-    _title = TabItems[0].text;
-    _index = 0;
-    _controller = new AnimationController(
-      duration: const Duration(milliseconds: 100),
-      vsync: this,
-    );
-  }
 
   Animatable<Color> background = TweenSequence<Color>(
     [
@@ -51,6 +40,22 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       ),
     ],
   );
+  @override
+  void initState() {
+    super.initState();
+    _tabController = new PageController();
+    _controller = new AnimationController(
+      duration: const Duration(milliseconds: 100),
+      vsync: this,
+    );
+    this._index = 0;
+    appbarTitle = Text(
+      TabItems[this._index].text,
+      style: TextStyle(color: Colors.black),
+    );
+    appbarActionIcon = Icon(Icons.search);
+  }
+
   Widget _buildFab(BuildContext context) {
     final icons = [Icons.sms, Icons.mail, Icons.phone];
     return AnchoredOverlay(
@@ -112,10 +117,51 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       key: _scaffoldKey,
       extendBodyBehindAppBar: false,
       appBar: new PlatformAdaptiveAppBar(
-        title: new Text(
-          _title,
-          style: TextStyle(color: Colors.black),
-        ),
+        actions: (this._index == 1
+            ? [
+                IconButton(
+                  icon: appbarActionIcon,
+                  onPressed: () {
+                    setState(() {
+                      if (this.appbarActionIcon.icon == Icons.search) {
+                        this.appbarTitle = TextFormField(
+                          textAlign: TextAlign.center,
+                          cursorColor: Colors.black,
+                          decoration: new InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              contentPadding: EdgeInsets.only(
+                                  left: 15, bottom: 11, top: 11, right: 15),
+                              hintText: 'Search your task'),
+                        );
+                        this.appbarActionIcon = Icon(Icons.cancel);
+                      } else {
+                        this.appbarTitle = Text(
+                          TabItems[this._index].text,
+                          style: TextStyle(color: Colors.black),
+                        );
+                        this.appbarActionIcon = Icon(Icons.search);
+                      }
+                    });
+                  },
+                )
+              ]
+            : [])
+          ..addAll([
+            Container(
+              width: 60,
+              height: 60,
+              padding: EdgeInsets.only(right: 21),
+              child: CircleAvatar(
+                backgroundColor: Colors.blue,
+                child: Text('AH'),
+              ),
+            )
+          ]),
+        title: appbarTitle,
         platform: Theme.of(context).platform,
         backgroundColor: Color.fromRGBO(245, 245, 245, 1),
         leading: IconButton(
@@ -156,18 +202,22 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
   void onTabChanged(int tab) {
     _controller.reverse();
-
     setState(() {
       this._index = tab;
+      appbarTitle = new Text(
+        TabItems[tab].text,
+        style: TextStyle(color: Colors.black),
+      );
     });
-
-    this._title = TabItems[tab].text;
   }
 }
 
 List<FABBottomAppBarItem> TabItems = <FABBottomAppBarItem>[
   FABBottomAppBarItem(text: 'Home', iconData: Icons.home),
-  FABBottomAppBarItem(text: 'Task', iconData: Icons.work),
+  FABBottomAppBarItem(
+    text: 'Task',
+    iconData: Icons.work,
+  ),
   FABBottomAppBarItem(text: 'Calendar', iconData: Icons.calendar_today),
   FABBottomAppBarItem(text: 'Profile', iconData: Icons.person),
 ];

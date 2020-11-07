@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/animated_list_item.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/widgets/circular_progress_item.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/widgets/task_card.dart';
 
 class HomeTab extends StatelessWidget {
   HomeTab({Key key}) : super(key: key);
@@ -154,73 +155,7 @@ class HomeTab extends StatelessWidget {
         height: 230.0,
         child: Column(
             children:
-                List.generate(2, (i) => new AnimatedListItem(i, card()))));
-  }
-
-  Widget card() {
-    return Container(
-      height: 100,
-      margin: EdgeInsets.only(bottom: 10.0),
-      child: Center(
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              new ListTile(
-                leading: Transform.scale(
-                  scale: 1.5,
-                  child: Radio(
-                    value: 0,
-                    activeColor: Color(0xffFFBD11),
-                  ),
-                ),
-                title: Text(
-                  'Make and article',
-                  style: TextStyle(fontSize: 20),
-                ),
-                subtitle: Padding(
-                    padding: EdgeInsets.only(top: 10),
-                    child: Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            height: 10,
-                            width: 10,
-                            margin: EdgeInsets.only(right: 10.0),
-                            decoration: new BoxDecoration(
-                              color: Colors.red,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          Text(
-                            'Networking',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
-                          Expanded(
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                Icon(
-                                  Icons.access_time,
-                                  size: 18,
-                                  color: Colors.grey,
-                                ),
-                                Text('9h 2m', textAlign: TextAlign.right)
-                              ]))
-                        ])),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+                List.generate(2, (i) => new AnimatedListItem(i, new TaskCard()))));
   }
 
   Widget _buildOnProgressList() {

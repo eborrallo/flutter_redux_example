@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animator/flutter_animator.dart';
 
 // https://stackoverflow.com/questions/46480221/flutter-floating-action-button-with-speed-dail
 class FabWithIcons extends StatefulWidget {

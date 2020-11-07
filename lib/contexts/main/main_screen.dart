@@ -35,11 +35,22 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     _title = TabItems[0].text;
     _index = 0;
     _controller = new AnimationController(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 100),
       vsync: this,
     );
   }
 
+  Animatable<Color> background = TweenSequence<Color>(
+    [
+      TweenSequenceItem(
+        weight: 1.0,
+        tween: ColorTween(
+          begin: Colors.blue,
+          end: Colors.purple,
+        ),
+      ),
+    ],
+  );
   Widget _buildFab(BuildContext context) {
     final icons = [Icons.sms, Icons.mail, Icons.phone];
     return AnchoredOverlay(
@@ -59,21 +70,22 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           key: inOutAnimation,
           inDefinition: ZoomInAnimation(),
           outDefinition: ZoomOutAnimation(),
-          child: new FloatingActionButton(
-            onPressed: () {
-              if (_controller.isDismissed) {
-                _controller.forward();
-              } else {
-                _controller.reverse();
-              }
-            },
-            backgroundColor: Colors.blue,
-            child: new AnimatedBuilder(
-              animation: _controller,
-              builder: (BuildContext context, Widget child) {
-                return new Transform(
+          child: new AnimatedBuilder(
+            animation: _controller,
+            builder: (BuildContext context, Widget child) {
+              return new FloatingActionButton(
+                onPressed: () {
+                  if (_controller.isDismissed) {
+                    _controller.forward();
+                  } else {
+                    _controller.reverse();
+                  }
+                },
+                backgroundColor: background
+                    .evaluate(AlwaysStoppedAnimation(_controller.value)),
+                child: new Transform(
                   transform:
-                      new Matrix4.rotationZ(_controller.value * 0.75 * pi),
+                      new Matrix4.rotationZ(_controller.value * 0.25 * pi),
                   alignment: FractionalOffset.center,
                   child: _controller.isDismissed
                       ? new Icon(
@@ -86,10 +98,10 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           size: 30,
                           color: Colors.white,
                         ),
-                );
-              },
-            ),
-            elevation: 0,
+                ),
+                elevation: 0,
+              );
+            },
           ),
         ));
   }
@@ -110,6 +122,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           icon: Icon(Icons.menu),
           color: Colors.black,
           onPressed: () {
+            _controller.reverse();
             _scaffoldKey.currentState.openDrawer();
           },
         ),
@@ -123,6 +136,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _buildFab(context),
       body: new PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _tabController,
         onPageChanged: onTabChanged,
         children: <Widget>[
@@ -141,6 +155,8 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   }
 
   void onTabChanged(int tab) {
+    _controller.reverse();
+
     setState(() {
       this._index = tab;
     });

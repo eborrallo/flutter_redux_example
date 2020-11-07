@@ -64,26 +64,39 @@ class HomeTab extends StatelessWidget {
                                             'Algorithm',
                                             style: TextStyle(fontSize: 20),
                                           ),
-                                          subtitle: Row(
-                                              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Icon(Icons.location_on, color: Colors.grey,size: 18,),
-                                                Text(
-                                                  'Room 3A',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                    child: Text('08:00 - 10:00',
-                                                        textAlign:
-                                                            TextAlign.right))
-                                              ]),
+                                          subtitle: Padding(
+                                              padding: EdgeInsets.only(top: 10),
+                                              child: Row(
+                                                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.location_on,
+                                                      color: Colors.grey,
+                                                      size: 18,
+                                                    ),
+                                                    Text(
+                                                      'Room 3A',
+                                                      textAlign: TextAlign.left,
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                        child: Text(
+                                                            '08:00 - 10:00',
+                                                            textAlign: TextAlign
+                                                                .right))
+                                                  ])),
                                         ),
                                         new Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
                                           children: [
-                                            new Icon(Icons.error_outline , color:Colors.orange,size: 18,),
+                                            new Icon(
+                                              Icons.error_outline,
+                                              color: Colors.orange,
+                                              size: 18,
+                                            ),
                                             new Text(
                                                 'You have one incpmplete task',
                                                 textAlign: TextAlign.left,
@@ -169,27 +182,39 @@ class HomeTab extends StatelessWidget {
                   'Make and article',
                   style: TextStyle(fontSize: 20),
                 ),
-                subtitle: Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        height: 10,
-                        width: 10,
-                        margin: EdgeInsets.only(right: 10.0),
-                        decoration: new BoxDecoration(
-                          color: Colors.red,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      Text(
-                        'Networking',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                      Expanded(child: Text('9h 2m', textAlign: TextAlign.right))
-                    ]),
+                subtitle: Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 10,
+                            width: 10,
+                            margin: EdgeInsets.only(right: 10.0),
+                            decoration: new BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          Text(
+                            'Networking',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
+                          ),
+                          Expanded(
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                Icon(
+                                  Icons.access_time,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                Text('9h 2m', textAlign: TextAlign.right)
+                              ]))
+                        ])),
               ),
             ],
           ),

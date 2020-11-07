@@ -12,6 +12,8 @@ import 'package:flutter_redux_boilerplate/redux/app_state.dart';
 import 'package:flutter_redux_boilerplate/redux/store.dart';
 import 'package:injectable/injectable.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 
 Store<AppState> store;
 void main() async {
@@ -36,8 +38,18 @@ class ReduxApp extends StatelessWidget {
         store: store,
         child: new MaterialApp(
             title: 'ReduxApp',
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: [
+              const Locale('en', 'US'),
+              const Locale('es', 'ES'),
+            ],
             theme: new ThemeData(
-                primarySwatch: Colors.grey,),
+              primarySwatch: Colors.grey,
+            ),
             // theme: defaultTargetPlatform == TargetPlatform.iOS? kIOSTheme                : kDefaultTheme,
             navigatorKey: navigatorKey,
             routes: <String, WidgetBuilder>{

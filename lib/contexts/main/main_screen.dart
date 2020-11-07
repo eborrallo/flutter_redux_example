@@ -5,7 +5,7 @@ import 'package:flutter_redux_boilerplate/contexts/main/fab_bottom_app_bar.dart'
 import 'package:flutter_redux_boilerplate/contexts/main/fab_with_icons.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/layout.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_drawer.dart';
-import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/calednar_tab.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/calendar/calendar_tab.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/home_tab.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/profile_tab.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/task_tab.dart';
@@ -97,7 +97,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return new Scaffold(
       key: _scaffoldKey,
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
       appBar: new PlatformAdaptiveAppBar(
         title: new Text(
           _title,
@@ -122,6 +122,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _buildFab(context),
       body: new PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _tabController,
         onPageChanged: onTabChanged,
         children: <Widget>[

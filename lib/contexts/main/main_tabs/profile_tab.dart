@@ -83,6 +83,55 @@ class ProfileTab extends StatelessWidget {
                               ],
                             ))
                       ],
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 30, top: 100),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                              height: 30,
+                              width: 30,
+                              margin: EdgeInsets.only(right: 40),
+                              decoration: BoxDecoration(
+                                color: Colors.purple,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Icon(
+                                Icons.lightbulb_outline,
+                                color: Colors.white,
+                                size: 20,
+                              )),
+                          Column(
+                            children: [
+                              Container(
+                                  width: 250,
+                                  child: Text(
+                                    'Insight',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      color: Colors.purple,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 17.0,
+                                    ),
+                                  )),
+                              Container(
+                                  margin: EdgeInsets.only(top: 10),
+                                  width: 250,
+                                  child: Text(
+                                    'You can raise your completation rate by finish your task ontime',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ))
+                            ],
+                          )
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -96,16 +145,21 @@ class ProfileTab extends StatelessWidget {
 class CustomHalfCircleClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    double radius=35;
+    double radius = 33;
+    double radiusLite = 10;
     Path path = Path() // Start from (0,0)
       ..lineTo(size.width, 0)
       ..lineTo(
         size.width,
         size.height,
       )
-      ..lineTo((size.width / 2) + radius, size.height)
-      ..arcToPoint(Offset((size.width / 2) - radius, size.height),
-          radius: Radius.circular(radius*1.1), clockwise: false)
+      ..lineTo((size.width / 2) + radius + radiusLite, size.height)
+      ..arcToPoint(Offset((size.width / 2) + radius, size.height - radiusLite),
+          radius: Radius.circular(radiusLite * 1.4))
+      ..arcToPoint(Offset((size.width / 2) - radius, size.height - radiusLite),
+          radius: Radius.circular(radius * 1.25), clockwise: false)
+      ..arcToPoint(Offset((size.width / 2) - radius - radiusLite, size.height),
+          radius: Radius.circular(radiusLite * 1.4))
       ..lineTo(0, size.height)
       ..close();
 

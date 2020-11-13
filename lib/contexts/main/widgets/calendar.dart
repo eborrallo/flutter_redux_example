@@ -37,25 +37,43 @@ class _CalendarState extends TableCalendarState {
     return super.build(context);
   }
 
+  String inCap(String word) {
+    return word[0].toUpperCase() + word.substring(1);
+  }
+
   @override
   Widget buildHeader() {
     final children = [
       Expanded(
         child: GestureDetector(
-          onTap: onHeaderTapped,
-          onLongPress: onHeaderLongPressed,
-          child: Text(
-            widget.headerStyle.titleTextBuilder != null
-                ? widget.headerStyle.titleTextBuilder(
-                    widget.calendarController.focusedDay, widget.locale)
-                : DateFormat.yMMMM(widget.locale)
-                    .format(widget.calendarController.focusedDay),
-            style: widget.headerStyle.titleTextStyle,
-            textAlign: widget.headerStyle.centerHeaderTitle
-                ? TextAlign.center
-                : TextAlign.start,
-          ),
-        ),
+            onTap: onHeaderTapped,
+            onLongPress: onHeaderLongPressed,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+              Text(
+                widget.headerStyle.titleTextBuilder != null
+                    ? widget.headerStyle.titleTextBuilder(
+                        widget.calendarController.focusedDay, widget.locale)
+                    : inCap(DateFormat.LLLL(widget.locale)
+                        .format(widget.calendarController.focusedDay)),
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                textAlign: widget.headerStyle.centerHeaderTitle
+                    ? TextAlign.center
+                    : TextAlign.start,
+              ),
+              Text(
+                widget.headerStyle.titleTextBuilder != null
+                    ? widget.headerStyle.titleTextBuilder(
+                        widget.calendarController.focusedDay, widget.locale)
+                    :' '+ DateFormat.y(widget.locale)
+                        .format(widget.calendarController.focusedDay),
+                style: TextStyle(fontSize: 25),
+                textAlign: widget.headerStyle.centerHeaderTitle
+                    ? TextAlign.center
+                    : TextAlign.start,
+              ),
+            ])),
       ),
       CustomIconButton(
         icon: widget.headerStyle.leftChevronIcon,

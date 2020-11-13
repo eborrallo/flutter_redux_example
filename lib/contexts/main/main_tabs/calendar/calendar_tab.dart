@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/profile_tab.dart';
 
 import 'package:flutter_redux_boilerplate/contexts/main/widgets/calendar.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/widgets/table_calendar/calendar.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_redux_boilerplate/contexts/main/widgets/table_calendar/c
 import 'package:flutter_redux_boilerplate/contexts/main/widgets/table_calendar/customization/days_of_week_style.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/widgets/table_calendar/customization/header_style.dart';
 import 'package:intl/intl.dart';
-
 
 class CalendarTab extends StatefulWidget {
   CalendarTab({Key key}) : super(key: key);
@@ -49,22 +49,24 @@ class _CalendarTabState extends State<CalendarTab>
         Expanded(
           flex: 2,
           child: Container(
-              color: Colors.transparent,
+              color: Color.fromRGBO(245, 245, 245, 1),
               child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 16.0),
                   child: buildTableCalendar())),
         ),
         Expanded(
+            child: ClipPath(
+          clipper: new CustomHalfCircleClipper(radius: 35,radiusLite:10, arc: 1.05 , arcLite: 1),
           child: Container(
             color: Colors.blue,
           ),
-        )
+        ))
       ],
     );
   }
 
   buildTableCalendar() {
-    return Calendar( 
+    return Calendar(
       locale: 'es_ES',
       calendarController: _calendarController,
       initialCalendarFormat: CalendarFormat.month,
@@ -79,7 +81,7 @@ class _CalendarTabState extends State<CalendarTab>
       ),
       daysOfWeekStyle: DaysOfWeekStyle(
         dowTextBuilder: (date, locale) =>
-            DateFormat.E(locale).format(date)[0] +
+            DateFormat.E(locale).format(date)[0].toUpperCase() +
             DateFormat.E(locale).format(date)[1],
         weekendStyle: TextStyle().copyWith(
             fontWeight: FontWeight.bold,

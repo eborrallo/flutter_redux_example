@@ -143,10 +143,17 @@ class ProfileTab extends StatelessWidget {
 }
 
 class CustomHalfCircleClipper extends CustomClipper<Path> {
+  double radius;
+  double radiusLite;
+  double arc;
+  double arcLite;
+  CustomHalfCircleClipper(
+      {this.radius = 33, this.radiusLite, this.arc = 1.25, this.arcLite = 1.4});
+
   @override
   Path getClip(Size size) {
-    double radius = 33;
-    double radiusLite = 10;
+    double radius = this.radius;
+    double radiusLite = this.radiusLite ?? radius / 3;
     Path path = Path() // Start from (0,0)
       ..lineTo(size.width, 0)
       ..lineTo(
@@ -155,11 +162,11 @@ class CustomHalfCircleClipper extends CustomClipper<Path> {
       )
       ..lineTo((size.width / 2) + radius + radiusLite, size.height)
       ..arcToPoint(Offset((size.width / 2) + radius, size.height - radiusLite),
-          radius: Radius.circular(radiusLite * 1.4))
+          radius: Radius.circular(radiusLite * this.arcLite))
       ..arcToPoint(Offset((size.width / 2) - radius, size.height - radiusLite),
-          radius: Radius.circular(radius * 1.25), clockwise: false)
+          radius: Radius.circular(radius * this.arc), clockwise: false)
       ..arcToPoint(Offset((size.width / 2) - radius - radiusLite, size.height),
-          radius: Radius.circular(radiusLite * 1.4))
+          radius: Radius.circular(radiusLite * this.arcLite))
       ..lineTo(0, size.height)
       ..close();
 

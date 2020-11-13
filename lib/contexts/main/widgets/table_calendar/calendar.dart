@@ -337,13 +337,13 @@ class TableCalendarState extends State<TableCalendar>
     }
   }
 
-  void _onHeaderTapped() {
+  void onHeaderTapped() {
     if (widget.onHeaderTapped != null) {
       widget.onHeaderTapped(widget.calendarController.focusedDay);
     }
   }
 
-  void _onHeaderLongPressed() {
+  void onHeaderLongPressed() {
     if (widget.onHeaderLongPressed != null) {
       widget.onHeaderLongPressed(widget.calendarController.focusedDay);
     }
@@ -399,8 +399,8 @@ class TableCalendarState extends State<TableCalendar>
       ),
       Expanded(
         child: GestureDetector(
-          onTap: _onHeaderTapped,
-          onLongPress: _onHeaderLongPressed,
+          onTap: onHeaderTapped,
+          onLongPress: onHeaderLongPressed,
           child: Text(
             widget.headerStyle.titleTextBuilder != null
                 ? widget.headerStyle.titleTextBuilder(
@@ -425,7 +425,7 @@ class TableCalendarState extends State<TableCalendar>
     if (widget.headerStyle.formatButtonVisible &&
         widget.availableCalendarFormats.length > 1) {
       children.insert(2, const SizedBox(width: 8.0));
-      children.insert(3, _buildFormatButton());
+      children.insert(3, buildFormatButton());
     }
 
     return Container(
@@ -439,7 +439,7 @@ class TableCalendarState extends State<TableCalendar>
     );
   }
 
-  Widget _buildFormatButton() {
+  Widget buildFormatButton() {
     return GestureDetector(
       onTap: _toggleCalendarFormat,
       child: Container(

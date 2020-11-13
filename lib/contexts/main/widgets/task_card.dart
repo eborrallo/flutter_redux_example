@@ -25,7 +25,7 @@ class _TaskCardState extends State<TaskCard> {
                   scale: 1.5,
                   child: Radio(
                     value: 0,
-                    activeColor: Color(0xffFFBD11),
+                    activeColor: Color(0xffFFBD11), groupValue: null, onChanged: (int value) {  },
                   ),
                 ),
                 title: Text(

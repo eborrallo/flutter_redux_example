@@ -68,7 +68,6 @@ class HomeTab extends StatelessWidget {
                                           subtitle: Padding(
                                               padding: EdgeInsets.only(top: 10),
                                               child: Row(
-                                                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                   children: [
                                                     Icon(
                                                       Icons.location_on,
@@ -154,8 +153,8 @@ class HomeTab extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 21.0),
         height: 230.0,
         child: Column(
-            children:
-                List.generate(2, (i) => new AnimatedListItem(i, new TaskCard()))));
+            children: List.generate(
+                2, (i) => new AnimatedListItem(i, new TaskCard()))));
   }
 
   Widget _buildOnProgressList() {

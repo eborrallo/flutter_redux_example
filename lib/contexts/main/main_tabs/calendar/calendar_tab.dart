@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/profile_tab.dart';
+import 'package:flutter_redux_boilerplate/contexts/main/widgets/animated_list_item.dart';
 
 import 'package:flutter_redux_boilerplate/contexts/main/widgets/calendar.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/widgets/table_calendar/calendar.dart';
@@ -50,8 +51,7 @@ class _CalendarTabState extends State<CalendarTab>
           flex: 2,
           child: Container(
               color: Color.fromRGBO(245, 245, 245, 1),
-              child: Container(
-                  child: buildTableCalendar())),
+              child: Container(child: buildTableCalendar())),
         ),
         Expanded(
             child: ClipPath(
@@ -61,11 +61,43 @@ class _CalendarTabState extends State<CalendarTab>
             color: Colors.blue,
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Text('Your Task')
-                  ],
-                )
+                Container(
+                  margin: EdgeInsets.only(left:20, top:20),
+                  alignment: Alignment.centerLeft,
+                  child: Text('Your Task', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),)
+                  ),
+                Container(
+                    margin: EdgeInsets.symmetric(vertical: 16.0),
+                    height: 160.0,
+                    child: ListView(
+                        padding: EdgeInsets.only(left: 21.0),
+                        scrollDirection: Axis.horizontal,
+                        children: List.generate(
+                            5,
+                            (i) => new AnimatedListItem(
+                                i,
+                                Container(
+                                    width: 280,
+                                    height: 300,
+                                    margin: EdgeInsets.only(bottom: 10.0),
+                                    child: Center(
+                                        child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Row(children: [
+                                              Container(
+                                                  width: 100,
+                                                  height: 200,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors
+                                                          .blueAccent.shade100,
+                                                      borderRadius:
+                                                          new BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10.0)))),
+                                            ]))))))))
               ],
             ),
           ),
@@ -102,7 +134,7 @@ class _CalendarTabState extends State<CalendarTab>
       headerStyle: HeaderStyle(
           centerHeaderTitle: true,
           formatButtonVisible: false,
-          headerMargin:EdgeInsets.symmetric(vertical: 20, horizontal: 0),
+          headerMargin: EdgeInsets.symmetric(vertical: 20, horizontal: 0),
           decoration: BoxDecoration(
               border: Border(
                   bottom: BorderSide(color: Theme.of(context).dividerColor)))),

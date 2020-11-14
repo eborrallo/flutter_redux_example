@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/profile_tab.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/widgets/animated_list_item.dart';
-
 import 'package:flutter_redux_boilerplate/contexts/main/widgets/calendar.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/widgets/table_calendar/calendar.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/widgets/table_calendar/calendar_controller.dart';
@@ -195,7 +194,7 @@ class _CalendarTabState extends State<CalendarTab>
             opacity: Tween(begin: 0.0, end: 1.0).animate(_animationController),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.transparent,
               ),
               width: 50,
               height: 50,

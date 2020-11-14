@@ -51,14 +51,23 @@ class _CalendarTabState extends State<CalendarTab>
           child: Container(
               color: Color.fromRGBO(245, 245, 245, 1),
               child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16.0),
                   child: buildTableCalendar())),
         ),
         Expanded(
             child: ClipPath(
-          clipper: new CustomHalfCircleClipper(radius: 35,radiusLite:10, arc: 1.05 , arcLite: 1),
+          clipper: new CustomHalfCircleClipper(
+              radius: 35, radiusLite: 10, arc: 1.05, arcLite: 1),
           child: Container(
             color: Colors.blue,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text('Your Task')
+                  ],
+                )
+              ],
+            ),
           ),
         ))
       ],
@@ -91,9 +100,12 @@ class _CalendarTabState extends State<CalendarTab>
             fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black38),
       ),
       headerStyle: HeaderStyle(
-        centerHeaderTitle: true,
-        formatButtonVisible: false,
-      ),
+          centerHeaderTitle: true,
+          formatButtonVisible: false,
+          headerMargin:EdgeInsets.symmetric(vertical: 20, horizontal: 0),
+          decoration: BoxDecoration(
+              border: Border(
+                  bottom: BorderSide(color: Theme.of(context).dividerColor)))),
       builders: CalendarBuilders(
         dayBuilder: (context, date, _) {
           return FadeTransition(

@@ -61,48 +61,50 @@ class _CalendarTabState extends State<CalendarTab>
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(left:20, top:20),
-                  alignment: Alignment.centerLeft,
-                  child: Text('Your Task', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),)
-                  ),
+                    margin: EdgeInsets.only(left: 20, top: 20),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Your Task',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )),
                 Container(
                     margin: EdgeInsets.symmetric(vertical: 16.0),
                     height: 160.0,
                     child: ListView(
                         padding: EdgeInsets.only(left: 21.0),
                         scrollDirection: Axis.horizontal,
-                        children: List.generate(
-                            5,
-                            (i) => new AnimatedListItem(
-                                i,
-                                Container(
-                                    width: 280,
-                                    height: 300,
-                                    margin: EdgeInsets.only(bottom: 10.0),
-                                    child: Center(
-                                        child: Card(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: Row(children: [
-                                              Container(
-                                                  width: 100,
-                                                  height: 200,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors
-                                                          .blueAccent.shade100,
-                                                      borderRadius:
-                                                          new BorderRadius.all(
-                                                              Radius.circular(
-                                                                  10.0)))),
-                                            ]))))))))
+                        children: List.generate(5,
+                            (i) => new AnimatedListItem(i, buildListTask()))))
               ],
             ),
           ),
         ))
       ],
     );
+  }
+
+  Container buildListTask() {
+    return Container(
+        width: 280,
+        height: 300,
+        margin: EdgeInsets.only(bottom: 10.0),
+        child: Center(
+            child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(children: [
+                  Container(
+                      width: 100,
+                      height: 200,
+                      decoration: BoxDecoration(
+                          color: Colors.blueAccent.shade100,
+                          borderRadius:
+                              new BorderRadius.all(Radius.circular(10.0)))),
+                ]))));
   }
 
   buildTableCalendar() {

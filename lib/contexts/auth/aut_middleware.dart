@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/contexts/auth/auth_actions.dart';
 import 'package:flutter_redux_boilerplate/contexts/auth/login/login_action.dart';
 import 'package:flutter_redux_boilerplate/contexts/navigation/navigation_actions.dart';
+import 'package:flutter_redux_boilerplate/contexts/navigation/screens.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/models/user.dart';
 import 'package:flutter_redux_boilerplate/redux/app_state.dart';
@@ -23,7 +24,7 @@ class AuthMiddleware {
         .signInWithEmailAndPassword(action.username, action.password)
         .then((value) {
       store.dispatch(LoginSuccess(value));
-      store.dispatch(NavigateToNextAndReplace(destination: 'main',pageTransition:PageTransitionType.fade));
+      store.dispatch(NavigateToNextAndReplace(destination: MAIN_SCREEN,pageTransition:PageTransitionType.fade));
     });
     next(action);
   }
@@ -32,16 +33,16 @@ class AuthMiddleware {
       NextDispatcher next) async {
     try {
       User user = await this.auth.getSignedInUser();
-      store.dispatch(NavigateToNextAndReplace(destination: 'main',pageTransition:PageTransitionType.fade ));
+      store.dispatch(NavigateToNextAndReplace(destination: MAIN_SCREEN,pageTransition:PageTransitionType.fade ));
     } catch (e) {
       print(e);
-      store.dispatch(NavigateToNextAndReplace(destination: 'login'));
+      store.dispatch(NavigateToNextAndReplace(destination: LOGIN_SCREEN));
     }
     next(action);
   }
 
   logout(Store<AppState> store, UserLogout action, NextDispatcher next) async {
-    store.dispatch(NavigateToNextAndReplace(destination: 'login'));
+    store.dispatch(NavigateToNextAndReplace(destination: LOGIN_SCREEN));
 
     next(action);
   }

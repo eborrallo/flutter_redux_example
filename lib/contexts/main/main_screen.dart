@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_drawer.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/calendar/calendar_tab.dart';
@@ -7,10 +8,13 @@ import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/home_tab.dart'
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/profile_tab.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_tabs/task_tab.dart';
 import 'dart:math';
-
 import 'package:flutter_redux_boilerplate/contexts/main/widgets/fab_bottom_app_bar.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/widgets/fab_with_icons.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/widgets/layout.dart';
+import 'package:flutter_redux_boilerplate/contexts/navigation/navigation_actions.dart';
+import 'package:flutter_redux_boilerplate/contexts/navigation/screens.dart';
+import 'package:flutter_redux_boilerplate/redux/app_state.dart';
+import 'package:redux/redux.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key}) : super(key: key);
@@ -57,19 +61,41 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildFab(BuildContext context) {
-    final icons = [Icons.sms, Icons.mail, Icons.phone];
+    final icons = [
+      Icons.assignment,
+      Icons.assignment_ind,
+      Icons.assignment_turned_in
+    ];
     return AnchoredOverlay(
         showOverlay: true,
         overlayBuilder: (context, offset) {
           print(offset);
-          return CenterAbout(
-            position: Offset(offset.dx, offset.dy - icons.length * 35.0),
-            child: FabWithIcons(
-              icons: icons,
-              onIconTapped: (int) {},
-              controller: _controller,
-            ),
-          );
+          return new StoreConnector<AppState, dynamic>(
+              converter: (Store<AppState> store) {
+            return (BuildContext context, int buttonIndex) {
+              switch (buttonIndex) {
+                case 2:
+                  store.dispatch(new NavigateToNext(destination: ADD_TASK_SCREEN));
+                  break;
+                case 1:
+                  store.dispatch(new NavigateToNext(destination: ADD_SUBJECT_SCREEN));
+                  break;
+                default:
+                  break;
+              }
+            };
+          }, builder: (BuildContext context, navigate) {
+            return CenterAbout(
+              position: Offset(offset.dx, offset.dy - icons.length * 35.0),
+              child: FabWithIcons(
+                icons: icons,
+                onIconTapped: (int i) {
+                  navigate(context, i);
+                },
+                controller: _controller,
+              ),
+            );
+          });
         },
         child: InOutAnimation(
           key: inOutAnimation,
@@ -115,7 +141,6 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return new Scaffold(
       key: _scaffoldKey,
-      extendBodyBehindAppBar: false,
       appBar: new PlatformAdaptiveAppBar(
         actions: (this._index == 1
             ? [

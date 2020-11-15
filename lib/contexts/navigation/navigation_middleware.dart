@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/contexts/add_subject/add_subject_screen.dart';
+import 'package:flutter_redux_boilerplate/contexts/add_task/add_task_screen.dart';
 import 'package:flutter_redux_boilerplate/contexts/auth/login/login_screen.dart';
 import 'package:flutter_redux_boilerplate/contexts/auth/sign_up/sign_up_screen.dart';
 import 'package:flutter_redux_boilerplate/contexts/loading/loading_screen.dart';
 import 'package:flutter_redux_boilerplate/contexts/main/main_screen.dart';
 import 'package:flutter_redux_boilerplate/contexts/navigation/navigation_actions.dart';
+import 'package:flutter_redux_boilerplate/contexts/navigation/screens.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/redux/app_state.dart';
 import 'package:injectable/injectable.dart';
@@ -36,10 +39,8 @@ class NavigationMiddleware {
       Store<AppState> store,
       NavigateToNextAndReplace action,
       NextDispatcher next) {
-    this
-        .navigatorKey
-        .currentState
-        .pushReplacement(this._navigate(action.destination,type: action.pageTransition));
+    this.navigatorKey.currentState.pushReplacement(
+        this._navigate(action.destination, type: action.pageTransition));
     next(action);
   }
 
@@ -58,14 +59,20 @@ class NavigationMiddleware {
       Duration duration = duration}) {
     Widget screen;
     switch (page) {
-      case 'login':
+      case LOGIN_SCREEN:
         screen = LoginScreen();
         break;
-      case 'signUp':
+      case SIGNUP_SCREEN:
         screen = SignUpScreen();
         break;
-      case 'main':
+      case MAIN_SCREEN:
         screen = MainScreen();
+        break;
+      case ADD_TASK_SCREEN:
+        screen = AddTaskScreen();
+        break;
+      case ADD_SUBJECT_SCREEN:
+        screen = AddSubjectScreen();
         break;
       default:
         screen = LoadingScreen();

@@ -99,7 +99,6 @@ class LoginScreen extends StatelessWidget {
                                   color: Colors.white,
                                   textColor: Colors.black,
                                   onPressed: () {
-                                    print('caca');
                                   },
                                   padding: EdgeInsets.all(8.0),
                                   splashColor: Colors.blueAccent,

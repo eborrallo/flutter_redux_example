@@ -5,7 +5,7 @@ class FabWithIcons extends StatefulWidget {
   FabWithIcons({this.icons, this.onIconTapped, this.controller});
   final List<IconData> icons;
   ValueChanged<int> onIconTapped;
-    AnimationController controller;
+  AnimationController controller;
 
   @override
   State createState() => FabWithIconsState();
@@ -13,17 +13,14 @@ class FabWithIcons extends StatefulWidget {
 
 class FabWithIconsState extends State<FabWithIcons>
     with TickerProviderStateMixin {
-
-  
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: List.generate(widget.icons.length, (int index) {
-        return _buildChild(index);
-      }).toList()
-    );
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: List.generate(widget.icons.length, (int index) {
+          return _buildChild(index);
+        }).toList());
   }
 
   Widget _buildChild(int index) {
@@ -48,8 +45,6 @@ class FabWithIconsState extends State<FabWithIcons>
       ),
     );
   }
-
-
 
   void _onTapped(int index) {
     widget.controller.reverse();

@@ -24,6 +24,29 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: new PlatformAdaptiveAppBar(
+          actions: ([
+            InkWell(
+                onTap: () {},
+                child: Container(
+                  margin: EdgeInsets.only(right: 20),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      IconButton(
+                          color: Colors.blue,
+                          icon: Icon(Icons.save),
+                          onPressed: () {}),
+                      Text(
+                        'SAVE',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue),
+                      )
+                    ],
+                  ),
+                ))
+          ]),
           title: Text(
             'Add Task',
             style: TextStyle(color: Colors.black),
@@ -162,7 +185,10 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                           enableInteractiveSelection: true,
                           controller: _fileController,
                           decoration: new InputDecoration(
-                            suffixIcon: Icon(Icons.file_upload),
+                            suffixIcon: Icon(
+                              Icons.file_upload,
+                              color: Colors.blue,
+                            ),
                             filled: true,
                             fillColor: Colors.grey.shade200,
                             border: OutlineInputBorder(

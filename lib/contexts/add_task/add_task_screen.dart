@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
 import 'package:intl/intl.dart';
@@ -8,8 +11,15 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskStateScreen extends State<AddTaskScreen> {
-  String _title, _setTime, _setDate;
+  String _title, _setTime, _setDate, _subject;
+  File _file;
+  DateTime selectedDate = DateTime.now();
+  TextEditingController _dateController = TextEditingController();
+  TextEditingController _fileController = TextEditingController();
+  String _hour, _minute, _time;
 
+  TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
+  TextEditingController _timeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,23 +117,31 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                           )),
                       subtitle: Container(
                         margin: EdgeInsets.only(bottom: 20),
-                        child: new TextFormField(
-                          decoration: new InputDecoration(
-                            filled: true,
-                            fillColor: Colors.grey.shade200,
-                            border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide.none),
-                            labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                            hintText: 'Write some description',
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                          ),
-                          validator: (val) => val.isEmpty
-                              ? 'Please enter your subject title.'
-                              : null,
-                          onSaved: (val) => _title = val,
-                        ),
+                        child: DropdownButtonFormField(
+                            items: [
+                              DropdownMenuItem(
+                                child: new Text('Male'),
+                                value: 0,
+                              ),
+                              DropdownMenuItem(
+                                child: new Text('asasd'),
+                                value: 1,
+                              )
+                            ],
+                            value: _subject,
+                            onChanged: (value) {
+                              setState(() {
+                                _subject = value;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.grey.shade200,
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide.none),
+                            )),
                       )),
                   ListTile(
                       title: Container(
@@ -135,7 +153,16 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                       subtitle: Container(
                         margin: EdgeInsets.only(bottom: 20),
                         child: new TextFormField(
+                          onTap: () {
+                            try {
+                              _selectFile();
+                            } catch (e) {}
+                          },
+                          readOnly: true,
+                          enableInteractiveSelection: true,
+                          controller: _fileController,
                           decoration: new InputDecoration(
+                            suffixIcon: Icon(Icons.file_upload),
                             filled: true,
                             fillColor: Colors.grey.shade200,
                             border: OutlineInputBorder(
@@ -143,7 +170,6 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                                     BorderRadius.all(Radius.circular(10.0)),
                                 borderSide: BorderSide.none),
                             labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                            hintText: 'Write some description',
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                           ),
                           validator: (val) => val.isEmpty
@@ -155,6 +181,15 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                 ]))));
   }
 
+  void _selectFile() async {
+    FilePickerResult result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      _fileController.text = result.files.single.name;
+      _file = File(result.files.single.path);
+    }
+  }
+
   Widget datePicker() {
     return InkWell(
       onTap: () {
@@ -163,7 +198,9 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
       child: Container(
         width: 180,
         height: 50,
-        margin: EdgeInsets.only(top: 10,),
+        margin: EdgeInsets.only(
+          top: 10,
+        ),
         alignment: Alignment.center,
         decoration: BoxDecoration(
             color: Colors.grey[200],
@@ -188,9 +225,6 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
     );
   }
 
-  DateTime selectedDate = DateTime.now();
-  TextEditingController _dateController = TextEditingController();
-
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
@@ -204,11 +238,6 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
         _dateController.text = DateFormat.yMd().format(selectedDate);
       });
   }
-
-  String _hour, _minute, _time;
-
-  TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
-  TextEditingController _timeController = TextEditingController();
 
   Future<Null> _selectTime(BuildContext context) async {
     final TimeOfDay picked = await showTimePicker(

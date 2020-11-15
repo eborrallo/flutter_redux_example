@@ -25,6 +25,7 @@ dependencies:
   percent_indicator: ^2.1.8
   simple_gesture_detector: ^0.1.4
   intl: ^0.16.1
+  file_picker: ^2.0.13
 
 
 dev_dependencies:

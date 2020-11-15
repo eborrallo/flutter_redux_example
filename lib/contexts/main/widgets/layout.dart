@@ -14,12 +14,14 @@ class AnchoredOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      child: new LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+      child: new LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
         return new OverlayBuilder(
           showOverlay: showOverlay,
           overlayBuilder: (BuildContext overlayContext) {
             RenderBox box = context.findRenderObject() as RenderBox;
-            final center = box.size.center(box.localToGlobal(const Offset(0.0, 0.0)));
+            final center =
+                box.size.center(box.localToGlobal(const Offset(0.0, 0.0)));
 
             return overlayBuilder(overlayContext, center);
           },
@@ -88,12 +90,10 @@ class _OverlayBuilderState extends State<OverlayBuilder> {
   }
 
   void addToOverlay(OverlayEntry entry) async {
-    print('addToOverlay');
     Overlay.of(context).insert(entry);
   }
 
   void hideOverlay() {
-    print('hideOverlay');
     overlayEntry.remove();
     overlayEntry = null;
   }

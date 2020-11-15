@@ -31,7 +31,8 @@ class NavigationMiddleware {
 
   Middleware<AppState> _navigateToNextMiddleware(
       Store<AppState> store, NavigateToNext action, NextDispatcher next) {
-    navigatorKey.currentState.push(this._navigate(action.destination));
+    navigatorKey.currentState
+        .push(this._navigate(action.destination, type: action.pageTransition));
     next(action);
   }
 
@@ -69,6 +70,7 @@ class NavigationMiddleware {
         screen = MainScreen();
         break;
       case ADD_TASK_SCREEN:
+      print(type);
         screen = AddTaskScreen();
         break;
       case ADD_SUBJECT_SCREEN:

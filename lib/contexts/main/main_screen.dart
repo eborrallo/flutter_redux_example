@@ -69,7 +69,6 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     return AnchoredOverlay(
         showOverlay: true,
         overlayBuilder: (context, offset) {
-          print(offset);
           return new StoreConnector<AppState, dynamic>(
               converter: (Store<AppState> store) {
             return (BuildContext context, int buttonIndex) {

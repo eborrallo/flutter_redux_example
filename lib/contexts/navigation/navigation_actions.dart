@@ -4,9 +4,10 @@ import 'package:page_transition/page_transition.dart';
 
 class NavigateToNext {
 
-  NavigateToNext({@required this.destination});
+  NavigateToNext({@required this.destination,this.pageTransition});
 
   final String destination;
+  final PageTransitionType pageTransition;
 
 }
 

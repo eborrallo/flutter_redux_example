@@ -12,7 +12,6 @@ class AppState {
         signUp = signUp ?? new SignUpState();
 
   static AppState rehydrationJSON(dynamic json) {
-    print(json);
     json = json ?? (new AppState()).toJson();
     return new AppState(
         auth: new AuthState.fromJSON(json['auth']),

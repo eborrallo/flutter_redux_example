@@ -35,7 +35,7 @@ class AuthMiddleware {
       User user = await this.auth.getSignedInUser();
       store.dispatch(NavigateToNextAndReplace(destination: MAIN_SCREEN,pageTransition:PageTransitionType.fade ));
     } catch (e) {
-      print(e);
+      //print(e);
       store.dispatch(NavigateToNextAndReplace(destination: LOGIN_SCREEN));
     }
     next(action);

@@ -61,7 +61,7 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
             child: Form(
                 //autovalidate: true,
                 onChanged: () {
-                  Form.of(primaryFocus.context).save();
+                 // Form.of(primaryFocus.context).save();
                 },
                 child: Column(children: [
                   ListTile(

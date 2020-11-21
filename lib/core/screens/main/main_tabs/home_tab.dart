@@ -11,7 +11,9 @@ class HomeTab extends StatelessWidget {
     return new Container(
         alignment: Alignment.topLeft,
         color: Color.fromRGBO(245, 245, 245, 1),
-        child: Column(children: [_onProgress(), _almostDue(), _todayClass()]));
+        child: new ListView(children: [
+          Column(children: [_onProgress(), _almostDue(), _todayClass()])
+        ]));
   }
 
   Widget _todayClass() {
@@ -67,28 +69,28 @@ class HomeTab extends StatelessWidget {
                                           ),
                                           subtitle: Padding(
                                               padding: EdgeInsets.only(top: 10),
-                                              child: Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.location_on,
-                                                      color: Colors.grey,
-                                                      size: 18,
-                                                    ),
-                                                    Text(
-                                                      'Room 3A',
-                                                      textAlign: TextAlign.left,
-                                                      style: TextStyle(
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                        child: Text(
-                                                            '08:00 - 10:00',
-                                                            textAlign: TextAlign
-                                                                .right))
-                                                  ])),
+                                              child: Row(children: [
+                                                Icon(
+                                                  Icons.location_on,
+                                                  color: Colors.grey,
+                                                  size: 18,
+                                                ),
+                                                Text(
+                                                  'Room 3A',
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                    child: Text('08:00 - 10:00',
+                                                        textAlign:
+                                                            TextAlign.right))
+                                              ])),
                                         ),
-                                        new Row(
+                                      Padding(
+                                              padding: EdgeInsets.symmetric(horizontal: 15),
+                                              child:  new Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
                                           children: [
@@ -97,14 +99,19 @@ class HomeTab extends StatelessWidget {
                                               color: Colors.orange,
                                               size: 18,
                                             ),
-                                            new Text(
-                                                'You have one incpmplete task',
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.orange))
+                                            Expanded(
+                                                child: Text(
+                                              'You have one incpmplete task',
+                                              textAlign: TextAlign.right,
+                                              maxLines: 2,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.orange),
+                                              overflow: TextOverflow.ellipsis,
+                                            )),
+                                           
                                           ],
-                                        ),
+                                        )),
                                       ])))))))),
     );
   }

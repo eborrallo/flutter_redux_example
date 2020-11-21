@@ -74,10 +74,12 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             return (BuildContext context, int buttonIndex) {
               switch (buttonIndex) {
                 case 2:
-                  store.dispatch(new NavigateToNext(destination: ADD_TASK_SCREEN));
+                  store.dispatch(
+                      new NavigateToNext(destination: ADD_TASK_SCREEN));
                   break;
                 case 1:
-                  store.dispatch(new NavigateToNext(destination: ADD_SUBJECT_SCREEN));
+                  store.dispatch(
+                      new NavigateToNext(destination: ADD_SUBJECT_SCREEN));
                   break;
                 default:
                   break;
@@ -114,21 +116,14 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                 backgroundColor: background
                     .evaluate(AlwaysStoppedAnimation(_controller.value)),
                 child: new Transform(
-                  transform:
-                      new Matrix4.rotationZ(_controller.value * 0.25 * pi),
-                  alignment: FractionalOffset.center,
-                  child: _controller.isDismissed
-                      ? new Icon(
-                          Icons.add,
-                          size: 30,
-                          color: Colors.white,
-                        )
-                      : new Icon(
-                          Icons.add,
-                          size: 30,
-                          color: Colors.white,
-                        ),
-                ),
+                    transform:
+                        new Matrix4.rotationZ(_controller.value * 0.25 * pi),
+                    alignment: FractionalOffset.center,
+                    child: new Icon(
+                      Icons.add,
+                      size: 30,
+                      color: Colors.white,
+                    )),
                 elevation: 0,
               );
             },

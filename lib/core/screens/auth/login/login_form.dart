@@ -76,7 +76,7 @@ class _LoginFormState extends State<LoginForm> {
                           },
                           padding: EdgeInsets.all(8.0),
                           splashColor: Colors.blueAccent,
-                          child: new Text('Sign in '),
+                          child: new Text('Sign in'),
                           shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(7.0),
                           )),

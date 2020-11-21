@@ -8,12 +8,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
-import 'services/firebase/FirebaseAuthentification.dart';
-import 'contexts/auth/aut_middleware.dart';
-import 'services/firebase/FirebaseInjectableModule.dart';
-import 'services/firebase/FirebaseUserMapper.dart';
-import 'contexts/navigation/navigation_middleware.dart';
-import 'contexts/auth/sign_up/sign_up_midleware.dart';
+import 'core/services/Auth.dart';
+import 'core/screens/auth/aut_middleware.dart';
+import 'integrations/firebase/FirebaseAuthentification.dart';
+import 'integrations/firebase/FirebaseInjectableModule.dart';
+import 'integrations/firebase/FirebaseUserMapper.dart';
+import 'core/services/navigation/navigation_middleware.dart';
+import 'core/screens/auth/sign_up/sign_up_midleware.dart';
 
 /// adds generated dependencies
 /// to the provided [GetIt] instance

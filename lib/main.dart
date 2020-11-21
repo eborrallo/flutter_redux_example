@@ -2,18 +2,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_redux_boilerplate/containers/platform_adaptive.dart';
-import 'package:flutter_redux_boilerplate/contexts/auth/login/login_screen.dart';
-import 'package:flutter_redux_boilerplate/contexts/auth/sign_up/sign_up_screen.dart';
-import 'package:flutter_redux_boilerplate/contexts/loading/loading_screen.dart';
-import 'package:flutter_redux_boilerplate/contexts/main/main_screen.dart';
+import 'package:flutter_redux_boilerplate/config/redux/app_state.dart';
+import 'package:flutter_redux_boilerplate/config/redux/store.dart';
+import 'package:flutter_redux_boilerplate/core/screens/auth/login/login_screen.dart';
+import 'package:flutter_redux_boilerplate/core/screens/auth/sign_up/sign_up_screen.dart';
+import 'package:flutter_redux_boilerplate/core/screens/loading/loading_screen.dart';
+import 'package:flutter_redux_boilerplate/core/screens/main/main_screen.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
-import 'package:flutter_redux_boilerplate/redux/app_state.dart';
-import 'package:flutter_redux_boilerplate/redux/store.dart';
 import 'package:injectable/injectable.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 
 Store<AppState> store;
 void main() async {

@@ -16,7 +16,7 @@ class MainDrawer extends StatelessWidget {
             builder: (BuildContext context, logout) => new Drawer(
                 child: new ListView(
                     children: <Widget>[
-                    new Container(
+                   /*  new Container(
                         height: 120.0,
                         child: new DrawerHeader(
                         padding: new EdgeInsets.all(0.0),
@@ -30,15 +30,25 @@ class MainDrawer extends StatelessWidget {
                             ),
                         ),
                         ),
-                    ),
+                    ), */
                     new ListTile(
-                        leading: new Icon(Icons.chat),
-                        title: new Text('Support'),
+                        leading: new Icon(Icons.home),
+                        title: new Text('Home'),
                         onTap: () => print('you pressed support')
                     ),
                     new ListTile(
-                        leading: new Icon(Icons.info),
-                        title: new Text('About'),
+                        leading: new Icon(Icons.timeline),
+                        title: new Text('Timetable'),
+                        onTap: () => print('you pressed about')
+                    ),
+                    new ListTile(
+                        leading: new Icon(Icons.assignment),
+                        title: new Text('Subjects'),
+                        onTap: () => print('you pressed about')
+                    ),
+                    new ListTile(
+                        leading: new Icon(Icons.assignment_ind),
+                        title: new Text('Lecturers'),
                         onTap: () => print('you pressed about')
                     ),
                     new Divider(),

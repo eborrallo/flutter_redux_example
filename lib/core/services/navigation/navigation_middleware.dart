@@ -3,6 +3,7 @@ import 'package:flutter_redux_boilerplate/config/redux/app_state.dart';
 import 'package:flutter_redux_boilerplate/config/screens.dart';
 import 'package:flutter_redux_boilerplate/core/screens/auth/login/login_screen.dart';
 import 'package:flutter_redux_boilerplate/core/screens/auth/sign_up/sign_up_screen.dart';
+import 'package:flutter_redux_boilerplate/core/screens/lecturer/add_lecturer_screen.dart';
 import 'package:flutter_redux_boilerplate/core/screens/loading/loading_screen.dart';
 import 'package:flutter_redux_boilerplate/core/screens/main/main_screen.dart';
 import 'package:flutter_redux_boilerplate/core/screens/subject/add_subject_screen.dart';
@@ -71,6 +72,9 @@ class NavigationMiddleware {
         break;
       case ADD_TASK_SCREEN:
         screen = AddTaskScreen();
+        break;
+      case ADD_LECTURER_SCREEN:
+        screen = AddLecturerScreen();
         break;
       case ADD_SUBJECT_SCREEN:
         screen = AddSubjectScreen();

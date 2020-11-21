@@ -73,11 +73,15 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               converter: (Store<AppState> store) {
             return (BuildContext context, int buttonIndex) {
               switch (buttonIndex) {
-                case 2:
+                case 1:
+                  store.dispatch(
+                      new NavigateToNext(destination: ADD_LECTURER_SCREEN));
+                  break;
+                case 0:
                   store.dispatch(
                       new NavigateToNext(destination: ADD_TASK_SCREEN));
                   break;
-                case 1:
+                case 2:
                   store.dispatch(
                       new NavigateToNext(destination: ADD_SUBJECT_SCREEN));
                   break;

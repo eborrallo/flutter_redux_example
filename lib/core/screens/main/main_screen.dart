@@ -66,41 +66,36 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       Icons.assignment_ind,
       Icons.assignment_turned_in
     ];
+    final store = StoreProvider.of<AppState>(context);
+
     return AnchoredOverlay(
         showOverlay: true,
         overlayBuilder: (context, offset) {
-          return new StoreConnector<AppState, dynamic>(
-              converter: (Store<AppState> store) {
-            return (BuildContext context, int buttonIndex) {
-              switch (buttonIndex) {
-                case 1:
-                  store.dispatch(
-                      new NavigateToNext(destination: ADD_LECTURER_SCREEN));
-                  break;
-                case 0:
-                  store.dispatch(
-                      new NavigateToNext(destination: ADD_TASK_SCREEN));
-                  break;
-                case 2:
-                  store.dispatch(
-                      new NavigateToNext(destination: ADD_SUBJECT_SCREEN));
-                  break;
-                default:
-                  break;
-              }
-            };
-          }, builder: (BuildContext context, navigate) {
-            return CenterAbout(
-              position: Offset(offset.dx, offset.dy - icons.length * 35.0),
-              child: FabWithIcons(
-                icons: icons,
-                onIconTapped: (int i) {
-                  navigate(context, i);
-                },
-                controller: _controller,
-              ),
-            );
-          });
+          return CenterAbout(
+            position: Offset(offset.dx, offset.dy - icons.length * 35.0),
+            child: FabWithIcons(
+              icons: icons,
+              onIconTapped: (int i) {
+                switch (i) {
+                  case 1:
+                    store.dispatch(
+                        new NavigateToNext(destination: ADD_LECTURER_SCREEN));
+                    break;
+                  case 0:
+                    store.dispatch(
+                        new NavigateToNext(destination: ADD_TASK_SCREEN));
+                    break;
+                  case 2:
+                    store.dispatch(
+                        new NavigateToNext(destination: ADD_SUBJECT_SCREEN));
+                    break;
+                  default:
+                    break;
+                }
+              },
+              controller: _controller,
+            ),
+          );
         },
         child: InOutAnimation(
           key: inOutAnimation,

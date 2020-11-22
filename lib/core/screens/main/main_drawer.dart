@@ -11,6 +11,8 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+
     return new Drawer(
         child: new ListView(
       children: <Widget>[
@@ -29,24 +31,16 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
         ),
-        new StoreConnector<AppState, dynamic>(
-            converter: (store) => (BuildContext context) {
-                  Navigator.pop(context);
-                  store.dispatch(new NavigateToNext(destination: MAIN_SCREEN));
-                },
-            builder: (BuildContext context, nav) => new ListTile(
-                leading: new Icon(Icons.home),
-                title: new Text('Home'),
-                onTap: () => nav(context))),
-        new StoreConnector<AppState, dynamic>(
-            converter: (store) => (BuildContext context) {
-                  store.dispatch(
-                      new NavigateToNext(destination: ADD_TASK_SCREEN));
-                },
-            builder: (BuildContext context, nav) => new ListTile(
-                leading: new Icon(Icons.timeline),
-                title: new Text('Timetable'),
-                onTap: () => nav(context))),
+        new ListTile(
+            leading: new Icon(Icons.home),
+            title: new Text('Home'),
+            onTap: () =>
+                store.dispatch(new NavigateToNext(destination: MAIN_SCREEN))),
+        new ListTile(
+            leading: new Icon(Icons.timeline),
+            title: new Text('Timetable'),
+            onTap: () => store
+                .dispatch(new NavigateToNext(destination: ADD_TASK_SCREEN))),
         new ListTile(
             leading: new Icon(Icons.assignment),
             title: new Text('Subjects'),
@@ -56,14 +50,10 @@ class MainDrawer extends StatelessWidget {
             title: new Text('Lecturers'),
             onTap: () => print('you pressed about')),
         new Divider(),
-        new StoreConnector<AppState, dynamic>(
-          converter: (store) => (BuildContext context) {
-            store.dispatch(new UserLogout());
-          },
-          builder: (BuildContext context, logout) => new ListTile(
-              leading: new Icon(Icons.exit_to_app),
-              title: new Text('Sign Out'),
-              onTap: () => logout(context)),
+        new ListTile(
+          leading: new Icon(Icons.exit_to_app),
+          title: new Text('Sign Out'),
+          onTap: () => store.dispatch(new UserLogout()),
         )
       ],
     ));

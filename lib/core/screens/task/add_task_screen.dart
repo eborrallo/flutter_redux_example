@@ -2,6 +2,10 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_redux_boilerplate/config/redux/app_state.dart';
+import 'package:flutter_redux_boilerplate/config/screens.dart';
+import 'package:flutter_redux_boilerplate/core/services/navigation/navigation_actions.dart';
 import 'package:flutter_redux_boilerplate/core/widgets/platform_adaptive.dart';
 
 import 'package:intl/intl.dart';
@@ -23,6 +27,8 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
   TextEditingController _timeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+
     return Scaffold(
         appBar: new PlatformAdaptiveAppBar(
           actions: ([
@@ -54,7 +60,13 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
           ),
           platform: Theme.of(context).platform,
           backgroundColor: Color.fromRGBO(245, 245, 245, 1),
-          leading: BackButton(color: Colors.black),
+          leading: BackButton(
+            color: Colors.black,
+            onPressed: () {
+              Navigator.pop(context);
+              store.dispatch(new NavigateToNext(destination: MAIN_SCREEN));
+            },
+          ),
         ),
         body: Container(
             color: Color.fromRGBO(245, 245, 245, 1),
@@ -62,7 +74,7 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
             child: Form(
                 //autovalidate: true,
                 onChanged: () {
-                 // Form.of(primaryFocus.context).save();
+                  // Form.of(primaryFocus.context).save();
                 },
                 child: Column(children: [
                   ListTile(

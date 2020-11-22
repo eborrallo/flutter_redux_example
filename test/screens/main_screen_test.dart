@@ -53,8 +53,7 @@ void main() {
         expect(find.text('Today Calss'), findsOneWidget);
       });
     });
-    testWidgets(
-        'We can see the "bottom float action button and childs" widgest',
+    testWidgets('We can see the bottom float action button and childs',
         (WidgetTester tester) async {
       await tester.pumpWidget(sut);
 
@@ -69,7 +68,7 @@ void main() {
       expect(find.byIcon(Icons.assignment_ind), findsOneWidget);
       expect(find.byIcon(Icons.assignment_turned_in), findsOneWidget);
     });
-    testWidgets('We can see the "bottom bar" widgest',
+    testWidgets('We can see and navigate using the bottom bar buttons',
         (WidgetTester tester) async {
       await tester.pumpWidget(sut);
 
@@ -93,6 +92,22 @@ void main() {
       await tester.tap(personButton);
       await tester.pumpAndSettle();
       expect(find.text('Profile'), findsOneWidget);
+    });
+
+    testWidgets('We can see and navigate using the drawer menu buttons',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(sut);
+      var menuButton = find.byIcon(Icons.menu);
+      expect(menuButton, findsOneWidget);
+      await tester.tap(menuButton);
+      await tester.pumpAndSettle();
+
+      expect(find.widgetWithIcon(ListTile, Icons.home), findsOneWidget);
+      expect(find.widgetWithIcon(ListTile, Icons.timeline), findsOneWidget);
+      expect(find.widgetWithIcon(ListTile, Icons.assignment), findsOneWidget);
+      expect(
+          find.widgetWithIcon(ListTile, Icons.assignment_ind), findsOneWidget);
+      expect(find.widgetWithIcon(ListTile, Icons.exit_to_app), findsOneWidget);
     });
   });
 }

@@ -377,7 +377,6 @@ class TableCalendarState extends State<TableCalendar>
   Widget build(BuildContext context) {
     return ClipRect(
       child: ListView(
-        //mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           if (widget.headerVisible) buildHeader(),
           Padding(

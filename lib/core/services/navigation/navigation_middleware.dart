@@ -32,9 +32,13 @@ class NavigationMiddleware {
 
   Middleware<AppState> _navigateToNextMiddleware(
       Store<AppState> store, NavigateToNext action, NextDispatcher next) {
-    navigatorKey.currentState
-        .push(this._navigate(action.destination, type: action.pageTransition));
-    next(action);
+    if (store.state.route == action.destination) {
+      print('actual route');
+    } else {
+      navigatorKey.currentState.push(
+          this._navigate(action.destination, type: action.pageTransition));
+      next(action);
+    }
   }
 
   Middleware<AppState> _navigateToNextAndReplaceMiddleware(

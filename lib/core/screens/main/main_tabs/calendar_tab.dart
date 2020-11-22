@@ -8,6 +8,7 @@ import 'package:flutter_redux_boilerplate/core/widgets/table_calendar/customizat
 import 'package:flutter_redux_boilerplate/core/widgets/table_calendar/customization/calendar_style.dart';
 import 'package:flutter_redux_boilerplate/core/widgets/table_calendar/customization/days_of_week_style.dart';
 import 'package:flutter_redux_boilerplate/core/widgets/table_calendar/customization/header_style.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 class CalendarTab extends StatefulWidget {
@@ -32,7 +33,6 @@ class _CalendarTabState extends State<CalendarTab>
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
-
     _animationController.forward();
   }
 
@@ -53,35 +53,41 @@ class _CalendarTabState extends State<CalendarTab>
               child: Container(child: buildTableCalendar())),
         ),
         Expanded(
+            flex: 1,
             child: ClipPath(
-          clipper: new CustomHalfCircleClipper(
-              radius: 35, radiusLite: 10, arc: 1.05, arcLite: 1),
-          child: Container(
-            color: Colors.blue,
-            child: Column(
-              children: [
-                Container(
-                    margin: EdgeInsets.only(left: 20, top: 20),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Your Task',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    )),
-                Container(
-                    margin: EdgeInsets.symmetric(vertical: 16.0),
-                    height: 160.0,
-                    child: ListView(
-                        padding: EdgeInsets.only(left: 21.0),
-                        scrollDirection: Axis.horizontal,
-                        children: List.generate(5,
-                            (i) => new AnimatedListItem(i, buildListTask()))))
-              ],
-            ),
-          ),
-        ))
+              clipper: new CustomHalfCircleClipper(
+                  radius: 35, radiusLite: 10, arc: 1.05, arcLite: 1),
+              child: Container(
+                color: Colors.blue,
+                child: Column(
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: 20, top: 20),
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Your Task',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
+                        )),
+                    Expanded(
+                        flex: 1,
+                        child: Container(
+                            margin: EdgeInsets.symmetric(vertical: 16.0),
+                            padding: EdgeInsets.only(bottom: 20),
+                            height: 160.0,
+                            child: ListView(
+                                padding: EdgeInsets.only(left: 21.0),
+                                scrollDirection: Axis.horizontal,
+                                children: List.generate(
+                                    5,
+                                    (i) => new AnimatedListItem(
+                                        i, buildListTask())))))
+                  ],
+                ),
+              ),
+            ))
       ],
     );
   }

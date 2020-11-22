@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/core/widgets/circular_progress_item.dart';
 
-
 class ProfileTab extends StatelessWidget {
   ProfileTab({Key key}) : super(key: key);
 
@@ -10,7 +9,8 @@ class ProfileTab extends StatelessWidget {
     return new Container(
         padding: EdgeInsets.only(top: 20),
         color: Color.fromRGBO(245, 245, 245, 1),
-        child: Column(
+        child: ListView(
+         // physics: NeverScrollableScrollPhysics(),
           children: [
             Container(
                 height: 150,
@@ -22,16 +22,18 @@ class ProfileTab extends StatelessWidget {
                     style: TextStyle(fontSize: 50),
                   ),
                 )),
-            Container(
+            new Center(
+                child: Container(
               margin: EdgeInsets.symmetric(vertical: 15),
               child: Text(
                 'Adam Blue',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-            ),
-            Container(
+            )),
+            new Center(
+                child: Container(
               child: Text('adam.b@email.com'),
-            ),
+            )),
             new ClipPath(
               clipper: new CustomHalfCircleClipper(),
               child: Container(

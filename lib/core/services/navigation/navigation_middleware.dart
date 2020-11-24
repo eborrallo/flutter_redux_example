@@ -8,6 +8,7 @@ import 'package:flutter_redux_boilerplate/core/screens/loading/loading_screen.da
 import 'package:flutter_redux_boilerplate/core/screens/main/main_screen.dart';
 import 'package:flutter_redux_boilerplate/core/screens/subject/add_subject_screen.dart';
 import 'package:flutter_redux_boilerplate/core/screens/task/add_task_screen.dart';
+import 'package:flutter_redux_boilerplate/core/screens/timetable/list_timetable_screen.dart';
 import 'package:flutter_redux_boilerplate/core/services/navigation/navigation_actions.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:injectable/injectable.dart';
@@ -82,6 +83,9 @@ class NavigationMiddleware {
         break;
       case ADD_SUBJECT_SCREEN:
         screen = AddSubjectScreen();
+        break;
+      case LIST_TIMETABLE_SCREEN:
+        screen = ListTimetableScreen();
         break;
       default:
         screen = LoadingScreen();

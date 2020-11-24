@@ -40,7 +40,7 @@ class MainDrawer extends StatelessWidget {
             leading: new Icon(Icons.timeline),
             title: new Text('Timetable'),
             onTap: () => store
-                .dispatch(new NavigateToNext(destination: ADD_TASK_SCREEN))),
+                .dispatch(new NavigateToNext(destination: LIST_TIMETABLE_SCREEN))),
         new ListTile(
             leading: new Icon(Icons.assignment),
             title: new Text('Subjects'),

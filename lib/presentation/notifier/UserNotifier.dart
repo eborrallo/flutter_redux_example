@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_redux_boilerplate/application/UserService.dart';
 import 'package:flutter_redux_boilerplate/domain/user/user.dart';

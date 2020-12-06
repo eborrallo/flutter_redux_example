@@ -19,27 +19,10 @@ class _ListTimetableScreenState extends State<ListTimetableScreen> {
     return Scaffold(
         appBar: new PlatformAdaptiveAppBar(
           actions: ([
-            InkWell(
-                onTap: () {},
-                child: Container(
-                  margin: EdgeInsets.only(right: 20),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      IconButton(
-                          color: Colors.blue,
-                          icon: Icon(Icons.save),
-                          onPressed: () {}),
-                      Text(
-                        'SAVE',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue),
-                      )
-                    ],
-                  ),
-                ))
+            IconButton(
+                color: Colors.black, icon: Icon(Icons.search), onPressed: () {}),
+            IconButton(
+                color: Colors.black, icon: Icon(Icons.add), onPressed: () {})
           ]),
           title: Text(
             'Timetable',
@@ -147,9 +130,7 @@ class _ListTimetableScreenState extends State<ListTimetableScreen> {
                                         Text('Room 5A',
                                             textAlign: TextAlign.right)
                                       ])),
-                                  Text(
-                                    ''
-                                  )
+                                  Text('')
                                 ],
                               ),
                             ),

@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_redux_boilerplate/config/redux/app_reducer.dart';
-import 'package:flutter_redux_boilerplate/config/redux/app_state.dart';
-import 'package:flutter_redux_boilerplate/core/screens/main/main_screen.dart';
+import 'package:flutter_redux_boilerplate/presentation/screens/main/main_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:redux/redux.dart';
+
 
 void main() {
   group('Main screen', () {
@@ -17,19 +14,13 @@ void main() {
 
       const Key innerKey = Key('main');
       MainScreen mainScreen = MainScreen(key: innerKey);
-      Store<AppState> store = new Store(
-        appReducer,
-        initialState: AppState(),
-      );
 
-      sut = StoreProvider<AppState>(
-          store: store,
-          child: MaterialApp(
+      sut =  MaterialApp(
             home: Scaffold(
               appBar: AppBar(title: const Text('Title')),
               body: mainScreen,
             ),
-          ));
+          );
     });
     group('Home tab', () {
       testWidgets('We can see the "On progress" widgest',

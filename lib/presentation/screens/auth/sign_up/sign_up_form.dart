@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/presentation/notifier/UserNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive.dart';
-
+import 'package:provider/provider.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -13,18 +14,19 @@ class _SignUpFormState extends State<SignUpForm> {
   String _username;
   String _password;
 
-  void _submit() {
+  bool _submit() {
     final form = formKey.currentState;
 
     if (form.validate()) {
       form.save();
+      return true;
     }
+    return false;
   }
 
   @override
   Widget build(BuildContext context) {
-
-
+    final userNotifier = context.watch<UserNotifier>();
     return new Form(
       key: formKey,
       child: new Column(
@@ -62,7 +64,9 @@ class _SignUpFormState extends State<SignUpForm> {
             padding: new EdgeInsets.only(top: 20.0),
             child: new PlatformAdaptiveButton(
               onPressed: () {
-                _submit();
+                if (_submit()) {
+                  userNotifier.register(_username, _password);
+                }
               },
               icon: new Icon(Icons.done),
               child: new Text('Register'),

@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as f;
-import 'package:flutter_redux_boilerplate/domain/Auth.dart';
+import 'package:flutter_redux_boilerplate/domain/services/Auth.dart';
 import 'package:flutter_redux_boilerplate/domain/user/user.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/firebase/FirebaseUserMapper.dart';
 import 'package:injectable/injectable.dart';
@@ -25,12 +25,15 @@ class FirebaseAuthentification implements Auth {
     final emailAddressStr = emailAddress;
     final passwordStr = password;
 
-    return await _firebaseAuth
+    return _firebaseAuth
         .createUserWithEmailAndPassword(
           email: emailAddressStr,
           password: passwordStr,
         )
-        .then((userCredential) => userCredential);
+        .then((userCredential) => userCredential)
+        .catchError((onError) {
+      print(onError);
+    });
   }
 
   @override
@@ -41,13 +44,13 @@ class FirebaseAuthentification implements Auth {
     final emailAddressStr = emailAddress;
     final passwordStr = password;
     try {
-       await _firebaseAuth.signInWithEmailAndPassword(
+      await _firebaseAuth.signInWithEmailAndPassword(
         email: emailAddressStr,
         password: passwordStr,
       );
       return this.getSignedInUser();
     } on f.FirebaseAuthException catch (e) {
-     throw new Exception(e.message);
+      throw new Exception(e.message);
     }
   }
 

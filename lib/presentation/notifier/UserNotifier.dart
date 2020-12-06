@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_redux_boilerplate/application/UserService.dart';
 import 'package:flutter_redux_boilerplate/domain/user/user.dart';
@@ -6,17 +8,21 @@ import 'package:injectable/injectable.dart';
 @lazySingleton
 @injectable
 class UserNotifier extends ChangeNotifier {
-  User user;
+  bool isLoading = false;
+  User user = new User('aaa', 'asasda');
   final UserService _app;
 
   UserNotifier({UserService app}) : _app = app {
-    _app.authService.getSignedInUser().then((User value) {
+   /*  _app.authService.getSignedInUser().then((User value) {
       user = value;
-      print(user);
-
+      isLoading = false;
       notifyListeners();
-    });
-    print(1);
-    print(user);
+    }); */
+  }
+
+  register(String emailAddress, String password) async {
+    await _app.authService.registerWithEmailAndPassword(emailAddress, password);
+    user = await _app.authService.getSignedInUser();
+    notifyListeners();
   }
 }

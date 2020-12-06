@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_boilerplate/domain/Auth.dart';
+import 'package:flutter_redux_boilerplate/domain/services/Auth.dart';
 import 'package:flutter_redux_boilerplate/domain/user/user.dart';
 import 'package:injectable/injectable.dart';
 

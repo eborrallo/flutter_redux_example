@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/presentation/notifier/UserNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/profile_tab.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/calendar.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/cu
 import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/customization/header_style.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CalendarTab extends StatefulWidget {
   CalendarTab({Key key}) : super(key: key);

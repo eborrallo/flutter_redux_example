@@ -11,7 +11,7 @@ class ProfileTab extends StatelessWidget {
         padding: EdgeInsets.only(top: 20),
         color: Color.fromRGBO(245, 245, 245, 1),
         child: ListView(
-         // physics: NeverScrollableScrollPhysics(),
+          //physics: NeverScrollableScrollPhysics(),
           children: [
             Container(
                 height: 150,
@@ -27,7 +27,7 @@ class ProfileTab extends StatelessWidget {
                 child: Container(
               margin: EdgeInsets.symmetric(vertical: 15),
               child: Text(
-                'Adam Blue',
+                'adam',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             )),

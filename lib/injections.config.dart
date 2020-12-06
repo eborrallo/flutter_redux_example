@@ -12,6 +12,8 @@ import 'domain/Auth.dart';
 import 'infraestructure/firebase/FirebaseAuthentification.dart';
 import 'infraestructure/firebase/FirebaseInjectableModule.dart';
 import 'infraestructure/firebase/FirebaseUserMapper.dart';
+import 'presentation/notifier/UserNotifier.dart';
+import 'application/UserService.dart';
 
 /// adds generated dependencies
 /// to the provided [GetIt] instance
@@ -27,6 +29,8 @@ GetIt $initGetIt(
   gh.lazySingleton<FirebaseUserMapper>(() => FirebaseUserMapper());
   gh.lazySingleton<Auth>(() =>
       FirebaseAuthentification(get<FirebaseAuth>(), get<FirebaseUserMapper>()));
+  gh.factory<UserService>(() => UserService(authService: get<Auth>()));
+  gh.lazySingleton<UserNotifier>(() => UserNotifier(app: get<UserService>()));
   return get;
 }
 

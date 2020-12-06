@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/config/styles/colors.dart';
-import 'package:flutter_redux_boilerplate/main.dart';
-import 'package:flutter_redux_boilerplate/presentation/screens/auth/auth_actions.dart';
-
+import 'package:flutter_redux_boilerplate/presentation/notifier/UserNotifier.dart';
+import 'package:provider/provider.dart';
 
 class LoadingScreen extends StatelessWidget {
   LoadingScreen({Key key}) : super(key: key);
-  
+
   Widget build(BuildContext context) {
+    final user = Provider.of<UserNotifier>(context, listen: false);
+
     return new MaterialApp(
       home: new Scaffold(
         body: new Center(

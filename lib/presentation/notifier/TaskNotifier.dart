@@ -10,7 +10,9 @@ class TaskNotifier extends ChangeNotifier {
   bool isLoading = false;
   TaskService _app;
 
-  TaskNotifier(this._app);
+  TaskNotifier(this._app) {
+    _updateList();
+  }
 
   List<Task> _list;
   List<SubjectProgress> _subjectsProgress;
@@ -24,7 +26,15 @@ class TaskNotifier extends ChangeNotifier {
   void _updateList() {
     _app.list().then((list) {
       _list = list;
-      _updateSubjectProgress(_list);
+      tesss().then((value) => notifyListeners());
+      notifyListeners();
+      // _updateSubjectProgress(_list);
+    });
+  }
+
+  Future tesss() {
+    return Future.delayed(Duration(seconds: 3), () {
+      _list.removeLast();
     });
   }
 

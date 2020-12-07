@@ -17,6 +17,7 @@ import 'infraestructure/firebase/FirebaseUserMapper.dart';
 import 'presentation/screens/loading/loading_screen.dart';
 import 'infraestructure/NavigationService.dart';
 import 'presentation/notifier/TaskNotifier.dart';
+import 'infraestructure/task/TaskRepository.dart';
 import 'application/TaskService.dart';
 import 'presentation/notifier/UserNotifier.dart';
 import 'application/UserService.dart';
@@ -35,7 +36,8 @@ GetIt $initGetIt(
   gh.lazySingleton<FirebaseUserMapper>(() => FirebaseUserMapper());
   gh.factory<LoadingScreen>(() => LoadingScreen(key: get<Key>()));
   gh.lazySingleton<NavigationService>(() => NavigationService());
-  gh.factory<TaskService>(() => TaskService());
+  gh.lazySingleton<TaskRepository>(() => TaskRepository());
+  gh.factory<TaskService>(() => TaskService(get<TaskRepository>()));
   gh.lazySingleton<Auth>(() =>
       FirebaseAuthentification(get<FirebaseAuth>(), get<FirebaseUserMapper>()));
   gh.factory<TaskNotifier>(() => TaskNotifier(get<TaskService>()));

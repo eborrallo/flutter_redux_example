@@ -3,28 +3,33 @@ import 'package:flutter/material.dart';
 class AnimatedListItem extends StatefulWidget {
   final int index;
   Widget child;
+
   AnimatedListItem(this.index, this.child, {Key key}) : super(key: key);
 
   @override
   _AnimatedListItemState createState() => _AnimatedListItemState();
 }
 
-class _AnimatedListItemState extends State<AnimatedListItem> {
-  bool _animate = false;
-
-  static bool _isStart = true;
-
+class _AnimatedListItemState extends State<AnimatedListItem>
+    with TickerProviderStateMixin {
+  AnimationController controller;
+  Animation<double> animation;
   @override
   void initState() {
     super.initState();
-    _isStart
-        ? Future.delayed(Duration(milliseconds: widget.index * 200), () {
-            setState(() {
-              _animate = true;
-              _isStart = false;
-            });
-          })
-        : _animate = true;
+
+    controller = AnimationController(
+        reverseDuration: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 1000),
+        vsync: this);
+    animation =
+        CurvedAnimation(parent: controller, curve: Curves.easeInOutQuart);
+    animation.addStatusListener((status) {
+      print(status);
+    });
+    Future.delayed(Duration(milliseconds: widget.index * 200), () {
+      controller.forward();
+    });
   }
 
   @override
@@ -34,11 +39,6 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      duration: Duration(milliseconds: 1000),
-      opacity: _animate ? 1 : 0,
-      curve: Curves.easeInOutQuart,
-      child:  widget.child,
-    );
+    return FadeTransition(opacity: animation, child: widget.child);
   }
 }

@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
+import 'package:provider/provider.dart';
 
 class HomeTab extends StatelessWidget {
   HomeTab({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final list = Provider.of<TaskNotifier>(context, listen: true);
+
     return new Container(
         alignment: Alignment.topLeft,
         color: Color.fromRGBO(245, 245, 245, 1),
         child: new ListView(children: [
-          Column(children: [_onProgress(), _almostDue(), _todayClass()])
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            _onProgress(),
+            _almostDue(list.almostDue),
+            _todayClass()
+          ])
         ]));
   }
 
@@ -88,35 +97,36 @@ class HomeTab extends StatelessWidget {
                                                             TextAlign.right))
                                               ])),
                                         ),
-                                      Padding(
-                                              padding: EdgeInsets.symmetric(horizontal: 15),
-                                              child:  new Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            new Icon(
-                                              Icons.error_outline,
-                                              color: Colors.orange,
-                                              size: 18,
-                                            ),
-                                            Expanded(
-                                                child: Text(
-                                              'You have one incpmplete task',
-                                              textAlign: TextAlign.right,
-                                              maxLines: 2,
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.orange),
-                                              overflow: TextOverflow.ellipsis,
+                                        Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 15),
+                                            child: new Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                new Icon(
+                                                  Icons.error_outline,
+                                                  color: Colors.orange,
+                                                  size: 18,
+                                                ),
+                                                Expanded(
+                                                    child: Text(
+                                                  'You have one incpmplete task',
+                                                  textAlign: TextAlign.right,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.orange),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                )),
+                                              ],
                                             )),
-                                           
-                                          ],
-                                        )),
                                       ])))))))),
     );
   }
 
-  Widget _almostDue() {
+  Widget _almostDue(List<Task> list) {
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -130,7 +140,7 @@ class HomeTab extends StatelessWidget {
             ),
           ),
         ),
-        this._buildAlmostDueList()
+        this._buildAlmostDueList(list)
       ],
     );
   }
@@ -154,14 +164,17 @@ class HomeTab extends StatelessWidget {
     );
   }
 
-  Widget _buildAlmostDueList() {
+//
+  Widget _buildAlmostDueList(List<Task> list) {
     return new Container(
         margin: EdgeInsets.symmetric(vertical: 21.0),
         padding: EdgeInsets.symmetric(horizontal: 21.0),
         height: 230.0,
         child: Column(
-            children: List.generate(
-                2, (i) => new AnimatedListItem(i, new TaskCard()))));
+            children: list == null
+                ? []
+                : List.generate(list.length,
+                    (i) => new AnimatedListItem(i, new TaskCard()))));
   }
 
   Widget _buildOnProgressList() {

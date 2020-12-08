@@ -59,6 +59,6 @@ class TaskTab extends StatelessWidget {
             children: List.generate(
                 2,
                 (i) =>
-                    new AnimatedListItem(i, new TaskCard(TaskStub.random(),'caa')))));
+                    new AnimatedListItem(i, new TaskCard(TaskStub.random(),Duration(hours: 4))))));
   }
 }

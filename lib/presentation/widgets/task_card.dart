@@ -1,13 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TaskCard extends StatefulWidget {
   final Task task;
-  final String timeLeft;
-
+  final Duration timeLeft;
   TaskCard(this.task, this.timeLeft);
 
   @override
@@ -16,7 +16,47 @@ class TaskCard extends StatefulWidget {
 
 class _TaskCardState extends State<TaskCard> {
   bool radiovalue = false;
-  
+  Timer _timer;
+  String totalTimeLeft;
+
+  String formatTimeLeft(int durationMinutes) {
+    Duration duration = new Duration(minutes: durationMinutes);
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitHours = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitMinutes = twoDigits(duration.inHours.remainder(24));
+    return "${twoDigitMinutes}h ${twoDigitHours}m";
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  void startTimer() {
+    totalTimeLeft = widget.timeLeft.inMinutes.toString();
+    const oneMin = const Duration(minutes: 1);
+    _timer = new Timer.periodic(
+      oneMin,
+      (Timer timer) {
+        if (totalTimeLeft == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            totalTimeLeft = (int.parse(totalTimeLeft) - 1).toString();
+          });
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +141,9 @@ class _TaskCardState extends State<TaskCard> {
                                         size: 18,
                                         color: Colors.grey,
                                       ),
-                                      Text(widget.timeLeft,
+                                      Text(
+                                          formatTimeLeft(
+                                              int.parse(totalTimeLeft)),
                                           textAlign: TextAlign.right)
                                     ]))
                               ])),

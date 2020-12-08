@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
@@ -34,7 +36,7 @@ class TaskService {
     return listSubjectProgress;
   }
 
-  String timeLeft(DateTime deliveryTime) {
+  Duration timeLeft(DateTime deliveryTime) {
     DateTime now = new DateTime.now();
     Duration difference = deliveryTime.difference(now);
     String hours = difference.inHours.toString();
@@ -42,7 +44,11 @@ class TaskService {
 
     String minutes =
         formatter.format(now.subtract(new Duration(hours: difference.inHours)));
-    return hours + "h " + minutes + "m ";
+    print(hours + " " + minutes);
+    print(deliveryTime);
+    return Duration(
+        hours: int.parse(hours),
+        minutes: int.parse(minutes)); //+ "h " + minutes + "m ";
   }
 
   Future<List<TodayClass>> todayClasses() {}

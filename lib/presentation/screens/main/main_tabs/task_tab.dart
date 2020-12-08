@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
+import 'package:flutter_redux_boilerplate/stubs/TaskStub.dart';
 
 class TaskTab extends StatelessWidget {
   TaskTab({Key key}) : super(key: key);
@@ -55,6 +57,8 @@ class TaskTab extends StatelessWidget {
         height: 230.0,
         child: Column(
             children: List.generate(
-                2, (i) => new AnimatedListItem(i, new TaskCard()))));
+                2,
+                (i) =>
+                    new AnimatedListItem(i, new TaskCard(TaskStub.random())))));
   }
 }

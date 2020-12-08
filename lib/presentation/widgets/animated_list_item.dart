@@ -25,7 +25,6 @@ class _AnimatedListItemState extends State<AnimatedListItem>
     animation =
         CurvedAnimation(parent: controller, curve: Curves.easeInOutQuart);
     animation.addStatusListener((status) {
-      print(status);
     });
     Future.delayed(Duration(milliseconds: widget.index * 200), () {
       controller.forward();
@@ -34,6 +33,8 @@ class _AnimatedListItemState extends State<AnimatedListItem>
 
   @override
   void dispose() {
+    controller.dispose(); // you need this
+
     super.dispose();
   }
 

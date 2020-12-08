@@ -11,8 +11,9 @@ Subject _$SubjectFromJson(Map<String, dynamic> json) {
     uuid: json['uuid'] as String,
     title: json['title'] as String,
     lecturers: (json['lecturers'] as List)
-        .map((e) => Lecturer.fromJson(e as Map<String, dynamic>))
-        .toList(),
+        ?.map((e) =>
+            e == null ? null : Lecturer.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 

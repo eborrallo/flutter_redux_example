@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
@@ -8,7 +9,6 @@ import 'package:provider/provider.dart';
 
 class HomeTab extends StatelessWidget {
   HomeTab({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final list = Provider.of<TaskNotifier>(context, listen: true);
@@ -18,7 +18,7 @@ class HomeTab extends StatelessWidget {
         color: Color.fromRGBO(245, 245, 245, 1),
         child: new ListView(children: [
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            _onProgress(),
+            _onProgress(list.onProgress),
             _almostDue(list.almostDue),
             _todayClass()
           ])
@@ -145,7 +145,7 @@ class HomeTab extends StatelessWidget {
     );
   }
 
-  Widget _onProgress() {
+  Widget _onProgress(List<SubjectProgress> list) {
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -159,12 +159,11 @@ class HomeTab extends StatelessWidget {
             ),
           ),
         ),
-        this._buildOnProgressList()
+        this._buildOnProgressList(list)
       ],
     );
   }
 
-//
   Widget _buildAlmostDueList(List<Task> list) {
     return new Container(
         margin: EdgeInsets.symmetric(vertical: 21.0),
@@ -173,25 +172,32 @@ class HomeTab extends StatelessWidget {
         child: Column(
             children: list == null
                 ? []
-                : List.generate(list.length,
-                    (i) => new AnimatedListItem(i, new TaskCard()))));
+                : List.generate(
+                    list.length > 2 ? 2 : list.length,
+                    (i) => new AnimatedListItem(
+                        i,
+                        new TaskCard(
+                          list[i],
+                        )))));
   }
 
-  Widget _buildOnProgressList() {
+  Widget _buildOnProgressList(List<SubjectProgress> list) {
     return new Container(
       margin: EdgeInsets.symmetric(vertical: 16.0),
       height: 100.0,
       child: ListView(
           padding: EdgeInsets.only(left: 21.0),
           scrollDirection: Axis.horizontal,
-          children: List.generate(
-              5,
-              (i) => new AnimatedListItem(
-                  i,
-                  new CircularProgresItem(
-                    text: 'Algoritm',
-                    progressValue: i * 20,
-                  )))),
+          children: list == null
+              ? []
+              : List.generate(
+                  list.length,
+                  (i) => new AnimatedListItem(
+                      i,
+                      new CircularProgresItem(
+                        text: list[i].title,
+                        progressValue: list[i].progress,
+                      )))),
     );
   }
 }

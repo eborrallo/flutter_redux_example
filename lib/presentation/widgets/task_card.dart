@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
+import 'package:provider/provider.dart';
 
 class TaskCard extends StatefulWidget {
+  final Task task;
+
+  TaskCard(this.task);
+
   @override
   _TaskCardState createState() => _TaskCardState();
 }
 
 class _TaskCardState extends State<TaskCard> {
+  bool radiovalue = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,13 +32,24 @@ class _TaskCardState extends State<TaskCard> {
               new ListTile(
                 leading: Transform.scale(
                   scale: 1.5,
-                  child: Radio(
-                    value: 0,
-                    activeColor: Color(0xffFFBD11), groupValue: null, onChanged: (int value) {  },
+                  child: Checkbox(
+                    value: radiovalue,
+                    activeColor: Color(0xffFFBD11),
+                    onChanged: (bool value) {
+                      setState(() {
+                        radiovalue = !radiovalue;
+                      });
+                      Future.delayed(Duration(milliseconds: 300), () {
+                        context.read<TaskNotifier>().taskDone(widget.task.uuid);
+                        setState(() {
+                          radiovalue = !radiovalue;
+                        });
+                      });
+                    },
                   ),
                 ),
                 title: Text(
-                  'Make and article',
+                  widget.task.title,
                   style: TextStyle(fontSize: 20),
                 ),
                 subtitle: Padding(
@@ -47,7 +67,7 @@ class _TaskCardState extends State<TaskCard> {
                             ),
                           ),
                           Text(
-                            'Networking',
+                            widget.task.subject.title,
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontSize: 15,

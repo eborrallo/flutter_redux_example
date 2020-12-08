@@ -1,4 +1,6 @@
+import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/stubs/TaskStub.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
@@ -19,11 +21,9 @@ class TaskRepository {
   Future<List<Task>> findAll() async {
     List<Task> _list = [];
     await Future.delayed(Duration(seconds: 3), () {
-      _list.add(new Task(uuid: 'as', title: 'as', deliveryDate: DateTime.now()));
-      _list.add(new Task(uuid: 'as', title: 'as', deliveryDate: DateTime.now()));
-     // _list.add(new Task(uuid: 'as', title: 'as', deliveryDate: DateTime.now()));
+      List<void>.generate(20, (i) => _list.add(TaskStub.random()));
     });
-     
+
     if (_list.isEmpty) {
       return <Task>[];
     }

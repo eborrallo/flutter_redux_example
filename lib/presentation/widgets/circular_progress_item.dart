@@ -7,7 +7,7 @@ class CircularProgresItem extends StatefulWidget {
   @override
   _CircularProgresItemState createState() => _CircularProgresItemState();
   String text;
-  int progressValue;
+  double progressValue;
   double radius;
 }
 
@@ -15,6 +15,7 @@ class _CircularProgresItemState extends State<CircularProgresItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 85,
       alignment: Alignment(0, 0),
       margin: EdgeInsets.only(right: 30.0),
       child: CircularPercentIndicator(
@@ -23,10 +24,11 @@ class _CircularProgresItemState extends State<CircularProgresItem> {
         backgroundColor: Colors.black12,
         percent: widget.progressValue / 100,
         animation: true,
-        radius: widget.radius??55.0,
+        radius: widget.radius ?? 55.0,
         lineWidth: 4.0,
         center: new Text(
-          widget.progressValue.toString(),
+          widget.progressValue.toStringAsFixed(0),
+          overflow: TextOverflow.ellipsis,
           style: new TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18.0,
@@ -34,7 +36,10 @@ class _CircularProgresItemState extends State<CircularProgresItem> {
         ),
         footer: new Padding(
             padding: EdgeInsets.only(top: 8.0),
-            child: new Text(widget.text,
+            child: new Text(
+                (widget.text.length <= 7)
+                    ? widget.text
+                    : '${widget.text.substring(0, 7)}..',
                 textAlign: TextAlign.center,
                 style: new TextStyle(
                   color: Colors.black54,

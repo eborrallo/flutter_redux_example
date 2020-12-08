@@ -5,13 +5,13 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'task.g.dart';
 
-@JsonSerializable(nullable: false)
+@JsonSerializable(nullable: true)
 class Task {
   final String uuid;
   final String title;
   final Subject subject;
   final DateTime deliveryDate;
-  final bool done;
+  bool done;
 
   Task({
     this.uuid,

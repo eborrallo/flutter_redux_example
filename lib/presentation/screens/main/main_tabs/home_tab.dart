@@ -4,6 +4,7 @@ import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
+import 'package:flutter_redux_boilerplate/presentation/widgets/reactive_animated_list.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
 import 'package:provider/provider.dart';
 
@@ -169,16 +170,10 @@ class HomeTab extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 21.0),
         padding: EdgeInsets.symmetric(horizontal: 21.0),
         height: 230.0,
-        child: Column(
-            children: list == null
-                ? []
-                : List.generate(
-                    list.length > 2 ? 2 : list.length,
-                    (i) => new AnimatedListItem(
-                        i,
-                        new TaskCard(
-                          list[i],
-                        )))));
+        child: ReactiveAnimatedList(
+          list,
+          length: 2,
+        ));
   }
 
   Widget _buildOnProgressList(List<SubjectProgress> list) {

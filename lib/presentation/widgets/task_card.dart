@@ -41,6 +41,8 @@ class _TaskCardState extends State<TaskCard> {
                       });
                       Future.delayed(Duration(milliseconds: 300), () {
                         context.read<TaskNotifier>().taskDone(widget.task.uuid);
+                      });
+                      Future.delayed(Duration(milliseconds: 400), () {
                         setState(() {
                           radiovalue = !radiovalue;
                         });

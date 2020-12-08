@@ -34,7 +34,6 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
         }
       });
     } else if (oldWidget.list == null && oldWidget.list != widget.list) {
-      // _list = widget.list;
       Future.delayed(Duration(milliseconds: 1), () {
         _listKey.currentState.insertItem(0);
       });

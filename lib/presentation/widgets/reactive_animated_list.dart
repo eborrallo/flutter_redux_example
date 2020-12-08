@@ -25,7 +25,7 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
               oldWidget.list.indexOf(element),
               (context, animation) =>
                   _buildItem(context, 0, element, animation));
-          Future.delayed(Duration(milliseconds: 500), () {
+          Future.delayed(Duration(milliseconds: 200), () {
             var nextiIndex = 1;
             if (widget.list.asMap().containsKey(nextiIndex)) {
               _listKey.currentState.insertItem(nextiIndex);

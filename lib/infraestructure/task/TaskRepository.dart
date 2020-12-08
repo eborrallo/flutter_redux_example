@@ -21,7 +21,7 @@ class TaskRepository {
   Future<List<Task>> findAll() async {
     List<Task> _list = [];
     await Future.delayed(Duration(seconds: 3), () {
-      List<void>.generate(20, (i) => _list.add(TaskStub.random()));
+      List<void>.generate(200, (i) => _list.add(TaskStub.random()));
     });
 
     if (_list.isEmpty) {

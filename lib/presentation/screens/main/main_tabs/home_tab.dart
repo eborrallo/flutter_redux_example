@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/application/TaskCardFactory.dart';
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
@@ -172,6 +174,7 @@ class HomeTab extends StatelessWidget {
         height: 230.0,
         child: ReactiveAnimatedList(
           list,
+          getIt<TasckCardFactroy>(),
           length: 2,
         ));
   }

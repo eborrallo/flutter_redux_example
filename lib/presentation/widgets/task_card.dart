@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TaskCard extends StatefulWidget {
   final Task task;
+  final String timeLeft;
 
-  TaskCard(this.task);
+  TaskCard(this.task, this.timeLeft);
 
   @override
   _TaskCardState createState() => _TaskCardState();
@@ -14,11 +16,12 @@ class TaskCard extends StatefulWidget {
 
 class _TaskCardState extends State<TaskCard> {
   bool radiovalue = false;
+  
 
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
-        ignoring: radiovalue, // or false to disable this behavior
+        ignoring: radiovalue,
         child: Container(
             height: 100,
             margin: EdgeInsets.only(bottom: 10.0),
@@ -98,7 +101,8 @@ class _TaskCardState extends State<TaskCard> {
                                         size: 18,
                                         color: Colors.grey,
                                       ),
-                                      Text('9h 2m', textAlign: TextAlign.right)
+                                      Text(widget.timeLeft,
+                                          textAlign: TextAlign.right)
                                     ]))
                               ])),
                     ),

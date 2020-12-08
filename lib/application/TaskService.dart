@@ -3,6 +3,7 @@ import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/task/TaskRepository.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 
 @injectable
 class TaskService {
@@ -31,6 +32,17 @@ class TaskService {
     });
 
     return listSubjectProgress;
+  }
+
+  String timeLeft(DateTime deliveryTime) {
+    DateTime now = new DateTime.now();
+    Duration difference = deliveryTime.difference(now);
+    String hours = difference.inHours.toString();
+    var formatter = new DateFormat('m');
+
+    String minutes =
+        formatter.format(now.subtract(new Duration(hours: difference.inHours)));
+    return hours + "h " + minutes + "m ";
   }
 
   Future<List<TodayClass>> todayClasses() {}

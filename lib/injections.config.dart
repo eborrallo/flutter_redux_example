@@ -16,6 +16,7 @@ import 'infraestructure/firebase/FirebaseInjectableModule.dart';
 import 'infraestructure/firebase/FirebaseUserMapper.dart';
 import 'presentation/screens/loading/loading_screen.dart';
 import 'infraestructure/NavigationService.dart';
+import 'application/TaskCardFactory.dart';
 import 'presentation/notifier/TaskNotifier.dart';
 import 'infraestructure/task/TaskRepository.dart';
 import 'application/TaskService.dart';
@@ -40,6 +41,7 @@ GetIt $initGetIt(
   gh.factory<TaskService>(() => TaskService(get<TaskRepository>()));
   gh.lazySingleton<Auth>(() =>
       FirebaseAuthentification(get<FirebaseAuth>(), get<FirebaseUserMapper>()));
+  gh.factory<TasckCardFactroy>(() => TasckCardFactroy(get<TaskService>()));
   gh.factory<TaskNotifier>(() => TaskNotifier(get<TaskService>()));
   gh.factory<UserService>(() => UserService(authService: get<Auth>()));
   gh.lazySingleton<AppNotifier>(() => AppNotifier(get<TaskNotifier>()));

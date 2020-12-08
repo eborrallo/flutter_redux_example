@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
+import 'package:flutter_redux_boilerplate/domain/services/WidgetFactory.dart';
 
 class ReactiveAnimatedList extends StatefulWidget {
   final List<dynamic> list;
+  final WidgetFactroy creator;
   Axis scrollDirection;
   int length;
 
-  ReactiveAnimatedList(this.list, {this.length, this.scrollDirection});
+  ReactiveAnimatedList(this.list,this.creator, {this.length, this.scrollDirection, });
   @override
   _ReactiveAnimatedListState createState() => _ReactiveAnimatedListState();
 }
@@ -24,7 +25,7 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
           _listKey.currentState.removeItem(
               oldWidget.list.indexOf(element),
               (context, animation) =>
-                  _buildItem(context, 0, element, animation));
+                  _buildItem(context, element, animation));
           Future.delayed(Duration(milliseconds: 200), () {
             var nextiIndex = 1;
             if (widget.list.asMap().containsKey(nextiIndex)) {
@@ -43,11 +44,9 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
     }
   }
 
-  Widget _buildItem(BuildContext context, int index, dynamic item, animation) {
+  Widget _buildItem(BuildContext context, dynamic item, animation) {
     return FadeTransition(
-      child: TaskCard(
-        item,
-      ),
+      child: widget.creator.create(item),
       opacity: animation,
     );
   }
@@ -63,7 +62,7 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
                         key: _listKey,
                         initialItemCount: 0,
                         itemBuilder: (context, index, animation) => _buildItem(
-                            context, index, widget.list[index], animation)))
+                            context, widget.list[index], animation)))
               ]);
   }
 }

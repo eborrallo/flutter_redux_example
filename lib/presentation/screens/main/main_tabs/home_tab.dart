@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/TaskCardFactory.dart';
+import 'package:flutter_redux_boilerplate/application/CircularProgresItemFactory.dart';
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
-import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/reactive_animated_list.dart';
-import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
+
 import 'package:provider/provider.dart';
 
 class HomeTab extends StatelessWidget {
@@ -181,21 +181,27 @@ class HomeTab extends StatelessWidget {
 
   Widget _buildOnProgressList(List<SubjectProgress> list) {
     return new Container(
-      margin: EdgeInsets.symmetric(vertical: 16.0),
-      height: 100.0,
-      child: ListView(
-          padding: EdgeInsets.only(left: 21.0),
+        margin: EdgeInsets.only(top: 16, bottom: 16, left: 21),
+        height: 100.0,
+        child: new ReactiveAnimatedList(
+          list,
+          getIt<CircularProgresItemFactory>(),
           scrollDirection: Axis.horizontal,
-          children: list == null
-              ? []
-              : List.generate(
-                  list.length,
-                  (i) => new AnimatedListItem(
-                      i,
-                      new CircularProgresItem(
-                        text: list[i].title,
-                        progressValue: list[i].progress,
-                      )))),
-    );
+          length: list != null ? list.length : 0,
+        )
+        // child: ListView(
+        //     padding: EdgeInsets.only(left: 21.0),
+        //     scrollDirection: Axis.horizontal,
+        //     children: list == null
+        //         ? []
+        //         : List.generate(
+        //             list.length,
+        //             (i) => new AnimatedListItem(
+        //                 i,
+        //                 new CircularProgresItem(
+        //                   text: list[i].title,
+        //                   progressValue: list[i].progress,
+        //                 )))),
+        );
   }
 }

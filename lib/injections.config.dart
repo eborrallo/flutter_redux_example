@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 
 import 'presentation/notifier/AppNotifier.dart';
 import 'domain/services/Auth.dart';
+import 'application/CircularProgresItemFactory.dart';
 import 'infraestructure/firebase/FirebaseAuthentification.dart';
 import 'infraestructure/firebase/FirebaseInjectableModule.dart';
 import 'infraestructure/firebase/FirebaseUserMapper.dart';
@@ -33,6 +34,8 @@ GetIt $initGetIt(
 }) {
   final gh = GetItHelper(get, environment, environmentFilter);
   final firebaseInjectableModule = _$FirebaseInjectableModule();
+  gh.lazySingleton<CircularProgresItemFactory>(
+      () => CircularProgresItemFactory());
   gh.lazySingleton<FirebaseAuth>(() => firebaseInjectableModule.firebaseAuth);
   gh.lazySingleton<FirebaseUserMapper>(() => FirebaseUserMapper());
   gh.factory<LoadingScreen>(() => LoadingScreen(key: get<Key>()));

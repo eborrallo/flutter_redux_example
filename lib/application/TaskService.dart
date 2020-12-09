@@ -44,8 +44,6 @@ class TaskService {
 
     String minutes =
         formatter.format(now.subtract(new Duration(hours: difference.inHours)));
-    print(hours + " " + minutes);
-    print(deliveryTime);
     return Duration(
         hours: int.parse(hours),
         minutes: int.parse(minutes)); //+ "h " + minutes + "m ";

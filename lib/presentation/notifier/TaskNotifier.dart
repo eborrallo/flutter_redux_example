@@ -33,21 +33,6 @@ class TaskNotifier extends ChangeNotifier {
     _app.list().then((list) {
       _list = list;
       _updateSubjectProgress();
-      // Future.delayed(Duration(milliseconds: 5000), () {
-      //   var count = 0;
-      //   var toRemove = [];
-
-      //   _list.forEach((Task element) {
-      //     if (!element.done && count < 5) {
-      //       toRemove.add(element);
-      //     }
-      //   });
-      //   _list.removeWhere( (e) => toRemove.contains(e));
-
-      // }).then((value) {
-      //   _updateSubjectProgress();
-      //   notifyListeners();
-      // });
     });
   }
 

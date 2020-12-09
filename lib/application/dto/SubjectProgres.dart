@@ -1,10 +1,7 @@
-import 'dart:ffi';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 
-@immutable
+
 class SubjectProgress {
   final String title;
   double progress = 0;

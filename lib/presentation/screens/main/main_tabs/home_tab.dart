@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_boilerplate/application/TaskCardFactory.dart';
-import 'package:flutter_redux_boilerplate/application/CircularProgresItemFactory.dart';
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
-import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
+import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/reactive_animated_list.dart';
+import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
 
 import 'package:provider/provider.dart';
 
@@ -174,7 +173,7 @@ class HomeTab extends StatelessWidget {
         height: 230.0,
         child: ReactiveAnimatedList(
           list,
-          getIt<TasckCardFactroy>(),
+          (context, element) => new TaskCard(element),
           length: 2,
         ));
   }
@@ -185,7 +184,10 @@ class HomeTab extends StatelessWidget {
         height: 100.0,
         child: new ReactiveAnimatedList(
           list,
-          getIt<CircularProgresItemFactory>(),
+          (context, element) => new CircularProgresItem(
+            text: element.title,
+            progressValue: element.progress,
+          ),
           scrollDirection: Axis.horizontal,
           length: list != null ? list.length : 0,
         ));

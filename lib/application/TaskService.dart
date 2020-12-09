@@ -36,18 +36,5 @@ class TaskService {
     return listSubjectProgress;
   }
 
-  Duration timeLeft(DateTime deliveryTime) {
-    DateTime now = new DateTime.now();
-    Duration difference = deliveryTime.difference(now);
-    String hours = difference.inHours.toString();
-    var formatter = new DateFormat('m');
-
-    String minutes =
-        formatter.format(now.subtract(new Duration(hours: difference.inHours)));
-    return Duration(
-        hours: int.parse(hours),
-        minutes: int.parse(minutes)); //+ "h " + minutes + "m ";
-  }
-
   Future<List<TodayClass>> todayClasses() {}
 }

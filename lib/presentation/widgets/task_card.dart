@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TaskCard extends StatefulWidget {
   final Task task;
-  final Duration timeLeft;
-  TaskCard(this.task, this.timeLeft);
+  TaskCard(this.task);
 
   @override
   _TaskCardState createState() => _TaskCardState();
@@ -39,13 +39,29 @@ class _TaskCardState extends State<TaskCard> {
     super.dispose();
   }
 
+  Duration timeLeft(DateTime deliveryTime) {
+    DateTime now = new DateTime.now();
+    Duration difference = deliveryTime.difference(now);
+    String hours = difference.inHours.toString();
+    var formatter = new DateFormat('m');
+
+    String minutes =
+        formatter.format(now.subtract(new Duration(hours: difference.inHours)));
+    return Duration(
+        hours: int.parse(hours),
+        minutes: int.parse(minutes)); //+ "h " + minutes + "m ";
+  }
+
   void startTimer() {
-    totalTimeLeft = widget.timeLeft.inMinutes.toString();
+    totalTimeLeft = timeLeft(widget.task.deliveryDate).inMinutes.toString();
+
     const oneMin = const Duration(minutes: 1);
     _timer = new Timer.periodic(
       oneMin,
       (Timer timer) {
-        if (totalTimeLeft == 0) {
+        totalTimeLeft = timeLeft(widget.task.deliveryDate).inMinutes.toString();
+
+        if (int.parse(totalTimeLeft) <= 0) {
           setState(() {
             timer.cancel();
           });

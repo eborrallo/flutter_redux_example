@@ -11,13 +11,11 @@ import 'package:flutter/material.dart';
 
 import 'presentation/notifier/AppNotifier.dart';
 import 'domain/services/Auth.dart';
-import 'application/CircularProgresItemFactory.dart';
 import 'infraestructure/firebase/FirebaseAuthentification.dart';
 import 'infraestructure/firebase/FirebaseInjectableModule.dart';
 import 'infraestructure/firebase/FirebaseUserMapper.dart';
 import 'presentation/screens/loading/loading_screen.dart';
 import 'infraestructure/NavigationService.dart';
-import 'application/TaskCardFactory.dart';
 import 'presentation/notifier/TaskNotifier.dart';
 import 'infraestructure/task/TaskRepository.dart';
 import 'application/TaskService.dart';
@@ -34,8 +32,6 @@ GetIt $initGetIt(
 }) {
   final gh = GetItHelper(get, environment, environmentFilter);
   final firebaseInjectableModule = _$FirebaseInjectableModule();
-  gh.lazySingleton<CircularProgresItemFactory>(
-      () => CircularProgresItemFactory());
   gh.lazySingleton<FirebaseAuth>(() => firebaseInjectableModule.firebaseAuth);
   gh.lazySingleton<FirebaseUserMapper>(() => FirebaseUserMapper());
   gh.factory<LoadingScreen>(() => LoadingScreen(key: get<Key>()));
@@ -44,7 +40,6 @@ GetIt $initGetIt(
   gh.factory<TaskService>(() => TaskService(get<TaskRepository>()));
   gh.lazySingleton<Auth>(() =>
       FirebaseAuthentification(get<FirebaseAuth>(), get<FirebaseUserMapper>()));
-  gh.factory<TasckCardFactroy>(() => TasckCardFactroy(get<TaskService>()));
   gh.factory<TaskNotifier>(() => TaskNotifier(get<TaskService>()));
   gh.factory<UserService>(() => UserService(authService: get<Auth>()));
   gh.lazySingleton<AppNotifier>(() => AppNotifier(get<TaskNotifier>()));

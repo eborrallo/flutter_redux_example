@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_boilerplate/domain/services/WidgetFactory.dart';
+
+typedef ItemBuilder = Widget Function(BuildContext context, dynamic itemData);
 
 class ReactiveAnimatedList extends StatefulWidget {
   final List<dynamic> list;
-  final WidgetFactroy creator;
+  final ItemBuilder itemBuilder;
   Axis scrollDirection;
   int length;
 
   ReactiveAnimatedList(
     this.list,
-    this.creator, {
+    this.itemBuilder, {
     this.length,
     this.scrollDirection = Axis.vertical,
   });
@@ -57,7 +58,7 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
 
   Widget _buildItem(BuildContext context, dynamic item, animation) {
     return FadeTransition(
-      child: widget.creator.create(item),
+      child: widget.itemBuilder(context, item),
       opacity: animation,
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/presentation/widgets/animated_count.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class CircularProgresItem extends StatefulWidget {
@@ -26,13 +27,13 @@ class _CircularProgresItemState extends State<CircularProgresItem> {
         animation: true,
         radius: widget.radius ?? 55.0,
         lineWidth: 4.0,
-        center: new Text(
-          widget.progressValue.toStringAsFixed(0),
-          overflow: TextOverflow.ellipsis,
-          style: new TextStyle(
+        center: AnimatedCount(
+          count: int.parse(widget.progressValue.toStringAsFixed(0)),
+          textStyle: new TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18.0,
               color: Colors.black54),
+          duration: Duration(milliseconds: 500),
         ),
         footer: new Padding(
             padding: EdgeInsets.only(top: 8.0),

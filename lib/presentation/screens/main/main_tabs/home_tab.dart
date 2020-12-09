@@ -188,20 +188,6 @@ class HomeTab extends StatelessWidget {
           getIt<CircularProgresItemFactory>(),
           scrollDirection: Axis.horizontal,
           length: list != null ? list.length : 0,
-        )
-        // child: ListView(
-        //     padding: EdgeInsets.only(left: 21.0),
-        //     scrollDirection: Axis.horizontal,
-        //     children: list == null
-        //         ? []
-        //         : List.generate(
-        //             list.length,
-        //             (i) => new AnimatedListItem(
-        //                 i,
-        //                 new CircularProgresItem(
-        //                   text: list[i].title,
-        //                   progressValue: list[i].progress,
-        //                 )))),
-        );
+        ));
   }
 }

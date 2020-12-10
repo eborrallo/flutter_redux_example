@@ -7,7 +7,6 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress
 import 'package:flutter_redux_boilerplate/presentation/widgets/reactive_animated_list.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
 
-import 'package:provider/provider.dart';
 
 class HomeTab extends StatelessWidget {
   final TaskNotifier list;
@@ -49,7 +48,7 @@ class HomeTab extends StatelessWidget {
     return new Container(
       margin: EdgeInsets.symmetric(vertical: 16.0),
       height: 150.0,
-      child: ListView(
+      child: new ListView(
           padding: EdgeInsets.only(left: 21.0),
           scrollDirection: Axis.horizontal,
           children: List.generate(
@@ -172,7 +171,7 @@ class HomeTab extends StatelessWidget {
         height: 230.0,
         child: ReactiveAnimatedList(
           list,
-          (context, element) => new TaskCard(element),
+          (context, element) => new TaskCard(element,),
           length: 2,
         ));
   }

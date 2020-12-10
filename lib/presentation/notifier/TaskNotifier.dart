@@ -18,15 +18,19 @@ class TaskNotifier extends ChangeNotifier {
   List<SubjectProgress> _subjectsProgress;
   List<TodayClass> _todayClass;
   List<Task> get tasks => _list == null ? null : List.unmodifiable(_list);
-  List<Task> get almostDue => _list == null ? null : List.unmodifiable(_list.where((Task element) => !element.done));
+  List<Task> get almostDue => _list == null
+      ? null
+      : List.unmodifiable(_list.where((Task element) => !element.done));
   List<SubjectProgress> get onProgress =>
       _subjectsProgress == null ? null : List.unmodifiable(_subjectsProgress);
   List<Task> get todayClass =>
       _todayClass == null ? null : List.unmodifiable(_todayClass);
 
-  void taskDone(String uuid) {
-    Task task=_list.firstWhere((Task element) => element.uuid == uuid);
-    task.done=true;
+  void toggleTask(String uuid) {
+    Task task = _list.firstWhere((Task element) => element.uuid == uuid);
+    task.done = !task.done;
+    notifyListeners();
+
     _updateSubjectProgress();
   }
 
@@ -40,7 +44,7 @@ class TaskNotifier extends ChangeNotifier {
   void _updateSubjectProgress({List<Task> listTask = null}) {
     var list = listTask != null ? listTask : _list;
     _subjectsProgress = _app.subjectProgress(list);
-   // _subjectsProgress.sort((a, b) => a.progress.compareTo(b.progress));
+    // _subjectsProgress.sort((a, b) => a.progress.compareTo(b.progress));
     notifyListeners();
   }
 

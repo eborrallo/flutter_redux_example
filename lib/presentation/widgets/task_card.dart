@@ -8,14 +8,14 @@ import 'package:provider/provider.dart';
 
 class TaskCard extends StatefulWidget {
   final Task task;
-  TaskCard(this.task);
+  bool blockEdit;
+  TaskCard(this.task, {this.blockEdit = true});
 
   @override
   _TaskCardState createState() => _TaskCardState();
 }
 
 class _TaskCardState extends State<TaskCard> {
-  bool radiovalue = false;
   Timer _timer;
   String totalTimeLeft;
 
@@ -27,12 +27,11 @@ class _TaskCardState extends State<TaskCard> {
     return "${twoDigitMinutes}h ${twoDigitHours}m";
   }
 
- @override
+  @override
   void didUpdateWidget(TaskCard oldWidget) {
     super.didUpdateWidget(oldWidget);
     startTimer();
   }
-
 
   @override
   void initState() {
@@ -62,13 +61,17 @@ class _TaskCardState extends State<TaskCard> {
         totalTimeLeft = timeLeft(widget.task.deliveryDate).inMinutes.toString();
 
         if (int.parse(totalTimeLeft) <= 0) {
-          setState(() {
-            timer.cancel();
-          });
+          if (this.mounted) {
+            setState(() {
+              timer.cancel();
+            });
+          }
         } else {
-          setState(() {
-            totalTimeLeft = (int.parse(totalTimeLeft) - 1).toString();
-          });
+          if (this.mounted) {
+            setState(() {
+              totalTimeLeft = (int.parse(totalTimeLeft) - 1).toString();
+            });
+          }
         }
       },
     );
@@ -77,7 +80,7 @@ class _TaskCardState extends State<TaskCard> {
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
-        ignoring: radiovalue,
+        ignoring: widget.blockEdit ? widget.task.done : false,
         child: Container(
             height: 100,
             margin: EdgeInsets.only(bottom: 10.0),
@@ -99,25 +102,12 @@ class _TaskCardState extends State<TaskCard> {
                           activeColor: Color(0xffFFBD11),
                           onChanged: (bool value) async {
                             if (this.mounted) {
-                              setState(() {
-                                radiovalue = true;
-                              });
-                              await Future.delayed(Duration(milliseconds: 300),
-                                  () {
-                                if (this.mounted) {
-                                  context
-                                      .read<TaskNotifier>()
-                                      .taskDone(widget.task.uuid);
-                                }
-                              });
-                              await Future.delayed(Duration(milliseconds: 100),
-                                  () {
-                                if (this.mounted) {
-                                  setState(() {
-                                    radiovalue = false;
-                                  });
-                                }
-                              });
+                              if (!value && widget.blockEdit) {
+                              } else {
+                                context
+                                    .read<TaskNotifier>()
+                                    .toggleTask(widget.task.uuid);
+                              }
                             }
                           },
                         ),

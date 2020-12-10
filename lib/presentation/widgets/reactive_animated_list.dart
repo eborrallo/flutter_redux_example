@@ -20,9 +20,12 @@ class ReactiveAnimatedList extends StatefulWidget {
 
 class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-
+  bool isEmty = true;
   bool _deleteItem(oldWidget) {
     bool deleted = false;
+    if (oldWidget.list.length == 0) {
+      return true;
+    }
     oldWidget.list.forEach((element) {
       if (!widget.list.contains(element)) {
         _listKey.currentState.removeItem(oldWidget.list.indexOf(element),
@@ -44,14 +47,23 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
   @override
   void didUpdateWidget(ReactiveAnimatedList oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.list != null && oldWidget.list.length != widget.list.length) {
-      if (_deleteItem(oldWidget)) {
-        _addItem(1);
+    print(oldWidget.list);
+    print(widget.list);
+    if (oldWidget.list != null) {
+      if (oldWidget.list.length > widget.list.length) {
+        if (_deleteItem(oldWidget)) {
+          _addItem(1);
+          isEmty = false;
+        }
+      } else if (oldWidget.list.length < widget.list.length) {
+        _addItem(0);
+        isEmty = false;
       }
     } else if (oldWidget.list == null && oldWidget.list != widget.list) {
       int _length = widget.length ?? widget.list.length;
       for (var i = 0; i < _length; i++) {
         _addItem(i);
+        isEmty = false;
       }
     }
   }
@@ -65,6 +77,8 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
 
   @override
   Widget build(BuildContext context) {
+    int _length = widget.length ?? widget.list.length;
+
     return Column(
         children: widget.list == null
             ? []
@@ -72,7 +86,7 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
                 Expanded(
                     child: AnimatedList(
                   key: _listKey,
-                  initialItemCount: 0,
+                  initialItemCount: isEmty ? _length : 0,
                   itemBuilder: (context, index, animation) {
                     return _buildItem(context, widget.list[index], animation);
                   },

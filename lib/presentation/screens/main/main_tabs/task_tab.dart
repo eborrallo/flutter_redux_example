@@ -70,7 +70,9 @@ class TaskTab extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 21.0),
         padding: EdgeInsets.symmetric(horizontal: 21.0),
         child: Column(
-            children: List.generate(list.length ?? 0,
-                (i) => AnimatedListItem(i, TaskCard(list[i])))));
+            children: List.generate(
+                list.length ?? 0,
+                (i) => AnimatedListItem(
+                    i, new TaskCard(list[i],blockEdit:false)))));
   }
 }

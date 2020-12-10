@@ -22,6 +22,8 @@ class TaskRepository {
     List<Task> _list = [];
     await Future.delayed(Duration(seconds: 3), () {
       List<void>.generate(20, (i) => _list.add(TaskStub.random()));
+       _list.sort((Task a, Task b) => a.deliveryDate.compareTo(b.deliveryDate));
+
     });
 
     if (_list.isEmpty) {

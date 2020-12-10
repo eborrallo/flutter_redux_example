@@ -17,6 +17,7 @@ class TaskNotifier extends ChangeNotifier {
   List<Task> _list;
   List<SubjectProgress> _subjectsProgress;
   List<TodayClass> _todayClass;
+  List<Task> get tasks => _list == null ? null : List.unmodifiable(_list);
   List<Task> get almostDue => _list == null ? null : List.unmodifiable(_list.where((Task element) => !element.done));
   List<SubjectProgress> get onProgress =>
       _subjectsProgress == null ? null : List.unmodifiable(_subjectsProgress);

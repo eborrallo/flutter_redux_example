@@ -14,12 +14,11 @@ class AnimatedListItem extends StatefulWidget {
 class _AnimatedListItemState extends State<AnimatedListItem>
     with TickerProviderStateMixin {
   Animation<double> animation;
-
+  AnimationController controller;
   @override
   void initState() {
     super.initState();
-
-    AnimationController controller = AnimationController(
+    controller = AnimationController(
         duration: const Duration(milliseconds: 1000),
         reverseDuration: const Duration(milliseconds: 1000),
         vsync: this);
@@ -28,8 +27,17 @@ class _AnimatedListItemState extends State<AnimatedListItem>
 
     animation.addStatusListener((status) {});
     Future.delayed(Duration(milliseconds: widget.index * 200), () {
-      controller.forward();
+      if (this.mounted) {
+        controller.forward();
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose(); // you need this
+
+    super.dispose();
   }
 
   @override

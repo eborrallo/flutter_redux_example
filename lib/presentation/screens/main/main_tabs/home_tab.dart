@@ -10,11 +10,10 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
 import 'package:provider/provider.dart';
 
 class HomeTab extends StatelessWidget {
-  HomeTab({Key key}) : super(key: key);
+  final TaskNotifier list;
+  HomeTab({Key key, this.list}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final list = Provider.of<TaskNotifier>(context, listen: true);
-
     return new Container(
         alignment: Alignment.topLeft,
         color: Color.fromRGBO(245, 245, 245, 1),
@@ -180,7 +179,7 @@ class HomeTab extends StatelessWidget {
 
   Widget _buildOnProgressList(List<SubjectProgress> list) {
     return new Container(
-        margin: EdgeInsets.only(top: 16, bottom: 16, left: 21),
+        margin: EdgeInsets.symmetric(vertical: 16),
         height: 100.0,
         child: new ReactiveAnimatedList(
           list,

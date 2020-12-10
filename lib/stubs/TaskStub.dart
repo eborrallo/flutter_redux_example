@@ -20,8 +20,8 @@ class TaskStub {
       'deliveryDate': DateTime.now()
           .add(new Duration(
               days: Random().nextInt(1) ,
-              hours: Random().nextInt(20) + 1,
-              minutes: Random().nextInt(55) + 1)
+              hours: Random().nextInt(20) ,
+              minutes: Random().nextInt(59) )
               )
           .toString(),
       'done': ([true, false]..shuffle()).first,

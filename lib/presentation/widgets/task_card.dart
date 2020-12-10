@@ -27,6 +27,13 @@ class _TaskCardState extends State<TaskCard> {
     return "${twoDigitMinutes}h ${twoDigitHours}m";
   }
 
+ @override
+  void didUpdateWidget(TaskCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    startTimer();
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -42,14 +49,7 @@ class _TaskCardState extends State<TaskCard> {
   Duration timeLeft(DateTime deliveryTime) {
     DateTime now = new DateTime.now();
     Duration difference = deliveryTime.difference(now);
-    String hours = difference.inHours.toString();
-    var formatter = new DateFormat('m');
-
-    String minutes =
-        formatter.format(now.subtract(new Duration(hours: difference.inHours)));
-    return Duration(
-        hours: int.parse(hours),
-        minutes: int.parse(minutes)); //+ "h " + minutes + "m ";
+    return difference;
   }
 
   void startTimer() {
@@ -95,7 +95,7 @@ class _TaskCardState extends State<TaskCard> {
                       leading: Transform.scale(
                         scale: 1.5,
                         child: Checkbox(
-                          value: radiovalue,
+                          value: widget.task.done,
                           activeColor: Color(0xffFFBD11),
                           onChanged: (bool value) async {
                             if (this.mounted) {

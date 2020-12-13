@@ -17,7 +17,6 @@ class ClassService {
 
   Future<List<TodayClass>> todayClasses() async {
     List<TodayClass> listTodayClass = [];
-    final DateFormat formatter = DateFormat('yyyy-MM-dd');
 
     List<Class> classes = await repository.findAll();
     classes.forEach((Class element) {

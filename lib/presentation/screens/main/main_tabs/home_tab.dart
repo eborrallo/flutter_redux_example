@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/presentation/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/class_card.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/reactive_animated_list.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
+import 'package:provider/provider.dart';
 
 class HomeTab extends StatelessWidget {
-  final TaskNotifier list;
-  HomeTab({Key key, this.list}) : super(key: key);
+  final AppNotifier appNotifier;
+
+  HomeTab({Key key, this.appNotifier}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -18,9 +21,9 @@ class HomeTab extends StatelessWidget {
         color: Color.fromRGBO(245, 245, 245, 1),
         child: new ListView(children: [
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            _onProgress(list.onProgress),
-            _almostDue(list.almostDue),
-            _todayClass(list.todayClass)
+            _onProgress(appNotifier.onProgress),
+            _almostDue(appNotifier.almostDue),
+            _todayClass(appNotifier.todayClasses)
           ])
         ]));
   }
@@ -32,7 +35,7 @@ class HomeTab extends StatelessWidget {
         new Padding(
           padding: EdgeInsets.only(left: 21.0, top: 0),
           child: new Text(
-            'Today Calss',
+            'Today Class',
             style: TextStyle(
               fontSize: 21,
               fontWeight: FontWeight.bold,

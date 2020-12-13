@@ -18,23 +18,21 @@ class SubjectService {
 
   List<SubjectProgress> subjectProgress(List<Task> tasks) {
     List<SubjectProgress> listSubjectProgress = [];
-    if (tasks != null) {
-      tasks.forEach((Task element) {
-        SubjectProgress newSubjectProgress =
-            new SubjectProgress(element.subject);
-        SubjectProgress subjectProgress = listSubjectProgress.firstWhere(
-            (SubjectProgress sub_element) =>
-                sub_element.title == element.subject.title,
-            orElse: () => null);
 
-        if (subjectProgress != null) {
-          subjectProgress.addTask(element);
-        } else {
-          newSubjectProgress.addTask(element);
-          listSubjectProgress.add(newSubjectProgress);
-        }
-      });
-    }
+    tasks.forEach((Task element) {
+      SubjectProgress newSubjectProgress = new SubjectProgress(element.subject);
+      SubjectProgress subjectProgress = listSubjectProgress.firstWhere(
+          (SubjectProgress sub_element) =>
+              sub_element.title == element.subject.title,
+          orElse: () => null);
+
+      if (subjectProgress != null) {
+        subjectProgress.addTask(element);
+      } else {
+        newSubjectProgress.addTask(element);
+        listSubjectProgress.add(newSubjectProgress);
+      }
+    });
 
     return listSubjectProgress;
   }

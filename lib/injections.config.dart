@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 
 import 'presentation/notifier/AppNotifier.dart';
 import 'domain/services/Auth.dart';
+import 'presentation/notifier/ClassNotifier.dart';
 import 'infraestructure/task/ClassRepository.dart';
 import 'application/ClassService.dart';
 import 'infraestructure/firebase/FirebaseAuthentification.dart';
@@ -18,6 +19,7 @@ import 'infraestructure/firebase/FirebaseInjectableModule.dart';
 import 'infraestructure/firebase/FirebaseUserMapper.dart';
 import 'presentation/screens/loading/loading_screen.dart';
 import 'infraestructure/NavigationService.dart';
+import 'presentation/notifier/SubjectNotifier.dart';
 import 'infraestructure/task/SubjectRepository.dart';
 import 'application/SubjectService.dart';
 import 'presentation/notifier/TaskNotifier.dart';
@@ -48,10 +50,15 @@ GetIt $initGetIt(
   gh.factory<TaskService>(() => TaskService(get<TaskRepository>()));
   gh.lazySingleton<Auth>(() =>
       FirebaseAuthentification(get<FirebaseAuth>(), get<FirebaseUserMapper>()));
-  gh.factory<TaskNotifier>(
-      () => TaskNotifier(get<TaskService>(), get<ClassService>()));
+  gh.factory<ClassNotifier>(() => ClassNotifier(get<ClassService>()));
+  gh.factory<SubjectNotifier>(() => SubjectNotifier(get<SubjectService>()));
+  gh.factory<TaskNotifier>(() => TaskNotifier(get<TaskService>()));
   gh.factory<UserService>(() => UserService(authService: get<Auth>()));
-  gh.lazySingleton<AppNotifier>(() => AppNotifier(get<TaskNotifier>()));
+  gh.lazySingleton<AppNotifier>(() => AppNotifier(
+        get<TaskNotifier>(),
+        get<SubjectNotifier>(),
+        get<ClassNotifier>(),
+      ));
   gh.lazySingleton<UserNotifier>(() => UserNotifier(app: get<UserService>()));
   return get;
 }

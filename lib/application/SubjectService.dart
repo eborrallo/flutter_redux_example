@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
-import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/task/SubjectRepository.dart';
@@ -37,5 +36,4 @@ class SubjectService {
     return listSubjectProgress;
   }
 
-  Future<List<TodayClass>> todayClasses() {}
 }

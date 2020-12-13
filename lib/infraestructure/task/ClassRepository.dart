@@ -18,7 +18,7 @@ class ClassRepository {
   @override
   Future<List<Class>> findAll() async {
     List<Class> _list = [];
-    await Future.delayed(Duration(seconds: 1), () {
+    await Future.delayed(Duration(milliseconds: 1300), () {
       List<void>.generate(7, (i) => _list.add(ClassStub.random()));
        _list.sort((Class a, Class b) => a.startTime.compareTo(b.startTime));
     });

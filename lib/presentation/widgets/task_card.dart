@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TaskCard extends StatefulWidget {

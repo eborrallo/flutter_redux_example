@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class TaskNotifier extends ChangeNotifier {
-  bool isLoading = false;
   TaskService _app;
 
   TaskNotifier(this._app) {

@@ -1,4 +1,3 @@
-import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/stubs/TaskStub.dart';
 import 'package:injectable/injectable.dart';

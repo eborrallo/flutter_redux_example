@@ -6,13 +6,14 @@ import 'package:injectable/injectable.dart';
 @injectable
 class ClassNotifier extends ChangeNotifier {
   ClassService _classService;
+  List<TodayClass> _todayClass;
 
   ClassNotifier(this._classService) {
     _updateTodayClass();
   }
 
-  List<TodayClass> _todayClass;
-  List<TodayClass> get todayClasses => _todayClass == null ? null : _todayClass;
+  List<TodayClass> get todayClasses =>
+      _todayClass == null ? null : List.unmodifiable(_todayClass);
 
   void _updateTodayClass() {
     _classService.todayClasses().then((list) {

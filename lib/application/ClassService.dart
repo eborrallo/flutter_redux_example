@@ -23,11 +23,10 @@ class ClassService {
       listTodayClass.add(new TodayClass(
           title: element.subject.title,
           location: element.location,
-          timeIn: DateFormat(DateFormat.HOUR24_MINUTE, 'es_ES').format(
-              element.startTime),
-          timeOut: DateFormat(DateFormat.HOUR24_MINUTE, 'es_ES').format(
-              element.startTime.add(element
-                  .duration)),
+          timeIn: DateFormat(DateFormat.HOUR24_MINUTE, 'es_ES')
+              .format(element.startTime),
+          timeOut: DateFormat(DateFormat.HOUR24_MINUTE, 'es_ES')
+              .format(element.startTime.add(element.duration)),
           message: 'caca'));
     });
 

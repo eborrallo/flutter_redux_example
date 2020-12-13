@@ -24,11 +24,11 @@ class ClassService {
           title: element.subject.title,
           location: element.location,
           timeIn: DateFormat(DateFormat.HOUR24_MINUTE, 'es_ES').format(
-              element.startTime), //,formatter.format(element.startTime),
+              element.startTime),
           timeOut: DateFormat(DateFormat.HOUR24_MINUTE, 'es_ES').format(
               element.startTime.add(element
-                  .duration)), //formatter.format(element.startTime.add(element.duration)),
-          message: ''));
+                  .duration)),
+          message: 'caca'));
     });
 
     return listTodayClass;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
@@ -73,6 +74,9 @@ class TaskTab extends StatelessWidget {
             children: List.generate(
                 list.length ?? 0,
                 (i) => AnimatedListItem(
-                    i, new TaskCard(list[i],blockEdit:false)))));
+                      i,
+                      new TaskCard(list[i], blockEdit: false),
+                      duration: Duration(milliseconds: 400),
+                    ))));
   }
 }

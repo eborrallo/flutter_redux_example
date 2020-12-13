@@ -54,8 +54,11 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
           isEmty = false;
         }
       } else if (oldWidget.list.length < widget.list.length) {
-        _addItem(0);
-        isEmty = false;
+        int _length = widget.length ?? widget.list.length;
+        if (widget.list.length <= _length) {
+          _addItem(0);
+          isEmty = false;
+        }
       }
     } else if (oldWidget.list == null && oldWidget.list != widget.list) {
       int _length = widget.length ?? widget.list.length;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_redux_boilerplate/config/screens.dart';
+
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_drawer.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/calendar_tab.dart';
@@ -125,6 +126,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final taskNotifier = Provider.of<TaskNotifier>(context, listen: true);
+   // final subjectNotifier = Provider.of<SubjectNotifier>(context, listen: true);
 
     return new Scaffold(
       key: _scaffoldKey,
@@ -198,8 +200,8 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         controller: _tabController,
         onPageChanged: onTabChanged,
         children: <Widget>[
-          new HomeTab(list:taskNotifier),
-          new TaskTab(taskNotifier:taskNotifier),
+          new HomeTab(list: taskNotifier),
+          new TaskTab(taskNotifier: taskNotifier),
           new CalendarTab(),
           new ProfileTab(),
         ],

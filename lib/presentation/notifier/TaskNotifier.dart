@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/application/ClassService.dart';
 import 'package:flutter_redux_boilerplate/application/TaskService.dart';
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
@@ -9,9 +10,11 @@ import 'package:injectable/injectable.dart';
 class TaskNotifier extends ChangeNotifier {
   bool isLoading = false;
   TaskService _app;
+  ClassService _classService;
 
-  TaskNotifier(this._app) {
+  TaskNotifier(this._app, this._classService) {
     _updateList();
+    _updateTodayClass();
   }
 
   List<Task> _list;
@@ -23,7 +26,7 @@ class TaskNotifier extends ChangeNotifier {
       : List.unmodifiable(_list.where((Task element) => !element.done));
   List<SubjectProgress> get onProgress =>
       _subjectsProgress == null ? null : List.unmodifiable(_subjectsProgress);
-  List<Task> get todayClass =>
+  List<TodayClass> get todayClass =>
       _todayClass == null ? null : List.unmodifiable(_todayClass);
 
   void toggleTask(String uuid) {
@@ -48,8 +51,8 @@ class TaskNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _updateTodayClass(List<Task> _list) {
-    _app.todayClasses().then((list) {
+  void _updateTodayClass() {
+    _classService.todayClasses().then((list) {
       _todayClass = list;
       notifyListeners();
     });

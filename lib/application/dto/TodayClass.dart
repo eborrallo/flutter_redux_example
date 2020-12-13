@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 @immutable
 class TodayClass {
   final String title;
-  final String room;
+  final String location;
   final String timeIn;
   final String timeOut;
-  final bool incompletedTask;
+  final String message;
 
   TodayClass(
-      this.title, this.room, this.timeIn, this.timeOut, this.incompletedTask);
+     { this.title, this.location, this.timeIn, this.timeOut, this.message});
 }

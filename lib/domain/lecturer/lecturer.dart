@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'lecturer.g.dart';
 
-@JsonSerializable(nullable: false)
+@JsonSerializable(nullable: true)
 class Lecturer {
   final String uuid;
   final String name;

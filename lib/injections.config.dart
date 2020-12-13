@@ -11,11 +11,15 @@ import 'package:flutter/material.dart';
 
 import 'presentation/notifier/AppNotifier.dart';
 import 'domain/services/Auth.dart';
+import 'infraestructure/task/ClassRepository.dart';
+import 'application/ClassService.dart';
 import 'infraestructure/firebase/FirebaseAuthentification.dart';
 import 'infraestructure/firebase/FirebaseInjectableModule.dart';
 import 'infraestructure/firebase/FirebaseUserMapper.dart';
 import 'presentation/screens/loading/loading_screen.dart';
 import 'infraestructure/NavigationService.dart';
+import 'infraestructure/task/SubjectRepository.dart';
+import 'application/SubjectService.dart';
 import 'presentation/notifier/TaskNotifier.dart';
 import 'infraestructure/task/TaskRepository.dart';
 import 'application/TaskService.dart';
@@ -32,15 +36,20 @@ GetIt $initGetIt(
 }) {
   final gh = GetItHelper(get, environment, environmentFilter);
   final firebaseInjectableModule = _$FirebaseInjectableModule();
+  gh.lazySingleton<ClassRepository>(() => ClassRepository());
+  gh.factory<ClassService>(() => ClassService(get<ClassRepository>()));
   gh.lazySingleton<FirebaseAuth>(() => firebaseInjectableModule.firebaseAuth);
   gh.lazySingleton<FirebaseUserMapper>(() => FirebaseUserMapper());
   gh.factory<LoadingScreen>(() => LoadingScreen(key: get<Key>()));
   gh.lazySingleton<NavigationService>(() => NavigationService());
+  gh.lazySingleton<SubjectRepository>(() => SubjectRepository());
+  gh.factory<SubjectService>(() => SubjectService(get<SubjectRepository>()));
   gh.lazySingleton<TaskRepository>(() => TaskRepository());
   gh.factory<TaskService>(() => TaskService(get<TaskRepository>()));
   gh.lazySingleton<Auth>(() =>
       FirebaseAuthentification(get<FirebaseAuth>(), get<FirebaseUserMapper>()));
-  gh.factory<TaskNotifier>(() => TaskNotifier(get<TaskService>()));
+  gh.factory<TaskNotifier>(
+      () => TaskNotifier(get<TaskService>(), get<ClassService>()));
   gh.factory<UserService>(() => UserService(authService: get<Auth>()));
   gh.lazySingleton<AppNotifier>(() => AppNotifier(get<TaskNotifier>()));
   gh.lazySingleton<UserNotifier>(() => UserNotifier(app: get<UserService>()));

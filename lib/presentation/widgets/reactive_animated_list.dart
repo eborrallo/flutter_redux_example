@@ -47,8 +47,6 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
   @override
   void didUpdateWidget(ReactiveAnimatedList oldWidget) {
     super.didUpdateWidget(oldWidget);
-    print(oldWidget.list);
-    print(widget.list);
     if (oldWidget.list != null) {
       if (oldWidget.list.length > widget.list.length) {
         if (_deleteItem(oldWidget)) {

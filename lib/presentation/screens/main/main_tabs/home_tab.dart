@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
+import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
-import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
+import 'package:flutter_redux_boilerplate/presentation/widgets/class_card.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/reactive_animated_list.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
-
 
 class HomeTab extends StatelessWidget {
   final TaskNotifier list;
@@ -20,12 +20,12 @@ class HomeTab extends StatelessWidget {
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             _onProgress(list.onProgress),
             _almostDue(list.almostDue),
-            _todayClass()
+            _todayClass(list.todayClass)
           ])
         ]));
   }
 
-  Widget _todayClass() {
+  Widget _todayClass(List<TodayClass> list) {
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -39,91 +39,21 @@ class HomeTab extends StatelessWidget {
             ),
           ),
         ),
-        this._buildTodayClass()
+        this._buildTodayClass(list)
       ],
     );
   }
 
-  Widget _buildTodayClass() {
+  Widget _buildTodayClass(List<TodayClass> list) {
     return new Container(
-      margin: EdgeInsets.symmetric(vertical: 16.0),
-      height: 150.0,
-      child: new ListView(
-          padding: EdgeInsets.only(left: 21.0),
+        margin: EdgeInsets.symmetric(vertical: 16.0),
+        height: 150.0,
+        child: new ReactiveAnimatedList(
+          list,
+          (context, element) => ClassCard(element),
+          length: list != null ? list.length : 0,
           scrollDirection: Axis.horizontal,
-          children: List.generate(
-              5,
-              (i) => new AnimatedListItem(
-                  i,
-                  Container(
-                      width: 300,
-                      margin: EdgeInsets.only(bottom: 10.0),
-                      child: Center(
-                          child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Padding(
-                                  padding: EdgeInsets.only(left: 10.0),
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        new ListTile(
-                                          title: Text(
-                                            'Algorithm',
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                          subtitle: Padding(
-                                              padding: EdgeInsets.only(top: 10),
-                                              child: Row(children: [
-                                                Icon(
-                                                  Icons.location_on,
-                                                  color: Colors.grey,
-                                                  size: 18,
-                                                ),
-                                                Text(
-                                                  'Room 3A',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                    child: Text('08:00 - 10:00',
-                                                        textAlign:
-                                                            TextAlign.right))
-                                              ])),
-                                        ),
-                                        Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 15),
-                                            child: new Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                new Icon(
-                                                  Icons.error_outline,
-                                                  color: Colors.orange,
-                                                  size: 18,
-                                                ),
-                                                Expanded(
-                                                    child: Text(
-                                                  'You have one incpmplete task',
-                                                  textAlign: TextAlign.right,
-                                                  maxLines: 2,
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      color: Colors.orange),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                )),
-                                              ],
-                                            )),
-                                      ])))))))),
-    );
+        ));
   }
 
   Widget _almostDue(List<Task> list) {
@@ -171,7 +101,9 @@ class HomeTab extends StatelessWidget {
         height: 230.0,
         child: ReactiveAnimatedList(
           list,
-          (context, element) => new TaskCard(element,),
+          (context, element) => new TaskCard(
+            element,
+          ),
           length: 2,
         ));
   }

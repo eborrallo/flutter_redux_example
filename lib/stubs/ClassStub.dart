@@ -30,7 +30,7 @@ class ClassStub {
           .toIso8601String(),
       'location': faker.lorem.word()
     });
-    List.generate(5, (index) => cls.addTask(TaskStub.random()));
+    List.generate(2, (index) => cls.addTask(TaskStub.random()));
     return cls;
   }
 }

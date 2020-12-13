@@ -55,7 +55,7 @@ class _ClassCardState extends State<ClassCard> {
                                           textAlign: TextAlign.right))
                                 ])),
                           ),
-                          widget.todayClass.message.isNotEmpty?
+                          widget.todayClass.message != null?
                               Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 15),
                                   child: new Row(

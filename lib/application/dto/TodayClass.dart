@@ -11,4 +11,6 @@ class TodayClass {
 
   TodayClass(
      { this.title, this.location, this.timeIn, this.timeOut, this.message});
+
+     
 }

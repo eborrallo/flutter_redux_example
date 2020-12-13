@@ -20,6 +20,7 @@ class ClassService {
 
     List<Class> classes = await repository.findAll();
     classes.forEach((Class element) {
+      ;
       listTodayClass.add(new TodayClass(
           title: element.subject.title,
           location: element.location,
@@ -27,7 +28,9 @@ class ClassService {
               .format(element.startTime),
           timeOut: DateFormat(DateFormat.HOUR24_MINUTE, 'es_ES')
               .format(element.startTime.add(element.duration)),
-          message: 'caca'));
+          message: element.tasks.where((element) => !element.done).length > 0
+              ? 'Faltan tareas por hacer'
+              : null));
     });
 
     return listTodayClass;

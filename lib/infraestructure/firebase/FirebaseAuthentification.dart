@@ -4,6 +4,7 @@ import 'package:flutter_redux_boilerplate/domain/user/user.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/firebase/FirebaseUserMapper.dart';
 import 'package:injectable/injectable.dart';
 
+@Environment("dev")
 @LazySingleton(as: Auth)
 class FirebaseAuthentification implements Auth {
   final f.FirebaseAuth _firebaseAuth;

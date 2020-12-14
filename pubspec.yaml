@@ -24,6 +24,7 @@ dependencies:
   json_serializable: ^3.5.1
   uuid: ^2.2.2
   faker: ^1.3.0
+  mockito: ^3.0.0-beta+2
 
 dev_dependencies:
   flutter_test:

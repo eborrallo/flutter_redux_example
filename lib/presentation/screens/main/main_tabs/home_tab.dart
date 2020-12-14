@@ -116,8 +116,8 @@ class HomeTab extends StatelessWidget {
 
   Widget _buildOnProgressList(List<SubjectProgress> list) {
     return new Container(
-        margin: EdgeInsets.symmetric(vertical: 16),
-        height: 100.0,
+        margin: EdgeInsets.symmetric(vertical: 15),
+        height: 101.0,
         child: new ReactiveAnimatedList(
           list,
           (context, element) => new CircularProgresItem(

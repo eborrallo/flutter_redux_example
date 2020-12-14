@@ -1,26 +1,17 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_boilerplate/presentation/screens/main/main_screen.dart';
+import 'package:flutter_redux_boilerplate/injections.dart';
+import 'package:flutter_redux_boilerplate/main.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:injectable/injectable.dart';
 import 'package:intl/date_symbol_data_local.dart';
-
 
 void main() {
   group('Main screen', () {
     Widget sut;
+    configureInjection(Environment.test);
+
     setUp(() {
-      Timer(const Duration(seconds: 5), () {});
-
-      const Key innerKey = Key('main');
-      MainScreen mainScreen = MainScreen(key: innerKey);
-
-      sut =  MaterialApp(
-            home: Scaffold(
-              appBar: AppBar(title: const Text('Title')),
-              body: mainScreen,
-            ),
-          );
+      sut = new CalendarApp();
     });
     group('Home tab', () {
       testWidgets('We can see the "On progress" widgest',
@@ -41,7 +32,7 @@ void main() {
           (WidgetTester tester) async {
         await tester.pumpWidget(sut);
 
-        expect(find.text('Today Calss'), findsOneWidget);
+        expect(find.text('Today Class'), findsOneWidget);
       });
     });
     testWidgets('We can see the bottom float action button and childs',

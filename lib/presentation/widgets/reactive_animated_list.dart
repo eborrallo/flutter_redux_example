@@ -28,7 +28,6 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
     }
     oldWidget.list.forEach((element) {
       if (!widget.list.contains(element)) {
-        print(oldWidget.list.indexOf(element));
         if (oldWidget.list.indexOf(element) < this.length())
           _listKey.currentState.removeItem(oldWidget.list.indexOf(element),
               (context, animation) => _buildItem(context, element, animation));

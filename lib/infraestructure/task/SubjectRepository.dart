@@ -1,6 +1,8 @@
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
+import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/stubs/SubjectStub.dart';
 import 'package:injectable/injectable.dart';
+import 'package:flutter_redux_boilerplate/stubs/ApiStub.dart';
 
 @lazySingleton
 class SubjectRepository {
@@ -19,7 +21,9 @@ class SubjectRepository {
   Future<List<Subject>> findAll() async {
     List<Subject> _list = [];
     await Future.delayed(Duration(seconds: 1), () {
-      List<void>.generate(20, (i) => _list.add(SubjectStub.random()));
+      //List<void>.generate(20, (i) => _list.add(SubjectStub.random()));
+      _list = getIt<ApiStub>().subjects;
+
       // _list.sort((Subject a, Subject b) => a.deliveryDate.compareTo(b.deliveryDate));
     });
 

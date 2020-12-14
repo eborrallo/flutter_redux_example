@@ -30,7 +30,7 @@ class _ClassCardState extends State<ClassCard> {
                           new ListTile(
                             title: Text(
                               widget.todayClass.title,
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                             ),
                             subtitle: Padding(
                                 padding: EdgeInsets.only(top: 10),
@@ -55,29 +55,36 @@ class _ClassCardState extends State<ClassCard> {
                                           textAlign: TextAlign.right))
                                 ])),
                           ),
-                          widget.todayClass.message != null?
-                              Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 15),
-                                  child: new Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      new Icon(
-                                        Icons.error_outline,
-                                        color: Colors.orange,
-                                        size: 18,
-                                      ),
-                                      Expanded(
-                                          child: Text(
-                                        widget.todayClass.message,
-                                        textAlign: TextAlign.right,
-                                        maxLines: 2,
-                                        style: TextStyle(
-                                            fontSize: 15, color: Colors.orange),
-                                        overflow: TextOverflow.ellipsis,
-                                      )),
-                                    ],
-                                  )):Container(),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 15),
+                              child: new Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  new Icon(
+                                    widget.todayClass.message != null
+                                        ? Icons.error_outline
+                                        : Icons.check,
+                                    color: widget.todayClass.message != null
+                                        ? Colors.orange
+                                        : Colors.green,
+                                    size: 18,
+                                  ),
+                                  Expanded(
+                                      child: Text(
+                                    widget.todayClass.message ??
+                                        "No hay tareas pendientes",
+                                    textAlign: TextAlign.right,
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: widget.todayClass.message != null
+                                            ? Colors.orange
+                                            : Colors.green),
+                                    overflow: TextOverflow.ellipsis,
+                                  )),
+                                ],
+                              )),
                         ])))));
   }
 }

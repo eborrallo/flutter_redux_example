@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/material.dart';
 
+import 'stubs/ApiStub.dart';
 import 'presentation/notifier/AppNotifier.dart';
 import 'domain/services/Auth.dart';
 import 'presentation/notifier/ClassNotifier.dart';
@@ -43,6 +44,7 @@ GetIt $initGetIt(
 }) {
   final gh = GetItHelper(get, environment, environmentFilter);
   final firebaseInjectableModule = _$FirebaseInjectableModule();
+  gh.lazySingleton<ApiStub>(() => ApiStub());
   gh.lazySingleton<Auth>(() => FirebaseAuthMock(), registerFor: {_test});
   gh.lazySingleton<ClassRepository>(() => ClassRepository());
   gh.factory<ClassService>(() => ClassService(get<ClassRepository>()));

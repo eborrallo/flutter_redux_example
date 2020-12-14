@@ -1,4 +1,6 @@
 import 'package:flutter_redux_boilerplate/domain/class/class.dart';
+import 'package:flutter_redux_boilerplate/injections.dart';
+import 'package:flutter_redux_boilerplate/stubs/ApiStub.dart';
 import 'package:flutter_redux_boilerplate/stubs/ClassStub.dart';
 import 'package:injectable/injectable.dart';
 
@@ -19,8 +21,10 @@ class ClassRepository {
   Future<List<Class>> findAll() async {
     List<Class> _list = [];
     await Future.delayed(Duration(milliseconds: 1300), () {
-      List<void>.generate(7, (i) => _list.add(ClassStub.random()));
-       _list.sort((Class a, Class b) => a.startTime.compareTo(b.startTime));
+      //List<void>.generate(7, (i) => _list.add(ClassStub.random()));
+      _list = getIt<ApiStub>().classes;
+
+      _list.sort((Class a, Class b) => a.startTime.compareTo(b.startTime));
     });
 
     if (_list.isEmpty) {

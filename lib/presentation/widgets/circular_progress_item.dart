@@ -17,8 +17,6 @@ class _CircularProgresItemState extends State<CircularProgresItem> {
   Widget build(BuildContext context) {
     return Container(
       width: 85,
-      //height: 200,
-      color: Colors.red,
       alignment: Alignment(0, 0),
       margin: EdgeInsets.only(right: 30.0),
       child: CircularPercentIndicator(

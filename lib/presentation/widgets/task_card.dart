@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/presentation/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:provider/provider.dart';
 
@@ -104,7 +105,7 @@ class _TaskCardState extends State<TaskCard> {
                               if (!value && widget.blockEdit) {
                               } else {
                                 context
-                                    .read<TaskNotifier>()
+                                    .read<AppNotifier>()
                                     .toggleTask(widget.task.uuid);
                               }
                             }

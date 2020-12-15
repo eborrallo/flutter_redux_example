@@ -19,6 +19,11 @@ class AppNotifier extends ChangeNotifier {
     var list = subjectsNotifier.progress(listTask: tasksNotifier.tasks);
     return list == null ? null : List.unmodifiable(list);
   }
+  void toggleTask(String uuid) {
+    tasksNotifier.toggleTask(uuid);
+    classNotifier.toggleTask(uuid);
+    notifyListeners();
+  }
 
   List<Task> get almostDue => tasksNotifier.tasks == null
       ? null

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
+import 'package:uuid/uuid.dart';
 
 class SubjectStub {
   static List subjectList = [
@@ -15,6 +16,7 @@ class SubjectStub {
   static Subject create({params}) {
     var map = params != null ? jsonDecode(params) : new Map<String, dynamic>();
     var _params = {
+      'uuid': map['uuid'] ?? Uuid().v4(),
       'title': map['title'] ?? (subjectList..shuffle()).first,
     };
 

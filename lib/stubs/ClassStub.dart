@@ -20,7 +20,7 @@ class ClassStub {
               (index) =>
                   new Lecturer(uuid: Uuid().v4(), name: faker.person.name())
                       .toJson()).toList(),
-      'tasks': map['tasks'] ?? [],
+      'tasks': [],
       'subject': map['subject'] ?? SubjectStub.random().toJson(),
       'duration': map['duration'] ??
           Duration(hours: Random().nextInt(2) + 1).inMicroseconds,

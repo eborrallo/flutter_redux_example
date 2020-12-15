@@ -13,15 +13,16 @@ class ApiStub {
   List<Class> classes = new List<Class>();
 
   ApiStub() {
+    print('caca');
+
     List<void>.generate(20, (i) {
       Subject randomSubject = SubjectStub.random();
-        var exist = this
-            .subjects
-            .where((element) => element.title == randomSubject.title);
-        if (exist.isEmpty) {
-          this.subjects.add(randomSubject);
-        }
-      
+      var exist = this
+          .subjects
+          .where((element) => element.title == randomSubject.title);
+      if (exist.isEmpty) {
+        this.subjects.add(randomSubject);
+      }
     });
     List<void>.generate(
         20,
@@ -29,11 +30,13 @@ class ApiStub {
             params: {'subject': (this.subjects..shuffle()).first})));
 
     List<void>.generate(this.subjects.length, (i) {
-      var classTask =
-          tasks.where((element) => element.subject.uuid == subjects[i].uuid);
 
-      this.classes.add(ClassStub.create(
-          params: {'subject': this.subjects[i].toJson(), 'tasks': classTask.map((e) => e.toJson()).toList()}));
+
+      this.classes.add(ClassStub.create(params: {
+            'subject': this.subjects[i].toJson(),
+            'tasks': tasks.where(
+          (Task element) => element.subject.uuid == this.subjects[i].uuid).map((e) => e.toJson()).toList()
+          }));
     });
   }
 }

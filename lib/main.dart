@@ -35,6 +35,7 @@ class CalendarApp extends StatelessWidget {
           ChangeNotifierProvider.value(value: appNotifier.tasksNotifier),
           ChangeNotifierProvider.value(value: appNotifier.subjectsNotifier),
           ChangeNotifierProvider.value(value: appNotifier.classNotifier),
+          ChangeNotifierProvider.value(value: appNotifier.calendarNotifier),
         ],
         child: new MaterialApp(
             title: 'CalendarApp',

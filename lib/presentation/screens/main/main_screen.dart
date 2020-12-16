@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_redux_boilerplate/config/screens.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/AppNotifier.dart';
+import 'package:flutter_redux_boilerplate/presentation/notifier/CalendarNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/ClassNotifier.dart';
 
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
@@ -130,6 +131,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     final taskNotifier = Provider.of<TaskNotifier>(context, listen: true);
     final appNotifier = Provider.of<AppNotifier>(context, listen: true);
     final classNotifier = Provider.of<ClassNotifier>(context, listen: true);
+    final calendarNotifier = Provider.of<CalendarNotifier>(context, listen: true);
 
     // final subjectNotifier = Provider.of<SubjectNotifier>(context, listen: true);
 
@@ -209,7 +211,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             appNotifier: appNotifier,
           ),
           new TaskTab(taskNotifier: taskNotifier),
-          new CalendarTab(),
+          new CalendarTab(appNotifier:appNotifier, calendarNotifier:calendarNotifier ,),
           new ProfileTab(),
         ],
       ),

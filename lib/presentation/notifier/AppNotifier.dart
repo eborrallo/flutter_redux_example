@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/presentation/notifier/CalendarNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/ClassNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/SubjectNotifier.dart';
 
@@ -14,6 +15,7 @@ class AppNotifier extends ChangeNotifier {
   final TaskNotifier tasksNotifier;
   final SubjectNotifier subjectsNotifier;
   final ClassNotifier classNotifier;
+  final CalendarNotifier calendarNotifier;
 
   List<SubjectProgress> get onProgress {
     var list = subjectsNotifier.progress(listTask: tasksNotifier.tasks);
@@ -25,6 +27,11 @@ class AppNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+List<Task> get selectedDayTasks => tasksNotifier.tasks == null
+      ? null
+      : List.unmodifiable(
+          tasksNotifier.tasks.where((Task element) => element.deliveryDate.day==calendarNotifier.selectedDay.day));
+
   List<Task> get almostDue => tasksNotifier.tasks == null
       ? null
       : List.unmodifiable(
@@ -34,5 +41,5 @@ class AppNotifier extends ChangeNotifier {
       ? null
       : List.unmodifiable(classNotifier.todayClasses);
 
-  AppNotifier(this.tasksNotifier, this.subjectsNotifier, this.classNotifier);
+  AppNotifier(this.tasksNotifier, this.subjectsNotifier, this.classNotifier, this.calendarNotifier);
 }

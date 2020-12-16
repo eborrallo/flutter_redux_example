@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/presentation/notifier/AppNotifier.dart';
+import 'package:flutter_redux_boilerplate/presentation/notifier/CalendarNotifier.dart';
+import 'package:flutter_redux_boilerplate/presentation/notifier/ClassNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/profile_tab.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/calendar.dart';
@@ -9,10 +12,13 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/cu
 import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/customization/days_of_week_style.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/customization/header_style.dart';
 import 'package:intl/intl.dart';
-
+import 'package:provider/provider.dart';
 
 class CalendarTab extends StatefulWidget {
-  CalendarTab({Key key}) : super(key: key);
+  CalendarTab({Key key, this.appNotifier, this.calendarNotifier})
+      : super(key: key);
+  final AppNotifier appNotifier;
+  final CalendarNotifier calendarNotifier;
 
   @override
   _CalendarTabState createState() => _CalendarTabState();
@@ -44,6 +50,8 @@ class _CalendarTabState extends State<CalendarTab>
 
   @override
   Widget build(BuildContext context) {
+    final classNotifier = Provider.of<CalendarNotifier>(context, listen: true);
+
     return Column(
       children: [
         Expanded(
@@ -81,7 +89,7 @@ class _CalendarTabState extends State<CalendarTab>
                                 padding: EdgeInsets.only(left: 21.0),
                                 scrollDirection: Axis.horizontal,
                                 children: List.generate(
-                                    5,
+                                    widget.appNotifier.selectedDayTasks.length,
                                     (i) => new AnimatedListItem(
                                         i, buildListTask())))))
                   ],
@@ -117,6 +125,7 @@ class _CalendarTabState extends State<CalendarTab>
     return Calendar(
       locale: 'es_ES',
       calendarController: _calendarController,
+      onDaySelected: _onDaySelected,
       initialCalendarFormat: CalendarFormat.month,
       availableCalendarFormats: const {
         CalendarFormat.month: 'Month',
@@ -200,19 +209,27 @@ class _CalendarTabState extends State<CalendarTab>
         todayDayBuilder: (context, date, _) {
           return FadeTransition(
             opacity: Tween(begin: 0.0, end: 1.0).animate(_animationController),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.transparent,
+            child: Card(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6.0),
               ),
-              width: 50,
-              height: 50,
-              child: Center(
-                child: Text(
-                  '${date.day}',
-                  style: TextStyle().copyWith(
-                      fontSize: 16.0,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.blue.shade100,
+                    borderRadius: BorderRadius.all(Radius.circular(
+                            6.0) //                 <--- border radius here
+                        )),
+                width: 50,
+                height: 50,
+                child: Center(
+                  child: Text(
+                    '${date.day}',
+                    style: TextStyle().copyWith(
+                        fontSize: 16.0,
+                        color: Colors.grey.shade600,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),
@@ -220,5 +237,10 @@ class _CalendarTabState extends State<CalendarTab>
         },
       ),
     );
+  }
+
+  void _onDaySelected(DateTime day, List events, List holidays) {
+    print('CALLBACK: _onDaySelected');
+    widget.calendarNotifier.selecteDay(day);
   }
 }

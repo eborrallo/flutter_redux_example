@@ -4,18 +4,19 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/wi
 import 'package:intl/intl.dart';
 
 class Calendar extends TableCalendar {
-  Calendar(
-      {Key key,
-      calendarController,
-      locale,
-      initialCalendarFormat,
-      availableCalendarFormats,
-      startingDayOfWeek,
-      calendarStyle,
-      daysOfWeekStyle,
-      headerStyle,
-      builders})
-      : super(
+  Calendar({
+    Key key,
+    calendarController,
+    locale,
+    initialCalendarFormat,
+    availableCalendarFormats,
+    startingDayOfWeek,
+    calendarStyle,
+    daysOfWeekStyle,
+    headerStyle,
+    builders,
+    onDaySelected,
+  }) : super(
           key: key,
           calendarController: calendarController,
           locale: locale,
@@ -26,6 +27,7 @@ class Calendar extends TableCalendar {
           daysOfWeekStyle: daysOfWeekStyle,
           headerStyle: headerStyle,
           builders: builders,
+          onDaySelected: onDaySelected,
         );
   @override
   _CalendarState createState() => _CalendarState();
@@ -49,31 +51,32 @@ class _CalendarState extends TableCalendarState {
             onTap: onHeaderTapped,
             onLongPress: onHeaderLongPressed,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-              Text(
-                widget.headerStyle.titleTextBuilder != null
-                    ? widget.headerStyle.titleTextBuilder(
-                        widget.calendarController.focusedDay, widget.locale)
-                    : inCap(DateFormat.LLLL(widget.locale)
-                        .format(widget.calendarController.focusedDay)),
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                textAlign: widget.headerStyle.centerHeaderTitle
-                    ? TextAlign.center
-                    : TextAlign.start,
-              ),
-              Text(
-                widget.headerStyle.titleTextBuilder != null
-                    ? widget.headerStyle.titleTextBuilder(
-                        widget.calendarController.focusedDay, widget.locale)
-                    :' '+ DateFormat.y(widget.locale)
-                        .format(widget.calendarController.focusedDay),
-                style: TextStyle(fontSize: 25),
-                textAlign: widget.headerStyle.centerHeaderTitle
-                    ? TextAlign.center
-                    : TextAlign.start,
-              ),
-            ])),
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    widget.headerStyle.titleTextBuilder != null
+                        ? widget.headerStyle.titleTextBuilder(
+                            widget.calendarController.focusedDay, widget.locale)
+                        : inCap(DateFormat.LLLL(widget.locale)
+                            .format(widget.calendarController.focusedDay)),
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    textAlign: widget.headerStyle.centerHeaderTitle
+                        ? TextAlign.center
+                        : TextAlign.start,
+                  ),
+                  Text(
+                    widget.headerStyle.titleTextBuilder != null
+                        ? widget.headerStyle.titleTextBuilder(
+                            widget.calendarController.focusedDay, widget.locale)
+                        : ' ' +
+                            DateFormat.y(widget.locale)
+                                .format(widget.calendarController.focusedDay),
+                    style: TextStyle(fontSize: 25),
+                    textAlign: widget.headerStyle.centerHeaderTitle
+                        ? TextAlign.center
+                        : TextAlign.start,
+                  ),
+                ])),
       ),
       CustomIconButton(
         icon: widget.headerStyle.leftChevronIcon,

@@ -13,8 +13,6 @@ class ApiStub {
   List<Class> classes = new List<Class>();
 
   ApiStub() {
-    print('caca');
-
     List<void>.generate(20, (i) {
       Subject randomSubject = SubjectStub.random();
       var exist = this
@@ -25,7 +23,7 @@ class ApiStub {
       }
     });
     List<void>.generate(
-        20,
+        40,
         (i) => this.tasks.add(TaskStub.create(
             params: {'subject': (this.subjects..shuffle()).first})));
 

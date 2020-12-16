@@ -19,7 +19,7 @@ class TaskStub {
       'deliveryDate': map['deliveryDate'] ??
           DateTime.now()
               .add(new Duration(
-                  days: Random().nextInt(1),
+                  days: Random().nextInt(7),
                   hours: Random().nextInt(20),
                   minutes: Random().nextInt(59)))
               .toString(),

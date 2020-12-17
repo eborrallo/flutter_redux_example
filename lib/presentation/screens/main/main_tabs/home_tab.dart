@@ -3,13 +3,10 @@ import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/AppNotifier.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/ClassNotifier.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/class_card.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/reactive_animated_list.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
-import 'package:provider/provider.dart';
 
 class HomeTab extends StatelessWidget {
   final AppNotifier appNotifier;
@@ -17,7 +14,6 @@ class HomeTab extends StatelessWidget {
   HomeTab({Key key, this.appNotifier}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
     return new Container(
         alignment: Alignment.topLeft,
         color: Color.fromRGBO(245, 245, 245, 1),
@@ -50,7 +46,6 @@ class HomeTab extends StatelessWidget {
   }
 
   Widget _buildTodayClass(List<TodayClass> list) {
-
     return new Container(
         margin: EdgeInsets.symmetric(vertical: 16.0),
         height: 150.0,
@@ -63,19 +58,40 @@ class HomeTab extends StatelessWidget {
   }
 
   Widget _almostDue(List<Task> list) {
+    List doneList = list!=null?list.where((element) => !element.done).toList():[];
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         new Padding(
-          padding: EdgeInsets.only(left: 21.0, top: 20),
-          child: new Text(
-            'Almost Due',
-            style: TextStyle(
-              fontSize: 21,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+            padding: EdgeInsets.only(left: 21.0, top: 20, right: 25),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                new Text(
+                  'Almost Due',
+                  style: TextStyle(
+                    fontSize: 21,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                doneList.length > 2
+                    ? FlatButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        color: Colors.transparent,
+                        onPressed: () {},
+                        child: new Text(
+                          'Show all',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      )
+                    : Container(),
+              ],
+            )),
         this._buildAlmostDueList(list)
       ],
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/AppNotifier.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/CalendarNotifier.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/ClassNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/profile_tab.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/calendar.dart';
@@ -12,13 +11,13 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/cu
 import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/customization/days_of_week_style.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/customization/header_style.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class CalendarTab extends StatefulWidget {
-  CalendarTab({Key key, this.appNotifier, this.calendarNotifier})
-      : super(key: key);
+  CalendarTab({
+    Key key,
+    this.appNotifier,
+  }) : super(key: key);
   final AppNotifier appNotifier;
-  final CalendarNotifier calendarNotifier;
 
   @override
   _CalendarTabState createState() => _CalendarTabState();
@@ -26,19 +25,31 @@ class CalendarTab extends StatefulWidget {
 
 class _CalendarTabState extends State<CalendarTab>
     with TickerProviderStateMixin {
-  DateTime _currentDate = DateTime.now();
-
   TableCalendarController _calendarController;
   AnimationController _animationController;
-
+  Map<DateTime, List<Task>> _events;
+  List<Task> _selectedDayTasks = [];
   @override
   void initState() {
     super.initState();
+    _events = Map();
+
+    Future.delayed(Duration(milliseconds: 0), () {
+      setState(() {
+        _events = widget.appNotifier.calendarEvents ?? [];
+        _selectedDayTasks = _events != null
+            ? _events[DateTime(
+                DateTime.now().year, DateTime.now().month, DateTime.now().day)]
+            : [];
+      });
+    });
+
     _calendarController = TableCalendarController();
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
+
     _animationController.forward();
   }
 
@@ -50,8 +61,6 @@ class _CalendarTabState extends State<CalendarTab>
 
   @override
   Widget build(BuildContext context) {
-    final classNotifier = Provider.of<CalendarNotifier>(context, listen: true);
-
     return Column(
       children: [
         Expanded(
@@ -89,9 +98,9 @@ class _CalendarTabState extends State<CalendarTab>
                                 padding: EdgeInsets.only(left: 21.0),
                                 scrollDirection: Axis.horizontal,
                                 children: List.generate(
-                                    widget.appNotifier.selectedDayTasks.length,
-                                    (i) => new AnimatedListItem(
-                                        i, buildListTask())))))
+                                    _selectedDayTasks.length,
+                                    (i) => new AnimatedListItem(i,
+                                        buildListTask(_selectedDayTasks[i]))))))
                   ],
                 ),
               ),
@@ -100,7 +109,7 @@ class _CalendarTabState extends State<CalendarTab>
     );
   }
 
-  Container buildListTask() {
+  Container buildListTask(Task _task) {
     return Container(
         width: 280,
         height: 300,
@@ -112,18 +121,79 @@ class _CalendarTabState extends State<CalendarTab>
                 ),
                 child: Row(children: [
                   Container(
-                      width: 100,
-                      height: 200,
-                      decoration: BoxDecoration(
-                          color: Colors.blueAccent.shade100,
-                          borderRadius:
-                              new BorderRadius.all(Radius.circular(10.0)))),
+                    width: 100,
+                    height: 200,
+                    decoration: BoxDecoration(
+                        color: Colors.blueAccent.shade100,
+                        borderRadius:
+                            new BorderRadius.all(Radius.circular(10.0))),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          'Due Time',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700, color: Colors.white),
+                        ),
+                        Text(
+                          _task.deliveryDate.hour.toString() +
+                              ":" +
+                              _task.deliveryDate.minute.toString(),
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white),
+                        )
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            _task.title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                                fontSize: 18),
+                          ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 10,
+                                  width: 10,
+                                  margin: EdgeInsets.only(right: 10.0),
+                                  decoration: new BoxDecoration(
+                                    color: Colors.red,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                Flexible(
+                                    child: Text(
+                                  _task.subject.title.toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.grey),
+                                ))
+                              ])
+                        ],
+                      ),
+                    ),
+                  )
                 ]))));
   }
 
   buildTableCalendar() {
     return Calendar(
       locale: 'es_ES',
+      events: _events,
       calendarController: _calendarController,
       onDaySelected: _onDaySelected,
       initialCalendarFormat: CalendarFormat.month,
@@ -155,6 +225,19 @@ class _CalendarTabState extends State<CalendarTab>
               border: Border(
                   bottom: BorderSide(color: Theme.of(context).dividerColor)))),
       builders: CalendarBuilders(
+        markersBuilder: (context, date, events, holidays) {
+          final children = <Widget>[];
+          if (events.isNotEmpty) {
+            children.add(
+              Positioned(
+                right: 1,
+                bottom: 40,
+                child: _buildEventsMarker(date, events),
+              ),
+            );
+          }
+          return children;
+        },
         dayBuilder: (context, date, _) {
           return FadeTransition(
             opacity: Tween(begin: 0.0, end: 1.0).animate(_animationController),
@@ -239,8 +322,34 @@ class _CalendarTabState extends State<CalendarTab>
     );
   }
 
+  Widget _buildEventsMarker(DateTime date, List events) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: _calendarController.isSelected(date)
+            ? Colors.black
+            : _calendarController.isToday(date)
+                ? Colors.black
+                : Colors.blue[400],
+      ),
+      width: 16.0,
+      height: 16.0,
+      child: Center(
+        child: Text(
+          '${events.length}',
+          style: TextStyle().copyWith(
+            color: Colors.white,
+            fontSize: 12.0,
+          ),
+        ),
+      ),
+    );
+  }
+
   void _onDaySelected(DateTime day, List events, List holidays) {
-    print('CALLBACK: _onDaySelected');
-    widget.calendarNotifier.selecteDay(day);
+    setState(() {
+      _selectedDayTasks = events.length > 0 ? events : [];
+    });
   }
 }

@@ -4,31 +4,32 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/wi
 import 'package:intl/intl.dart';
 
 class Calendar extends TableCalendar {
-  Calendar({
-    Key key,
-    calendarController,
-    locale,
-    initialCalendarFormat,
-    availableCalendarFormats,
-    startingDayOfWeek,
-    calendarStyle,
-    daysOfWeekStyle,
-    headerStyle,
-    builders,
-    onDaySelected,
-  }) : super(
-          key: key,
-          calendarController: calendarController,
-          locale: locale,
-          initialCalendarFormat: initialCalendarFormat,
-          availableCalendarFormats: availableCalendarFormats,
-          startingDayOfWeek: startingDayOfWeek,
-          calendarStyle: calendarStyle,
-          daysOfWeekStyle: daysOfWeekStyle,
-          headerStyle: headerStyle,
-          builders: builders,
-          onDaySelected: onDaySelected,
-        );
+  Calendar(
+      {Key key,
+      calendarController,
+      locale,
+      initialCalendarFormat,
+      availableCalendarFormats,
+      startingDayOfWeek,
+      calendarStyle,
+      daysOfWeekStyle,
+      headerStyle,
+      builders,
+      onDaySelected,
+      events})
+      : super(
+            key: key,
+            calendarController: calendarController,
+            locale: locale,
+            initialCalendarFormat: initialCalendarFormat,
+            availableCalendarFormats: availableCalendarFormats,
+            startingDayOfWeek: startingDayOfWeek,
+            calendarStyle: calendarStyle,
+            daysOfWeekStyle: daysOfWeekStyle,
+            headerStyle: headerStyle,
+            builders: builders,
+            onDaySelected: onDaySelected,
+            events: events);
   @override
   _CalendarState createState() => _CalendarState();
 }

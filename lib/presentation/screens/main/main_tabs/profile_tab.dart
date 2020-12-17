@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/presentation/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
 
-
 class ProfileTab extends StatelessWidget {
-  ProfileTab({Key key}) : super(key: key);
+  final AppNotifier appNotifier;
+
+  ProfileTab({Key key, this.appNotifier}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ class ProfileTab extends StatelessWidget {
                             width: 150,
                             child: CircularProgresItem(
                               text: 'Completation Rate',
-                              progressValue: 80,
+                              progressValue: appNotifier.weekCompletation,
                               radius: 80,
                             )),
                         Container(
@@ -73,7 +75,7 @@ class ProfileTab extends StatelessWidget {
                               children: [
                                 Container(
                                     child: Text(
-                                  '38',
+                                  appNotifier.totalTasksThisWeek,
                                   style: TextStyle(fontSize: 40),
                                 )),
                                 Container(

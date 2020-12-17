@@ -37,16 +37,15 @@ class _CircularProgresItemState extends State<CircularProgresItem> {
         ),
         footer: new Padding(
             padding: EdgeInsets.only(top: 8.0),
-            child: new Text(
-                (widget.text.length <= 7)
-                    ? widget.text
-                    : '${widget.text.substring(0, 7)}..',
-                textAlign: TextAlign.center,
-                style: new TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 17.0,
-                ))),
+            child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(widget.text,
+                    textAlign: TextAlign.center,
+                    style: new TextStyle(
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 17.0,
+                    )))),
         linearGradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,

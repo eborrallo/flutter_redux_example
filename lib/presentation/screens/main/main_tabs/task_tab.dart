@@ -5,57 +5,120 @@ import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dar
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
 
-class TaskTab extends StatelessWidget {
+class TaskTab extends StatefulWidget {
+  TaskTab({
+    Key key,
+    this.taskNotifier,
+  }) : super(key: key);
   final TaskNotifier taskNotifier;
-  TaskTab({Key key, this.taskNotifier}) : super(key: key);
+
+  @override
+  TaskTabState createState() => TaskTabState();
+}
+
+class TaskTabState extends State<TaskTab> {
+  bool showOld = false;
+  ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     var now = new DateTime.now();
     var tomorrow = now.add(Duration(days: 1));
     var upcoming = tomorrow.add(Duration(days: 1));
-    List listToday = taskNotifier.tasks ?? [];
+    List listToday = showOld
+        ? (widget.taskNotifier.allTasks ?? [])
+        : widget.taskNotifier.tasksThisWeek ?? [];
+
     return new Container(
-        alignment: Alignment.topLeft,
-        color: Color.fromRGBO(245, 245, 245, 1),
-        padding: EdgeInsets.only(top: 20),
-        child: new ListView(
-          children: [
-            _today(listToday
-                .where((element) => element.deliveryDate.day == now.day)
-                .toList()),
-            _tomorrow(listToday
-                .where((element) => element.deliveryDate.day == tomorrow.day)
-                .toList()),
-            _upcomming(listToday
-                .where((element) => element.deliveryDate.day > upcoming.day)
-                .toList())
-          ],
-        ));
+      alignment: Alignment.topLeft,
+      color: Color.fromRGBO(245, 245, 245, 1),
+      padding: EdgeInsets.only(top: 20),
+      child: new ListView(
+        controller: _scrollController,
+        children: [
+          showOld
+              ? _oldest(listToday
+                  .where((element) =>
+                      element.deliveryDate.millisecondsSinceEpoch <
+                      now.millisecondsSinceEpoch)
+                  .toList())
+              : Container(),
+          _today(listToday
+              .where((element) =>
+                  element.deliveryDate.day == now.day &&
+                  element.deliveryDate.millisecondsSinceEpoch >
+                      now.millisecondsSinceEpoch)
+              .toList()),
+          _tomorrow(listToday
+              .where((element) => element.deliveryDate.day == tomorrow.day)
+              .toList()),
+          _upcomming(listToday
+              .where((element) => element.deliveryDate.day > upcoming.day)
+              .toList())
+        ],
+      ),
+    );
   }
 
-  Widget _tackCollection(String title, List list) {
+  Widget _tackCollection(String title, List list, {Widget widget}) {
     return new Container(
         child: new Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        new Padding(
-          padding: EdgeInsets.only(left: 21.0),
-          child: new Text(
-            title,
-            style: TextStyle(
-              fontSize: 21,
-              fontWeight: FontWeight.bold,
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          new Padding(
+            padding: EdgeInsets.only(left: 21.0),
+            child: new Text(
+              title,
+              style: TextStyle(
+                fontSize: 21,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
+          widget ?? Container()
+        ]),
         this._buildAlmostDueList(list)
       ],
     ));
   }
 
+  Widget showHideOldest() {
+    return new Padding(
+        padding: EdgeInsets.only(right: 21.0),
+        child: FlatButton.icon(
+          icon: Icon(showOld ? Icons.update : Icons.history),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+          color: Colors.transparent,
+          onPressed: () {
+            setState(() {
+              showOld = !showOld;
+            });
+
+            _scrollController.animateTo(
+              _scrollController.position.minScrollExtent,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeOut,
+            );
+          },
+          label: new Text(
+            showOld ? 'Show new' : 'Show old',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ));
+  }
+
+  Widget _oldest(List list) {
+    return _tackCollection('Oldest', list, widget: showHideOldest());
+  }
+
   Widget _today(List list) {
-    return _tackCollection('Today', list);
+    return _tackCollection('Today', list, widget: showHideOldest());
   }
 
   Widget _tomorrow(List list) {

@@ -8,7 +8,7 @@ import 'package:flutter_redux_boilerplate/presentation/notifier/SubjectNotifier.
 
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:injectable/injectable.dart';
-import 'dart:collection';
+import 'package:flutter_redux_boilerplate/domain/extensions/week_of_day.dart';
 
 @lazySingleton
 @injectable
@@ -30,8 +30,18 @@ class AppNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  double get weekCompletation {
+    List<Task> tasksWeek = tasksNotifier.tasksThisWeek;
+
+    List<Task> tasksWeekDone =
+        tasksWeek.where((Task _taks) => _taks.done).toList();
+    return ((tasksWeekDone.length * 100) / tasksWeek.length);
+  }
+
+  String get totalTasksThisWeek => tasksNotifier.tasksThisWeek.length.toString();
+
   Map<DateTime, List<Task>> get calendarEvents =>
-      calendarNotifier.taskByDay(tasksNotifier.tasks);
+      calendarNotifier.taskByDay(tasksNotifier.allTasks);
 
   List<Task> get almostDue => tasksNotifier.tasks == null
       ? null

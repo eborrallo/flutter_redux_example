@@ -98,7 +98,9 @@ class _CalendarTabState extends State<CalendarTab>
                                 padding: EdgeInsets.only(left: 21.0),
                                 scrollDirection: Axis.horizontal,
                                 children: List.generate(
-                                    _selectedDayTasks.length,
+                                    _selectedDayTasks != null
+                                        ? _selectedDayTasks.length
+                                        : 0,
                                     (i) => new AnimatedListItem(i,
                                         buildListTask(_selectedDayTasks[i]))))))
                   ],

@@ -214,7 +214,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           new CalendarTab(
             appNotifier: appNotifier,
           ),
-          new ProfileTab(),
+          new ProfileTab(appNotifier: appNotifier,),
         ],
       ),
       drawer: new MainDrawer(),

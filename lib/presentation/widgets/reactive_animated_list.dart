@@ -42,7 +42,7 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
 
   void _addItem(index) {
     Future.delayed(Duration(milliseconds: index * 200), () {
-      if (widget.list.asMap().containsKey(index)) {
+      if (widget.list.asMap().containsKey(index) && this.mounted) {
         _listKey.currentState.insertItem(index);
       }
     });

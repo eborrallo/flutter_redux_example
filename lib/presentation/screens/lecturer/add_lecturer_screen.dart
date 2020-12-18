@@ -42,7 +42,7 @@ class _AddLecturerScreenState extends State<AddLecturerScreen> {
           ),
           platform: Theme.of(context).platform,
           backgroundColor: Color.fromRGBO(245, 245, 245, 1),
-          leading: BackButton(color: Colors.black),
+          leading: CloseButton(color: Colors.black),
         ),
         body: Container(
             color: Color.fromRGBO(245, 245, 245, 1),

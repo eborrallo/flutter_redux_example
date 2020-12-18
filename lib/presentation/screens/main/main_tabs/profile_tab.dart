@@ -60,22 +60,21 @@ class ProfileTab extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
-                            width: 150,
+                        Expanded(
+                            flex: 1,
                             child: CircularProgresItem(
                               text: 'Completation Rate',
-                              progressValue: appNotifier.weekCompletation,
+                              progressValue: appNotifier.weekCompletation ?? 0,
                               radius: 80,
                             )),
-                        Container(
-                            width: 60,
-                            height: 150,
+                        Expanded(
+                            flex: 1,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Container(
                                     child: Text(
-                                  appNotifier.totalTasksThisWeek,
+                                  appNotifier.totalTasksThisWeek ?? 0,
                                   style: TextStyle(fontSize: 40),
                                 )),
                                 Container(

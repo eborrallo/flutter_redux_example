@@ -31,14 +31,17 @@ class AppNotifier extends ChangeNotifier {
   }
 
   double get weekCompletation {
-    List<Task> tasksWeek = tasksNotifier.tasksThisWeek;
-
+    List<Task> tasksWeek = tasksNotifier.tasksThisWeek ?? [];
+    if (tasksWeek.length == 0) {
+      return 0;
+    }
     List<Task> tasksWeekDone =
         tasksWeek.where((Task _taks) => _taks.done).toList();
     return ((tasksWeekDone.length * 100) / tasksWeek.length);
   }
 
-  String get totalTasksThisWeek => tasksNotifier.tasksThisWeek.length.toString();
+  String get totalTasksThisWeek =>
+      tasksNotifier.tasksThisWeek?.length.toString();
 
   Map<DateTime, List<Task>> get calendarEvents =>
       calendarNotifier.taskByDay(tasksNotifier.allTasks);

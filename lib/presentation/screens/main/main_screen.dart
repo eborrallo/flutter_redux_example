@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_redux_boilerplate/config/screens.dart';
+import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
+import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/CalendarNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/ClassNotifier.dart';
@@ -17,6 +19,7 @@ import 'dart:math';
 
 import 'package:flutter_redux_boilerplate/presentation/widgets/layout.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -79,11 +82,22 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               icons: icons,
               onIconTapped: (int i) {
                 switch (i) {
-                  case 1:
-                    break;
                   case 0:
+                    getIt<NavigationService>().navigateToNext(
+                        ADD_SUBJECT_SCREEN,
+                        pageTransition: PageTransitionType.bottomToTop);
+
                     break;
+                  case 1:
+                    getIt<NavigationService>().navigateToNext(
+                        ADD_LECTURER_SCREEN,
+                        pageTransition: PageTransitionType.bottomToTop);
+                    break;
+
                   case 2:
+                    getIt<NavigationService>().navigateToNext(ADD_TASK_SCREEN,
+                        pageTransition: PageTransitionType.bottomToTop);
+
                     break;
                   default:
                     break;
@@ -130,7 +144,8 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final appNotifier = Provider.of<AppNotifier>(context, listen: true);
     final classNotifier = Provider.of<ClassNotifier>(context, listen: true);
-    final calendarNotifier = Provider.of<CalendarNotifier>(context, listen: true);
+    final calendarNotifier =
+        Provider.of<CalendarNotifier>(context, listen: true);
     final taskNotifier = Provider.of<TaskNotifier>(context, listen: true);
 
     // final subjectNotifier = Provider.of<SubjectNotifier>(context, listen: true);
@@ -214,7 +229,9 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           new CalendarTab(
             appNotifier: appNotifier,
           ),
-          new ProfileTab(appNotifier: appNotifier,),
+          new ProfileTab(
+            appNotifier: appNotifier,
+          ),
         ],
       ),
       drawer: new MainDrawer(),

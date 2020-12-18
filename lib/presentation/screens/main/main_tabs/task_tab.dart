@@ -104,7 +104,7 @@ class TaskTabState extends State<TaskTab> {
             );
           },
           label: new Text(
-            showOld ? 'Show new' : 'Show old',
+            showOld ? 'Hidde old' : 'Show old',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,

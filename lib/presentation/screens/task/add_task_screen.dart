@@ -53,11 +53,8 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
           ),
           platform: Theme.of(context).platform,
           backgroundColor: Color.fromRGBO(245, 245, 245, 1),
-          leading: BackButton(
+          leading: CloseButton(
             color: Colors.black,
-            onPressed: () {
-              Navigator.pop(context);
-            },
           ),
         ),
         body: Container(

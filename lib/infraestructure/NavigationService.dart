@@ -19,7 +19,8 @@ class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
 
-  navigateToNext(destination, pageTransition) {
+  navigateToNext(destination,
+      {pageTransition: PageTransitionType.leftToRight}) {
     Future.delayed(Duration.zero, () {
       navigatorKey.currentState
           .push(this._navigate(destination, type: pageTransition));

@@ -150,6 +150,7 @@ class _CalendarTabState extends State<CalendarTab>
                     ),
                   ),
                   Expanded(
+                    flex: 1,
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Column(

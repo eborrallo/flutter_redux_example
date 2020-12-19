@@ -27,7 +27,7 @@ class TaskTabState extends State<TaskTab> {
     var upcoming = tomorrow.add(Duration(days: 1));
     List listToday = showOld
         ? (widget.taskNotifier.allTasks ?? [])
-        : widget.taskNotifier.tasksThisWeek ?? [];
+        : widget.taskNotifier.tasks ?? [];
 
     return new Container(
       alignment: Alignment.topLeft,

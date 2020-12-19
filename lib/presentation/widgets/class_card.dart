@@ -27,8 +27,7 @@ class _ClassCardState extends State<ClassCard> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                              child: new ListTile(
+                          new ListTile(
                             title: Text(
                               widget.todayClass.title,
                               style: TextStyle(
@@ -57,7 +56,7 @@ class _ClassCardState extends State<ClassCard> {
                                               widget.todayClass.timeOut,
                                           textAlign: TextAlign.right))
                                 ])),
-                          )),
+                          ),
                           Padding(
                               padding: EdgeInsets.symmetric(horizontal: 15),
                               child: new Row(

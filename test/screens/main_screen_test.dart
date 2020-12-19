@@ -1,3 +1,4 @@
+import 'package:fake_async/fake_async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/main.dart';
@@ -52,28 +53,32 @@ void main() {
     });
     testWidgets('We can see and navigate using the bottom bar buttons',
         (WidgetTester tester) async {
-      await tester.pumpWidget(sut);
+      await tester.runAsync(() async {
+        await tester.pumpWidget(sut);
+        await tester.pumpAndSettle();
 
-      expect(find.byIcon(Icons.home), findsOneWidget);
-      expect(find.text('Home'), findsOneWidget);
-      var workButton = find.widgetWithIcon(InkWell, Icons.work);
-      expect(workButton, findsOneWidget);
-      await tester.tap(workButton);
-      await tester.pumpAndSettle();
-      expect(find.text('Task'), findsOneWidget);
+        expect(find.byIcon(Icons.home), findsOneWidget);
+        expect(find.text('Home'), findsOneWidget);
+        
+        var workButton = find.widgetWithIcon(InkWell, Icons.work);
+        expect(workButton, findsOneWidget);
+        await tester.tap(workButton);
+        await tester.pumpAndSettle();
+        expect(find.text('Task'), findsOneWidget);
 
-      initializeDateFormatting('es-ES');
-      var calendarButton = find.widgetWithIcon(InkWell, Icons.calendar_today);
-      expect(calendarButton, findsOneWidget);
-      await tester.tap(calendarButton);
-      await tester.pumpAndSettle();
-      expect(find.text('Calendar'), findsOneWidget);
+        initializeDateFormatting('es-ES');
+        var calendarButton = find.widgetWithIcon(InkWell, Icons.calendar_today);
+        expect(calendarButton, findsOneWidget);
+        await tester.tap(calendarButton);
+        await tester.pumpAndSettle();
+        expect(find.text('Calendar'), findsOneWidget);
 
-      var personButton = find.widgetWithIcon(InkWell, Icons.person);
-      expect(personButton, findsOneWidget);
-      await tester.tap(personButton);
-      await tester.pumpAndSettle();
-      expect(find.text('Profile'), findsOneWidget);
+        var personButton = find.widgetWithIcon(InkWell, Icons.person);
+        expect(personButton, findsOneWidget);
+        await tester.tap(personButton);
+        await tester.pumpAndSettle();
+        expect(find.text('Profile'), findsOneWidget);
+      });
     });
 
     testWidgets('We can see and navigate using the drawer menu buttons',

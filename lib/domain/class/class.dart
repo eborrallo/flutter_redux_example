@@ -34,7 +34,7 @@ class Class {
   }
 
    String warningMessage(){
-     return 'caca'; 
+     return ''; 
    }
 
    factory Class.fromJson(Map<String, dynamic> json) => _$ClassFromJson(json);

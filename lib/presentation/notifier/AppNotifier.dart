@@ -5,10 +5,8 @@ import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/CalendarNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/ClassNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/SubjectNotifier.dart';
-
 import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:injectable/injectable.dart';
-import 'package:flutter_redux_boilerplate/domain/extensions/week_of_day.dart';
 
 @lazySingleton
 @injectable

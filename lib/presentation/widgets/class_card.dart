@@ -27,10 +27,12 @@ class _ClassCardState extends State<ClassCard> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          new ListTile(
+                          Expanded(
+                              child: new ListTile(
                             title: Text(
                               widget.todayClass.title,
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w500),
                             ),
                             subtitle: Padding(
                                 padding: EdgeInsets.only(top: 10),
@@ -40,13 +42,14 @@ class _ClassCardState extends State<ClassCard> {
                                     color: Colors.grey,
                                     size: 18,
                                   ),
-                                  Text(
+                                  Expanded(
+                                      child: Text(
                                     widget.todayClass.location,
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       fontSize: 15,
                                     ),
-                                  ),
+                                  )),
                                   Expanded(
                                       child: Text(
                                           widget.todayClass.timeIn +
@@ -54,7 +57,7 @@ class _ClassCardState extends State<ClassCard> {
                                               widget.todayClass.timeOut,
                                           textAlign: TextAlign.right))
                                 ])),
-                          ),
+                          )),
                           Padding(
                               padding: EdgeInsets.symmetric(horizontal: 15),
                               child: new Row(

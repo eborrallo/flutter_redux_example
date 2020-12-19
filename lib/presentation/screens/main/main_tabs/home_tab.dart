@@ -10,8 +10,10 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
 
 class HomeTab extends StatelessWidget {
   final AppNotifier appNotifier;
+  final changeTab;
 
-  HomeTab({Key key, this.appNotifier}) : super(key: key);
+  HomeTab({Key key, this.appNotifier, this.changeTab})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -58,7 +60,8 @@ class HomeTab extends StatelessWidget {
   }
 
   Widget _almostDue(List<Task> list) {
-    List doneList = list!=null?list.where((element) => !element.done).toList():[];
+    List doneList =
+        list != null ? list.where((element) => !element.done).toList() : [];
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -80,7 +83,9 @@ class HomeTab extends StatelessWidget {
                           borderRadius: BorderRadius.circular(18.0),
                         ),
                         color: Colors.transparent,
-                        onPressed: () {},
+                        onPressed: () {
+                          this.changeTab(1);
+                        },
                         child: new Text(
                           'Show all',
                           style: TextStyle(

@@ -214,6 +214,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           selectedColor: Colors.blue,
           notchedShape: CircularNotchedRectangle(),
           onTabSelected: onTap,
+          index: this._index,
           items: TabItems),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _buildFab(context),
@@ -222,9 +223,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         controller: _tabController,
         onPageChanged: onTabChanged,
         children: <Widget>[
-          new HomeTab(
-            appNotifier: appNotifier,
-          ),
+          new HomeTab(appNotifier: appNotifier, changeTab: onTap),
           new TaskTab(taskNotifier: taskNotifier),
           new CalendarTab(
             appNotifier: appNotifier,

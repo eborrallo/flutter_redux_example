@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/config/screens.dart';
 import 'package:flutter_redux_boilerplate/config/styles/colors.dart';
+import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
+import 'package:flutter_redux_boilerplate/injections.dart';
+import 'package:page_transition/page_transition.dart';
 
 class MainDrawer extends StatelessWidget {
   MainDrawer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    NavigationService navigation = getIt<NavigationService>();
     return new Drawer(
         child: new ListView(
       children: <Widget>[
@@ -31,7 +36,8 @@ class MainDrawer extends StatelessWidget {
         new ListTile(
             leading: new Icon(Icons.timeline),
             title: new Text('Timetable'),
-            onTap: () => print("Timetable")),
+            onTap: () => navigation.navigateToNext(LIST_TIMETABLE_SCREEN,
+                pageTransition: PageTransitionType.leftToRightWithFade)),
         new ListTile(
             leading: new Icon(Icons.assignment),
             title: new Text('Subjects'),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/AppNotifier.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TaskCard extends StatefulWidget {
@@ -27,6 +28,11 @@ class _TaskCardState extends State<TaskCard> {
     if (duration.inDays > 0) {
       return "${twoDigitDays}d ${twoDigitMinutes}h ${twoDigitHours}m";
     }
+    if (int.parse(twoDigitMinutes) < 0) {
+      DateTime now =
+          DateTime.now().subtract(Duration(minutes: durationMinutes));
+      return DateFormat.yMMMd().format(now);
+    }
     return "${twoDigitMinutes}h ${twoDigitHours}m";
   }
 
@@ -38,8 +44,9 @@ class _TaskCardState extends State<TaskCard> {
 
   @override
   void initState() {
-    super.initState();
     startTimer();
+
+    super.initState();
   }
 
   @override

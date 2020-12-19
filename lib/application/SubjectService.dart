@@ -21,8 +21,8 @@ class SubjectService {
     tasks.forEach((Task element) {
       SubjectProgress newSubjectProgress = new SubjectProgress(element.subject);
       SubjectProgress subjectProgress = listSubjectProgress.firstWhere(
-          (SubjectProgress sub_element) =>
-              sub_element.title == element.subject.title,
+          (SubjectProgress subElement) =>
+              subElement.title == element.subject.title,
           orElse: () => null);
 
       if (subjectProgress != null) {

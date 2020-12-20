@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_boilerplate/application/UserService.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/UserNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/services/Auth.dart';
@@ -24,7 +23,7 @@ void main() {
       Auth authMock = FirebaseAuthMock();
       when(authMock.getSignedInUser()).thenReturn(new User('email', 'uid'));
       var userNotifier =
-          new UserNotifier(app: new UserService(authService: authMock));
+          new UserNotifier(auth:  authMock);
       var appNotifier = getIt<AppNotifier>();
       sut = new CalendarApp(
         navigationService: navigationService,

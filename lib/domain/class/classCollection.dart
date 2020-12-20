@@ -1,18 +1,23 @@
-import 'dart:async';
-
+import 'dart:convert';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/domain/class/class.dart';
-import 'package:flutter_redux_boilerplate/infraestructure/task/ClassRepository.dart';
-import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-@injectable
-class ClassService {
-  final ClassRepository repository;
-  ClassService(this.repository);
+part 'classCollection.g.dart';
 
-  Future<List<Class>> list() {
-    return repository.findAll();
+@JsonSerializable(nullable: true)
+class ClassCollection {
+  final List<Class> list;
+  ClassCollection({this.list});
+
+  factory ClassCollection.fromJson(Map<String, dynamic> json) =>
+      _$ClassCollectionFromJson(json);
+  Map<String, dynamic> toJson() => _$ClassCollectionToJson(this);
+
+  @override
+  String toString() {
+    return jsonEncode(this.toJson());
   }
 
   List<TodayClass> todayClasses(List<Class> classes) {

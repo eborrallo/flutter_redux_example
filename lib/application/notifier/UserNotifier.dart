@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_redux_boilerplate/application/UserService.dart';
+import 'package:flutter_redux_boilerplate/domain/services/Auth.dart';
 import 'package:flutter_redux_boilerplate/domain/user/user.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,10 +8,10 @@ import 'package:injectable/injectable.dart';
 class UserNotifier extends ChangeNotifier {
   bool isLoading = false;
   User user = new User('aaa', 'asasda');
-  final UserService _app;
+  final Auth _auth;
 
-  UserNotifier({UserService app}) : _app = app {
-    /*  _app.authService.getSignedInUser().then((User value) {
+  UserNotifier({Auth auth}) : _auth = auth {
+    /*  _auth.authService.getSignedInUser().then((User value) {
       user = value;
       isLoading = false;
       notifyListeners();
@@ -19,12 +19,12 @@ class UserNotifier extends ChangeNotifier {
   }
   init() {
     return Future.delayed(Duration(milliseconds: 1),
-        () => this._app.authService.getSignedInUser());
+        () => this._auth.getSignedInUser());
   }
 
   register(String emailAddress, String password) async {
-    await _app.authService.registerWithEmailAndPassword(emailAddress, password);
-    user = await _app.authService.getSignedInUser();
+    await _auth.registerWithEmailAndPassword(emailAddress, password);
+    user = await _auth.getSignedInUser();
     notifyListeners();
   }
 }

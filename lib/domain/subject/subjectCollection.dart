@@ -1,21 +1,28 @@
-import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
-import 'package:flutter_redux_boilerplate/infraestructure/task/SubjectRepository.dart';
-import 'package:injectable/injectable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-@injectable
-class SubjectService {
-  final SubjectRepository subjectRepository;
-  SubjectService(this.subjectRepository);
+part 'subjectCollection.g.dart';
 
-  Future<List<Subject>> list() {
-    return subjectRepository.findAll();
+@JsonSerializable(nullable: true)
+class SubjectCollection {
+  final List<Subject> list;
+
+  SubjectCollection({this.list});
+
+  factory SubjectCollection.fromJson(Map<String, dynamic> json) =>
+      _$SubjectCollectionFromJson(json);
+  Map<String, dynamic> toJson() => _$SubjectCollectionToJson(this);
+
+  @override
+  String toString() {
+    return jsonEncode(this.toJson());
   }
 
-  List<SubjectProgress> subjectProgress(List<Task> tasks) {
+  static List<SubjectProgress> subjectProgress(List<Task> tasks) {
     List<SubjectProgress> listSubjectProgress = [];
 
     tasks.forEach((Task element) {
@@ -35,5 +42,4 @@ class SubjectService {
 
     return listSubjectProgress;
   }
-
 }

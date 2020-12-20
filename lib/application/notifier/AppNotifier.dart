@@ -17,6 +17,7 @@ class AppNotifier extends ChangeNotifier {
   final CalendarNotifier calendarNotifier;
 
   List<SubjectProgress> get onProgress {
+    
     var list = subjectsNotifier.progress(listTask: tasksNotifier.tasks);
     return list == null ? null : List.unmodifiable(list);
   }

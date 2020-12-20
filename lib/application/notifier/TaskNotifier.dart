@@ -1,40 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_boilerplate/application/TaskService.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/domain/task/taskCollection.dart';
+import 'package:flutter_redux_boilerplate/infraestructure/task/TaskRepository.dart';
 import 'package:injectable/injectable.dart';
-import 'package:flutter_redux_boilerplate/domain/extensions/week_of_day.dart';
 
 @injectable
 class TaskNotifier extends ChangeNotifier {
-  TaskService _app;
+  final TaskRepository taskRepository;
 
-  TaskNotifier(this._app) {
+  TaskNotifier(this.taskRepository) {
     _updateList();
   }
 
-  List<Task> _list;
-  List<Task> get allTasks => _list == null ? null : List.unmodifiable(_list);
+  TaskCollection _taskCollection;
 
-  List<Task> get tasks => _list == null
+  List<Task> get allTasks => _taskCollection.list == null
       ? null
-      : List.unmodifiable(_list.where((Task _task) =>
-          _task.deliveryDate.millisecondsSinceEpoch > DateTime.now().millisecondsSinceEpoch));
-  List<Task> get tasksThisWeek => _list == null
+      : List.unmodifiable(_taskCollection.list);
+
+  List<Task> get tasks => _taskCollection?.list == null
       ? null
-      : List.unmodifiable(_list
-          .where((Task _task) =>
-              _task.deliveryDate.weekOfYear == DateTime.now().weekOfYear)
-          .toList());
+      : List.unmodifiable(_taskCollection.nexts());
+
+  List<Task> get tasksThisWeek => _taskCollection.list == null
+      ? null
+      : List.unmodifiable(_taskCollection.byWeek());
+
 
   void toggleTask(String uuid) {
-    Task task = _list.firstWhere((Task element) => element.uuid == uuid);
+    Task task =
+        _taskCollection.list.firstWhere((Task element) => element.uuid == uuid);
     task.done = !task.done;
     notifyListeners();
   }
 
   void _updateList() {
-    _app.list().then((list) {
-      _list = list;
+    taskRepository.findAll().then((list) {
+      _taskCollection = TaskCollection(list: list);
       notifyListeners();
     });
   }

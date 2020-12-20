@@ -15,7 +15,6 @@ import 'domain/services/Auth.dart';
 import 'application/notifier/CalendarNotifier.dart';
 import 'application/notifier/ClassNotifier.dart';
 import 'infraestructure/task/ClassRepository.dart';
-import 'application/ClassService.dart';
 import 'infraestructure/firebase/FirebaseAuthentification.dart';
 import 'infraestructure/firebase/FirebaseInjectableModule.dart';
 import 'infraestructure/firebase/FirebaseUserMapper.dart';
@@ -23,12 +22,9 @@ import 'presentation/screens/loading/loading_screen.dart';
 import 'infraestructure/NavigationService.dart';
 import 'application/notifier/SubjectNotifier.dart';
 import 'infraestructure/task/SubjectRepository.dart';
-import 'application/SubjectService.dart';
 import 'application/notifier/TaskNotifier.dart';
 import 'infraestructure/task/TaskRepository.dart';
-import 'application/TaskService.dart';
 import 'application/notifier/UserNotifier.dart';
-import 'application/UserService.dart';
 
 /// Environment names
 const _dev = 'dev';
@@ -46,30 +42,26 @@ GetIt $initGetIt(
   gh.lazySingleton<ApiStub>(() => ApiStub());
   gh.factory<CalendarNotifier>(() => CalendarNotifier());
   gh.lazySingleton<ClassRepository>(() => ClassRepository());
-  gh.factory<ClassService>(() => ClassService(get<ClassRepository>()));
   gh.lazySingleton<FirebaseAuth>(() => firebaseInjectableModule.firebaseAuth);
   gh.lazySingleton<FirebaseUserMapper>(() => FirebaseUserMapper());
   gh.factory<LoadingScreen>(() => LoadingScreen(key: get<Key>()));
   gh.lazySingleton<NavigationService>(() => NavigationService());
+  gh.factory<SubjectNotifier>(() => SubjectNotifier());
   gh.lazySingleton<SubjectRepository>(() => SubjectRepository());
-  gh.factory<SubjectService>(() => SubjectService(get<SubjectRepository>()));
   gh.lazySingleton<TaskRepository>(() => TaskRepository());
-  gh.factory<TaskService>(() => TaskService(get<TaskRepository>()));
   gh.lazySingleton<Auth>(
       () => FirebaseAuthentification(
           get<FirebaseAuth>(), get<FirebaseUserMapper>()),
       registerFor: {_dev});
-  gh.factory<ClassNotifier>(() => ClassNotifier(get<ClassService>()));
-  gh.factory<SubjectNotifier>(() => SubjectNotifier(get<SubjectService>()));
-  gh.factory<TaskNotifier>(() => TaskNotifier(get<TaskService>()));
-  gh.factory<UserService>(() => UserService(authService: get<Auth>()));
+  gh.factory<ClassNotifier>(() => ClassNotifier(get<ClassRepository>()));
+  gh.factory<TaskNotifier>(() => TaskNotifier(get<TaskRepository>()));
+  gh.lazySingleton<UserNotifier>(() => UserNotifier(auth: get<Auth>()));
   gh.lazySingleton<AppNotifier>(() => AppNotifier(
         get<TaskNotifier>(),
         get<SubjectNotifier>(),
         get<ClassNotifier>(),
         get<CalendarNotifier>(),
       ));
-  gh.lazySingleton<UserNotifier>(() => UserNotifier(app: get<UserService>()));
   return get;
 }
 

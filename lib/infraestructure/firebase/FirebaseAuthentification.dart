@@ -15,7 +15,7 @@ class FirebaseAuthentification implements Auth {
     this._firebaseUserMapper,
   );
   @override
-  Future<User> getSignedInUser() async =>
+  User getSignedInUser()  =>
       _firebaseUserMapper.toDomain(_firebaseAuth.currentUser);
 
   @override

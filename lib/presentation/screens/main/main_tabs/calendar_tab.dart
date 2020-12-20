@@ -101,8 +101,11 @@ class _CalendarTabState extends State<CalendarTab>
                                     _selectedDayTasks != null
                                         ? _selectedDayTasks.length
                                         : 0,
-                                    (i) => new AnimatedListItem(i,
-                                        buildListTask(_selectedDayTasks[i]))))))
+                                    (i) => new AnimatedListItem(
+                                          i,
+                                          buildListTask(_selectedDayTasks[i]),
+                                          duration: Duration(milliseconds: 500),
+                                        )))))
                   ],
                 ),
               ),

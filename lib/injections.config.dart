@@ -72,6 +72,7 @@ GetIt $initGetIt(
         get<SubjectNotifier>(),
         get<ClassNotifier>(),
         get<CalendarNotifier>(),
+        get<UserService>(),
       ));
   return get;
 }

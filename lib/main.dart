@@ -18,14 +18,23 @@ void main() async {
   await Firebase.initializeApp();
   configureInjection(Environment.dev);
 
-  return runApp(new CalendarApp());
+  return runApp(new CalendarApp(
+    navigationService: getIt<NavigationService>(),
+    userNotifier: getIt<UserNotifier>(),
+    appNotifier: getIt<AppNotifier>(),
+  ));
 }
 
 class CalendarApp extends StatelessWidget {
-  CalendarApp({Key key}) : super(key: key);
-  final NavigationService navigationService = getIt<NavigationService>();
-  final UserNotifier userNotifier = getIt<UserNotifier>();
-  final AppNotifier appNotifier =  getIt<AppNotifier>();
+  final NavigationService navigationService;
+  final UserNotifier userNotifier;
+  final AppNotifier appNotifier;
+  CalendarApp(
+      {Key key, this.navigationService, this.userNotifier, this.appNotifier})
+      : super(key: key){
+      }
+
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -53,17 +62,16 @@ class CalendarApp extends StatelessWidget {
             ),
             // theme: defaultTargetPlatform == TargetPlatform.iOS? kIOSTheme                : kDefaultTheme,
             navigatorKey: navigationService.navigatorKey,
-            routes: <String, WidgetBuilder>{
-              '/': (BuildContext context) {
-                if (userNotifier.isLoading == false &&
-                    userNotifier.user == null) {
-                  return new LoginScreen();
-                } else if (userNotifier.isLoading == false &&
-                    userNotifier.user != null) {
-                  return new MainScreen();
-                }
-                return new LoadingScreen();
+            home: FutureBuilder(
+              future: userNotifier.init(),
+              builder: (context, AsyncSnapshot snapshot) {
+                return snapshot.data != null
+                    ? MainScreen()
+                    : MainScreen(); //LoadingScreen();
               },
+            ),
+            routes: <String, WidgetBuilder>{
+              'home': (BuildContext context) => new LoadingScreen(),
               '/login': (BuildContext context) => new LoginScreen(),
               '/main': (BuildContext context) => new MainScreen(),
               '/signUp': (BuildContext context) => new SignUpScreen(),

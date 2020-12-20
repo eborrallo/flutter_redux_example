@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/application/UserService.dart';
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
@@ -15,6 +16,7 @@ class AppNotifier extends ChangeNotifier {
   final SubjectNotifier subjectsNotifier;
   final ClassNotifier classNotifier;
   final CalendarNotifier calendarNotifier;
+  final UserService userService;
 
   List<SubjectProgress> get onProgress {
     var list = subjectsNotifier.progress(listTask: tasksNotifier.tasks);
@@ -54,5 +56,7 @@ class AppNotifier extends ChangeNotifier {
       : List.unmodifiable(classNotifier.todayClasses);
 
   AppNotifier(this.tasksNotifier, this.subjectsNotifier, this.classNotifier,
-      this.calendarNotifier);
+      this.calendarNotifier, this.userService);
+
+
 }

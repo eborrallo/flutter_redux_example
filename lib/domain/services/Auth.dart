@@ -11,5 +11,5 @@ abstract class Auth {
     String emailAddress,
     String password,
   );
-  Future<User> getSignedInUser();
+  User getSignedInUser();
 }

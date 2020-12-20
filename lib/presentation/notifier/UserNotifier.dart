@@ -11,11 +11,15 @@ class UserNotifier extends ChangeNotifier {
   final UserService _app;
 
   UserNotifier({UserService app}) : _app = app {
-   /*  _app.authService.getSignedInUser().then((User value) {
+    /*  _app.authService.getSignedInUser().then((User value) {
       user = value;
       isLoading = false;
       notifyListeners();
     }); */
+  }
+  init() {
+    return Future.delayed(Duration(milliseconds: 1),
+        () => this._app.authService.getSignedInUser());
   }
 
   register(String emailAddress, String password) async {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/UserNotifier.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/UserNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive.dart';
 import 'package:provider/provider.dart';
 

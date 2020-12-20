@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/AppNotifier.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
 
 class ProfileTab extends StatelessWidget {

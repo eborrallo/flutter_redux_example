@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/CalendarNotifier.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/ClassNotifier.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/config/screens.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/AppNotifier.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/CalendarNotifier.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/ClassNotifier.dart';
-
-import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_drawer.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/calendar_tab.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/home_tab.dart';

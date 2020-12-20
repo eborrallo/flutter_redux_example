@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/CalendarNotifier.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/ClassNotifier.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/SubjectNotifier.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/CalendarNotifier.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/ClassNotifier.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/SubjectNotifier.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/TaskNotifier.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton

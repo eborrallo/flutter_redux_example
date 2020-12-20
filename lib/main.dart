@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/UserNotifier.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/AppNotifier.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/UserNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/auth/login/login_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/loading/loading_screen.dart';

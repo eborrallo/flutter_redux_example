@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/domain/task/taskCollection.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/task/TaskRepository.dart';
 import 'package:injectable/injectable.dart';
-
 
 @injectable
 class TaskService {
@@ -12,5 +13,4 @@ class TaskService {
   Future<List<Task>> list() {
     return taskRepository.findAll();
   }
-
 }

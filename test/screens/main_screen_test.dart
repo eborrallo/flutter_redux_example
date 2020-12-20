@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/UserService.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/UserNotifier.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/services/Auth.dart';
 import 'package:flutter_redux_boilerplate/domain/user/user.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
@@ -9,8 +11,6 @@ import 'package:injectable/injectable.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/AppNotifier.dart';
-import 'package:flutter_redux_boilerplate/presentation/notifier/UserNotifier.dart';
 
 import '../mocks/FirebaseAuthMock.dart';
 

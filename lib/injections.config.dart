@@ -10,10 +10,10 @@ import 'package:injectable/injectable.dart';
 import 'package:flutter/material.dart';
 
 import 'stubs/ApiStub.dart';
-import 'presentation/notifier/AppNotifier.dart';
+import 'application/notifier/AppNotifier.dart';
 import 'domain/services/Auth.dart';
-import 'presentation/notifier/CalendarNotifier.dart';
-import 'presentation/notifier/ClassNotifier.dart';
+import 'application/notifier/CalendarNotifier.dart';
+import 'application/notifier/ClassNotifier.dart';
 import 'infraestructure/task/ClassRepository.dart';
 import 'application/ClassService.dart';
 import 'infraestructure/firebase/FirebaseAuthentification.dart';
@@ -21,13 +21,13 @@ import 'infraestructure/firebase/FirebaseInjectableModule.dart';
 import 'infraestructure/firebase/FirebaseUserMapper.dart';
 import 'presentation/screens/loading/loading_screen.dart';
 import 'infraestructure/NavigationService.dart';
-import 'presentation/notifier/SubjectNotifier.dart';
+import 'application/notifier/SubjectNotifier.dart';
 import 'infraestructure/task/SubjectRepository.dart';
 import 'application/SubjectService.dart';
-import 'presentation/notifier/TaskNotifier.dart';
+import 'application/notifier/TaskNotifier.dart';
 import 'infraestructure/task/TaskRepository.dart';
 import 'application/TaskService.dart';
-import 'presentation/notifier/UserNotifier.dart';
+import 'application/notifier/UserNotifier.dart';
 import 'application/UserService.dart';
 
 /// Environment names

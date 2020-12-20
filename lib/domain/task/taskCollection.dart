@@ -26,6 +26,7 @@ class TaskCollection {
       .toList();
   void add(Task task) {
     list.add(task);
+    list.sort((Task a, Task b) => a.deliveryDate.compareTo(b.deliveryDate));
   }
 
   @override

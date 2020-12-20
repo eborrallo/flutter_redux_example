@@ -34,7 +34,7 @@ class NavigationService {
         .pushReplacement(this._navigate(destination, type: pageTransition));
   }
 
-  navigateBack(destination, pageTransition) {
+  navigateBack() {
     this.navigatorKey.currentState.pop();
   }
 

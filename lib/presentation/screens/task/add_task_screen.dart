@@ -1,8 +1,14 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
+import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
+import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive.dart';
+import 'package:flutter_redux_boilerplate/stubs/TaskStub.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class AddTaskScreen extends StatefulWidget {
   @override
@@ -21,12 +27,20 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
   TextEditingController _timeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: new PlatformAdaptiveAppBar(
           actions: ([
             InkWell(
-                onTap: () {},
+                onTap: () {
+                  var params = {
+                    'title':'Tarea creada',
+                    'deliveryDate': DateTime.now().add(Duration(minutes: 5)).toString()
+                  };
+                  context
+                      .read<AppNotifier>()
+                      .addTask(TaskStub.create(params: params));
+                  getIt<NavigationService>().navigateBack();
+                },
                 child: Container(
                   margin: EdgeInsets.only(right: 20),
                   child: Row(

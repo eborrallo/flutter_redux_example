@@ -72,9 +72,10 @@ class CalendarApp extends StatelessWidget {
             ),
             routes: <String, WidgetBuilder>{
               'home': (BuildContext context) => new LoadingScreen(),
-              '/login': (BuildContext context) => new LoginScreen(),
-              '/main': (BuildContext context) => new MainScreen(),
-              '/signUp': (BuildContext context) => new SignUpScreen(),
+              'login': (BuildContext context) => new LoginScreen(),
+              'main': (BuildContext context) => new MainScreen(),
+              'signUp': (BuildContext context) => new SignUpScreen(),
+              'addTask': (BuildContext context) => new SignUpScreen(),
             }));
   }
 }

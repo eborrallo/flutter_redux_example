@@ -18,7 +18,7 @@ class TaskNotifier extends ChangeNotifier {
       ? null
       : List.unmodifiable(_taskCollection.list);
 
-  List<Task> get tasks => _taskCollection?.list == null
+  List<Task> get tasks => _taskCollection == null
       ? null
       : List.unmodifiable(_taskCollection.nexts());
 
@@ -28,6 +28,7 @@ class TaskNotifier extends ChangeNotifier {
 
   void addTask(Task task) {
     _taskCollection.add(task);
+    
     notifyListeners();
   }
 

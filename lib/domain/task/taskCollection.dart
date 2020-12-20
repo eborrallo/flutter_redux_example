@@ -15,13 +15,18 @@ class TaskCollection {
       _$TaskCollectionFromJson(json);
   Map<String, dynamic> toJson() => _$TaskCollectionToJson(this);
 
-  List<Task> nexts() => list.where((Task _task) =>
-      _task.deliveryDate.millisecondsSinceEpoch >
-      DateTime.now().millisecondsSinceEpoch).toList();
+  List<Task> nexts() => list
+      .where((Task _task) =>
+          _task.deliveryDate.millisecondsSinceEpoch >
+          DateTime.now().millisecondsSinceEpoch)
+      .toList();
   List<Task> byWeek() => list
       .where((Task _task) =>
           _task.deliveryDate.weekOfYear == DateTime.now().weekOfYear)
       .toList();
+  void add(Task task) {
+    list.add(task);
+  }
 
   @override
   String toString() {

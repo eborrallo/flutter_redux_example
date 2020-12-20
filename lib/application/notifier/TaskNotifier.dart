@@ -26,6 +26,10 @@ class TaskNotifier extends ChangeNotifier {
       ? null
       : List.unmodifiable(_taskCollection.byWeek());
 
+  void addTask(Task task) {
+    _taskCollection.add(task);
+    notifyListeners();
+  }
 
   void toggleTask(String uuid) {
     Task task =

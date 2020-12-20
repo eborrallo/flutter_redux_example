@@ -9,13 +9,15 @@ part 'task.g.dart';
 class Task {
   final String uuid;
   final String title;
+  final String description;
   final Subject subject;
   final DateTime deliveryDate;
   bool done;
 
-  Task({
+  Task( {
     this.uuid,
     this.title,
+    this.description,
     this.subject,
     this.deliveryDate,
     this.done,

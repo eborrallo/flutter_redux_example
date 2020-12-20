@@ -9,7 +9,7 @@ import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-@injectable 
+@injectable
 class AppNotifier extends ChangeNotifier {
   final TaskNotifier tasksNotifier;
   final SubjectNotifier subjectsNotifier;
@@ -17,7 +17,6 @@ class AppNotifier extends ChangeNotifier {
   final CalendarNotifier calendarNotifier;
 
   List<SubjectProgress> get onProgress {
-    
     var list = subjectsNotifier.progress(listTask: tasksNotifier.tasks);
     return list == null ? null : List.unmodifiable(list);
   }
@@ -26,6 +25,12 @@ class AppNotifier extends ChangeNotifier {
     tasksNotifier.toggleTask(uuid);
     classNotifier.toggleTask(uuid);
 
+    notifyListeners();
+  }
+
+  void addTask(Task _task) {
+    tasksNotifier.addTask(_task);
+    classNotifier.addTask(_task);
     notifyListeners();
   }
 
@@ -56,6 +61,4 @@ class AppNotifier extends ChangeNotifier {
 
   AppNotifier(this.tasksNotifier, this.subjectsNotifier, this.classNotifier,
       this.calendarNotifier);
-
-
 }

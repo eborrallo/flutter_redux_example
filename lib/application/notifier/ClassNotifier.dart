@@ -28,6 +28,16 @@ class ClassNotifier extends ChangeNotifier {
     _update(listClasses);
   }
 
+  void addTask(Task _task) {
+    List<Class> listClasses = _classes.list.map((Class _cls) {
+      if(_cls.subject.uuid==_task.subject.uuid){
+        _cls.tasks.add(_task);
+      }
+      return _cls;
+    }).toList();
+    _update(listClasses);
+  }
+
   List<TodayClass> get todayClasses =>
       _todayClass == null ? null : List.unmodifiable(_todayClass);
 

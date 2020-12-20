@@ -4,7 +4,6 @@ import 'package:flutter_redux_boilerplate/domain/services/Auth.dart';
 import 'package:flutter_redux_boilerplate/domain/user/user.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/main.dart';
-import 'package:flutter_redux_boilerplate/mocks/FirebaseAuthMock.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -12,6 +11,8 @@ import 'package:mockito/mockito.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/notifier/UserNotifier.dart';
+
+import '../mocks/FirebaseAuthMock.dart';
 
 void main() {
   group('Main screen', () {
@@ -41,10 +42,12 @@ void main() {
       });
       testWidgets('We can see the "Almost Due" widgest',
           (WidgetTester tester) async {
-        await tester.pumpWidget(sut);
-        await tester.pumpAndSettle();
+        await tester.runAsync(() async {
+          await tester.pumpWidget(sut);
+          await tester.pumpAndSettle();
 
-        expect(find.text('Almost Due'), findsOneWidget);
+          expect(find.text('Almost Due'), findsOneWidget);
+        });
       });
       testWidgets('We can see the "Today Class" widgest',
           (WidgetTester tester) async {

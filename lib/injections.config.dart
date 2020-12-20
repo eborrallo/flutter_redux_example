@@ -16,7 +16,6 @@ import 'presentation/notifier/CalendarNotifier.dart';
 import 'presentation/notifier/ClassNotifier.dart';
 import 'infraestructure/task/ClassRepository.dart';
 import 'application/ClassService.dart';
-import 'mocks/FirebaseAuthMock.dart';
 import 'infraestructure/firebase/FirebaseAuthentification.dart';
 import 'infraestructure/firebase/FirebaseInjectableModule.dart';
 import 'infraestructure/firebase/FirebaseUserMapper.dart';
@@ -32,7 +31,6 @@ import 'presentation/notifier/UserNotifier.dart';
 import 'application/UserService.dart';
 
 /// Environment names
-const _test = 'test';
 const _dev = 'dev';
 
 /// adds generated dependencies
@@ -46,7 +44,6 @@ GetIt $initGetIt(
   final gh = GetItHelper(get, environment, environmentFilter);
   final firebaseInjectableModule = _$FirebaseInjectableModule();
   gh.lazySingleton<ApiStub>(() => ApiStub());
-  gh.lazySingleton<Auth>(() => FirebaseAuthMock(), registerFor: {_test});
   gh.factory<CalendarNotifier>(() => CalendarNotifier());
   gh.lazySingleton<ClassRepository>(() => ClassRepository());
   gh.factory<ClassService>(() => ClassService(get<ClassRepository>()));
@@ -58,7 +55,6 @@ GetIt $initGetIt(
   gh.factory<SubjectService>(() => SubjectService(get<SubjectRepository>()));
   gh.lazySingleton<TaskRepository>(() => TaskRepository());
   gh.factory<TaskService>(() => TaskService(get<TaskRepository>()));
-  gh.factory<UserService>(() => UserService(authService: get<Auth>()));
   gh.lazySingleton<Auth>(
       () => FirebaseAuthentification(
           get<FirebaseAuth>(), get<FirebaseUserMapper>()),
@@ -66,14 +62,14 @@ GetIt $initGetIt(
   gh.factory<ClassNotifier>(() => ClassNotifier(get<ClassService>()));
   gh.factory<SubjectNotifier>(() => SubjectNotifier(get<SubjectService>()));
   gh.factory<TaskNotifier>(() => TaskNotifier(get<TaskService>()));
-  gh.lazySingleton<UserNotifier>(() => UserNotifier(app: get<UserService>()));
+  gh.factory<UserService>(() => UserService(authService: get<Auth>()));
   gh.lazySingleton<AppNotifier>(() => AppNotifier(
         get<TaskNotifier>(),
         get<SubjectNotifier>(),
         get<ClassNotifier>(),
         get<CalendarNotifier>(),
-        get<UserService>(),
       ));
+  gh.lazySingleton<UserNotifier>(() => UserNotifier(app: get<UserService>()));
   return get;
 }
 

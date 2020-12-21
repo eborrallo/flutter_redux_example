@@ -24,7 +24,7 @@ class TaskTabState extends State<TaskTab> {
     var now = new DateTime.now();
     var tomorrow = now.add(Duration(days: 1));
     var upcoming = tomorrow.add(Duration(days: 1));
-    List listToday = showOld
+    List list = showOld
         ? (widget.taskNotifier.allTasks ?? [])
         : widget.taskNotifier.tasks ?? [];
 
@@ -36,22 +36,22 @@ class TaskTabState extends State<TaskTab> {
         controller: _scrollController,
         children: [
           showOld
-              ? _oldest(listToday
+              ? _oldest(list
                   .where((element) =>
                       element.deliveryDate.millisecondsSinceEpoch <
                       now.millisecondsSinceEpoch)
                   .toList())
               : Container(),
-          _today(listToday
+          _today(list
               .where((element) =>
                   element.deliveryDate.day == now.day &&
                   element.deliveryDate.millisecondsSinceEpoch >
                       now.millisecondsSinceEpoch)
               .toList()),
-          _tomorrow(listToday
+          _tomorrow(list
               .where((element) => element.deliveryDate.day == tomorrow.day)
               .toList()),
-          _upcomming(listToday
+          _upcomming(list
               .where((element) => element.deliveryDate.day > upcoming.day)
               .toList())
         ],

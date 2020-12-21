@@ -6,6 +6,8 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class SubjectNotifier extends ChangeNotifier {
+
+
   List<SubjectProgress> progress({List<Task> listTask}) {
     return listTask == null
         ? null

@@ -23,18 +23,22 @@ class ApiStub {
       }
     });
     List<void>.generate(
-        50,
+        5,
         (i) => this.tasks.add(TaskStub.create(
             params: {'subject': (this.subjects..shuffle()).first})));
 
     List<void>.generate(this.subjects.length, (i) {
-
-
-      this.classes.add(ClassStub.create(params: {
-            'subject': this.subjects[i].toJson(),
-            'tasks': tasks.where(
-          (Task element) => element.subject.uuid == this.subjects[i].uuid).map((e) => e.toJson()).toList()
-          }));
+      Class cls = ClassStub.create(params: {
+        'subject': this.subjects[i].toJson(),
+      });
+      tasks
+          .where(
+              (Task element) => element.subject.uuid == this.subjects[i].uuid)
+          .toList()
+          .forEach((Task _task) {
+        cls.addTask(_task);
+      });
+      this.classes.add(cls);
     });
   }
 }

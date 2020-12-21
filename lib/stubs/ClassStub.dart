@@ -34,11 +34,11 @@ class ClassStub {
       'location': map['location'] ?? faker.lorem.word()
     };
     Class cls = new Class.fromJson(_params);
-    List.generate(
-        map['tasks'] != null ? map['tasks'].length : 2,
-        (index) => cls.addTask(map['tasks'] != null
-            ? Task.fromJson(map['tasks'][index])
-            : TaskStub.random()));
+    // List.generate(
+    //     map['tasks'] != null ? map['tasks'].length : 2,
+    //     (index) => cls.addTask(map['tasks'] != null
+    //         ? Task.fromJson(map['tasks'][index])
+    //         : TaskStub.random()));
     return cls;
   }
 

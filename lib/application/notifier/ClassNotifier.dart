@@ -16,21 +16,14 @@ class ClassNotifier extends ChangeNotifier {
     _updateTodayClass();
   }
   void toggleTask(String uuid) {
-    List<Class> listClasses = _classes.list.map((Class _cls) {
-      Task task = _cls.tasks
-          .firstWhere((element) => element.uuid == uuid, orElse: () => null);
-      if (task != null) {
-        task.done = !task.done;
-      }
-      return _cls;
-    }).toList();
-
-    _update(listClasses);
+ 
+    _update(_classes.list);
   }
 
   void addTask(Task _task) {
     List<Class> listClasses = _classes.list.map((Class _cls) {
-      if(_cls.subject.uuid==_task.subject.uuid){
+      print(_cls.subject.uuid + "==" + _task.subject.uuid);
+      if (_cls.subject.uuid == _task.subject.uuid) {
         _cls.tasks.add(_task);
       }
       return _cls;

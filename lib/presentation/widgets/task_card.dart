@@ -90,6 +90,7 @@ class _TaskCardState extends State<TaskCard> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.task.title+" "+widget.task.done.toString());
     return IgnorePointer(
         ignoring: widget.blockEdit ? widget.task.done : false,
         child: Container(
@@ -112,7 +113,9 @@ class _TaskCardState extends State<TaskCard> {
                           value: widget.task.done,
                           activeColor: Color(0xffFFBD11),
                           onChanged: (bool value) async {
+
                             if (this.mounted) {
+
                               if (!value && widget.blockEdit) {
                               } else {
                                 context

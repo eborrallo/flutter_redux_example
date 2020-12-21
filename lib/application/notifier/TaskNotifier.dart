@@ -28,7 +28,7 @@ class TaskNotifier extends ChangeNotifier {
 
   void addTask(Task task) {
     _taskCollection.add(task);
-    
+
     notifyListeners();
   }
 
@@ -36,6 +36,16 @@ class TaskNotifier extends ChangeNotifier {
     Task task =
         _taskCollection.list.firstWhere((Task element) => element.uuid == uuid);
     task.done = !task.done;
+
+    //     List<Task> _list = _taskCollection.list.map((Task element) {
+    //   if (element.uuid == uuid) {
+    //     element.done = !element.done;
+    //     print(element);
+    //   }
+    //   return element;
+    // }).toList();
+
+    // _taskCollection = TaskCollection(list: _list);
     notifyListeners();
   }
 

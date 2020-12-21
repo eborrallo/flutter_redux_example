@@ -24,7 +24,6 @@ class AppNotifier extends ChangeNotifier {
   void toggleTask(String uuid) {
     tasksNotifier.toggleTask(uuid);
     classNotifier.toggleTask(uuid);
-
     notifyListeners();
   }
 

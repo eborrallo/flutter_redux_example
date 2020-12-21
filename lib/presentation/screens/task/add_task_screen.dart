@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/SubjectNotifier.dart';
+import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
@@ -25,22 +28,35 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
 
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
   TextEditingController _timeController = TextEditingController();
+  List<Subject> _subjects;
+  void save() {
+    var params = {
+      'title': 'Tarea creada',
+      'subject':
+          _subjects.firstWhere((Subject element) => element.uuid == _subject),
+      'deliveryDate': DateTime.now().add(Duration(minutes: 5)).toString()
+    };
+    context.read<AppNotifier>().addTask(TaskStub.create(params: params));
+    getIt<NavigationService>().navigateBack();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _subjects =  context.read<AppNotifier>().onProgress
+        .map((SubjectProgress subjectProgress) => subjectProgress.subject)
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: new PlatformAdaptiveAppBar(
           actions: ([
             InkWell(
-                onTap: () {
-                  var params = {
-                    'title':'Tarea creada',
-                    'deliveryDate': DateTime.now().add(Duration(minutes: 5)).toString()
-                  };
-                  context
-                      .read<AppNotifier>()
-                      .addTask(TaskStub.create(params: params));
-                  getIt<NavigationService>().navigateBack();
-                },
+                onTap: save,
                 child: Container(
                   margin: EdgeInsets.only(right: 20),
                   child: Row(
@@ -157,16 +173,12 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                       subtitle: Container(
                         margin: EdgeInsets.only(bottom: 20),
                         child: DropdownButtonFormField(
-                            items: [
-                              DropdownMenuItem(
-                                child: new Text('Male'),
-                                value: 0,
-                              ),
-                              DropdownMenuItem(
-                                child: new Text('asasd'),
-                                value: 1,
-                              )
-                            ],
+                            items: _subjects
+                                .map((Subject subject) => DropdownMenuItem(
+                                      child: new Text(subject.title),
+                                      value: subject.uuid,
+                                    ))
+                                .toList(),
                             value: _subject,
                             onChanged: (value) {
                               setState(() {

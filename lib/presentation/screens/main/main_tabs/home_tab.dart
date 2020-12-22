@@ -71,7 +71,7 @@ class HomeTab extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 new Text(
-                  'Almost Due',
+                  'Nexts almost Due',
                   style: TextStyle(
                     fontSize: 21,
                     fontWeight: FontWeight.bold,

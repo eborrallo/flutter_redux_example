@@ -24,7 +24,7 @@ class ClassCollection {
     List<TodayClass> listTodayClass = [];
 
     classes.forEach((Class element) {
-      int doneTasksToday = element.tasks
+      int pendingTasksToday = element.tasks
           .where((elementTasks) =>
               !elementTasks.done &&
               elementTasks.deliveryDate.day == DateTime.now().day &&
@@ -38,13 +38,13 @@ class ClassCollection {
               .format(element.startTime),
           timeOut: DateFormat(DateFormat.HOUR24_MINUTE, 'es_ES')
               .format(element.startTime.add(element.duration)),
-          message: doneTasksToday > 0
+          message: pendingTasksToday > 0
               ? Intl.plural(
                   element.tasks.length,
                   one:
-                      'Falta ' + doneTasksToday.toString() + ' tarea por hacer',
+                      'Falta ' + pendingTasksToday.toString() + ' tarea por hacer',
                   other: 'Faltan ' +
-                      doneTasksToday.toString() +
+                      pendingTasksToday.toString() +
                       ' tareas por hacer',
                 )
               : null));

@@ -45,7 +45,7 @@ void main() {
           await tester.pumpWidget(sut);
           await tester.pumpAndSettle();
 
-          expect(find.text('Almost Due'), findsOneWidget);
+          expect(find.text('Nexts almost Due'), findsOneWidget);
         });
       });
       testWidgets('We can see the "Today Class" widgest',

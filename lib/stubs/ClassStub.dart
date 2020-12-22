@@ -6,7 +6,6 @@ import 'package:flutter_redux_boilerplate/domain/class/class.dart';
 import 'package:flutter_redux_boilerplate/domain/lecturer/lecturer.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/stubs/SubjectStub.dart';
-import 'package:flutter_redux_boilerplate/stubs/TaskStub.dart';
 import 'package:uuid/uuid.dart';
 
 class ClassStub {

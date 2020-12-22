@@ -16,7 +16,6 @@ class TaskTab extends StatefulWidget {
 }
 
 class TaskTabState extends State<TaskTab> {
-  bool showOld = false;
   ScrollController _scrollController = ScrollController();
 
   @override
@@ -24,7 +23,7 @@ class TaskTabState extends State<TaskTab> {
     var now = new DateTime.now();
     var tomorrow = now.add(Duration(days: 1));
     var upcoming = tomorrow.add(Duration(days: 1));
-    List list = showOld
+    List list = widget.taskNotifier.showOld
         ? (widget.taskNotifier.allTasks ?? [])
         : widget.taskNotifier.tasks ?? [];
 
@@ -35,25 +34,12 @@ class TaskTabState extends State<TaskTab> {
       child: new ListView(
         controller: _scrollController,
         children: [
-          showOld
-              ? _oldest(list
-                  .where((element) =>
-                      element.deliveryDate.millisecondsSinceEpoch <
-                      now.millisecondsSinceEpoch)
-                  .toList())
+          widget.taskNotifier.showOld
+              ? _oldest(widget.taskNotifier.oldest)
               : Container(),
-          _today(list
-              .where((element) =>
-                  element.deliveryDate.day == now.day &&
-                  element.deliveryDate.millisecondsSinceEpoch >
-                      now.millisecondsSinceEpoch)
-              .toList()),
-          _tomorrow(list
-              .where((element) => element.deliveryDate.day == tomorrow.day)
-              .toList()),
-          _upcomming(list
-              .where((element) => element.deliveryDate.day > upcoming.day)
-              .toList())
+          _today(widget.taskNotifier.today),
+          _tomorrow(widget.taskNotifier.tomorrow),
+          _upcomming(widget.taskNotifier.upComing)
         ],
       ),
     );
@@ -86,15 +72,14 @@ class TaskTabState extends State<TaskTab> {
     return new Padding(
         padding: EdgeInsets.only(right: 21.0),
         child: FlatButton.icon(
-          icon: Icon(showOld ? Icons.update : Icons.history),
+          icon:
+              Icon(widget.taskNotifier.showOld ? Icons.update : Icons.history),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18.0),
           ),
           color: Colors.transparent,
           onPressed: () {
-            setState(() {
-              showOld = !showOld;
-            });
+            widget.taskNotifier.toggleShowOld();
 
             _scrollController.animateTo(
               _scrollController.position.minScrollExtent,
@@ -103,7 +88,7 @@ class TaskTabState extends State<TaskTab> {
             );
           },
           label: new Text(
-            showOld ? 'Hidde old' : 'Show old',
+            widget.taskNotifier.showOld ? 'Hidde old' : 'Show old',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,

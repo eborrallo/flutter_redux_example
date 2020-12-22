@@ -3,9 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
-import 'package:flutter_redux_boilerplate/application/notifier/SubjectNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
-import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive.dart';
@@ -24,20 +22,24 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
   DateTime selectedDate = DateTime.now();
   TextEditingController _dateController = TextEditingController();
   TextEditingController _fileController = TextEditingController();
-  String _hour, _minute, _time;
+  String _hour, _minute, _time, _dateValidator, _timeValidator;
 
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
   TextEditingController _timeController = TextEditingController();
   List<Subject> _subjects;
+  final _formKey = GlobalKey<FormState>();
+
   void save() {
-    var params = {
-      'title': 'Tarea creada',
-      'subject':
-          _subjects.firstWhere((Subject element) => element.uuid == _subject),
-      'deliveryDate': DateTime.now().add(Duration(minutes: 5)).toString()
-    };
-    context.read<AppNotifier>().addTask(TaskStub.create(params: params));
-    getIt<NavigationService>().navigateBack();
+    if (_formKey.currentState.validate()) {
+      var params = {
+        'title': 'Tarea creada',
+        'subject':
+            _subjects.firstWhere((Subject element) => element.uuid == _subject),
+        'deliveryDate': DateTime.now().add(Duration(minutes: 5)).toString()
+      };
+      context.read<AppNotifier>().addTask(TaskStub.create(params: params));
+      getIt<NavigationService>().navigateBack();
+    }
   }
 
   @override
@@ -45,7 +47,9 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
     // TODO: implement initState
     super.initState();
 
-    _subjects =  context.read<AppNotifier>().onProgress
+    _subjects = context
+        .read<AppNotifier>()
+        .onProgress
         .map((SubjectProgress subjectProgress) => subjectProgress.subject)
         .toList();
   }
@@ -65,7 +69,7 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                       IconButton(
                           color: Colors.blue,
                           icon: Icon(Icons.save),
-                          onPressed: () {}),
+                          onPressed: save),
                       Text(
                         'SAVE',
                         style: TextStyle(
@@ -91,7 +95,8 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
             color: Color.fromRGBO(245, 245, 245, 1),
             padding: EdgeInsets.all(20),
             child: Form(
-                //autovalidate: true,
+                key: _formKey,
+                autovalidate: true,
                 onChanged: () {
                   // Form.of(primaryFocus.context).save();
                 },
@@ -117,9 +122,8 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                             hintText: 'Write subject title',
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                           ),
-                          validator: (val) => val.isEmpty
-                              ? 'Please enter your subject title.'
-                              : null,
+                          validator: (val) =>
+                              val.isEmpty ? 'Please enter your title.' : null,
                           onSaved: (val) => _title = val,
                         ),
                       )),
@@ -146,7 +150,7 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                           ),
                           validator: (val) => val.isEmpty
-                              ? 'Please enter your subject title.'
+                              ? 'Please enter your description.'
                               : null,
                           onSaved: (val) => _title = val,
                         ),
@@ -185,6 +189,9 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                                 _subject = value;
                               });
                             },
+                            validator: (val) => val == null
+                                ? 'Please enter your Subject.'
+                                : null,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.grey.shade200,
@@ -227,7 +234,7 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                           ),
                           validator: (val) => val.isEmpty
-                              ? 'Please enter your subject title.'
+                              ? 'Please enter your attachment.'
                               : null,
                           onSaved: (val) => _title = val,
                         ),
@@ -246,37 +253,59 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
 
   Widget datePicker() {
     return InkWell(
-      onTap: () {
-        _selectDate(context);
-      },
-      child: Container(
-        width: 180,
-        height: 50,
-        margin: EdgeInsets.only(
-          top: 10,
-        ),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.all(Radius.circular(10))),
-        child: TextFormField(
-            textAlign: TextAlign.left,
-            enabled: false,
-            keyboardType: TextInputType.text,
-            controller: _dateController,
-            onSaved: (String val) {
-              _setDate = val;
-            },
-            decoration: InputDecoration(
-              prefixIcon: Icon(
-                Icons.calendar_today,
-                color: Colors.grey,
+        onTap: () {
+          _selectDate(context);
+        },
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+            width: 180,
+            height: 50,
+            margin: EdgeInsets.only(
+              top: 20,
+            ),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: TextFormField(
+                textAlign: TextAlign.left,
+                enabled: false,
+                keyboardType: TextInputType.text,
+                controller: _dateController,
+                onSaved: (String val) {
+                  _setDate = val;
+                },
+                validator: (val) {
+                  if (val.isEmpty) {
+                    Future.delayed(Duration.zero, () async {
+                      setState(() {
+                        _dateValidator = 'Please enter your date.';
+                      });
+                    });
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.calendar_today,
+                    color: Colors.grey,
+                  ),
+                  hintText: 'Pick date',
+                  disabledBorder:
+                      UnderlineInputBorder(borderSide: BorderSide.none),
+                )),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 10),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                _dateValidator ?? '',
+                style: TextStyle(color: Colors.red[600], fontSize: 12),
               ),
-              hintText: 'Pick date',
-              disabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
-            )),
-      ),
-    );
+            ),
+          )
+        ]));
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -313,32 +342,50 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
       onTap: () {
         _selectTime(context);
       },
-      child: Container(
-        margin: EdgeInsets.only(top: 10, left: 20),
-        width: 150,
-        height: 50,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.all(Radius.circular(10))),
-        child: TextFormField(
-          textAlign: TextAlign.left,
-          onSaved: (String val) {
-            _setTime = val;
-          },
-          enabled: false,
-          keyboardType: TextInputType.text,
-          controller: _timeController,
-          decoration: InputDecoration(
-            hintText: 'Set time',
-            prefixIcon: Icon(
-              Icons.access_time,
-              color: Colors.grey,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Container(
+          margin: EdgeInsets.only(top: 20, left: 20),
+          width: 150,
+          height: 50,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          child: TextFormField(
+            textAlign: TextAlign.left,
+            onSaved: (String val) {
+              _setTime = val;
+            },
+            enabled: false,
+            keyboardType: TextInputType.text,
+            controller: _timeController,
+            validator: (val) {
+              Future.delayed(Duration.zero, () async {
+                setState(() {
+                  _timeValidator = 'Please enter your time.';
+                });
+              });
+              return null;
+            },
+            decoration: InputDecoration(
+              hintText: 'Set time',
+              prefixIcon: Icon(
+                Icons.access_time,
+                color: Colors.grey,
+              ),
+              disabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
             ),
-            disabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
           ),
         ),
-      ),
+        Container(
+          margin: EdgeInsets.only(left: 20),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(_timeValidator ?? '',
+                style: TextStyle(color: Colors.red[600], fontSize: 12)),
+          ),
+        )
+      ]),
     );
   }
 }

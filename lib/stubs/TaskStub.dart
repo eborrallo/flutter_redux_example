@@ -17,10 +17,10 @@ class TaskStub {
       'title': map['title'] ?? subject.title + " task",
       'subject': subject.toJson(),
       'deliveryDate': map['deliveryDate'] ??
-          DateTime.now().subtract(Duration(days: 5))
+          DateTime.now().subtract(Duration(days: 3))
               .add(new Duration(
-                  days: Random().nextInt(10),
-                  hours: Random().nextInt(20),
+                  days: Random().nextInt(5),
+                  hours: Random().nextInt(10),
                   minutes: Random().nextInt(59)))
               .toString(),
       'done': map['done'] ?? ([true, false]..shuffle()).first,

@@ -27,11 +27,17 @@ class _TaskCardState extends State<TaskCard> {
     String twoDigitHours = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitMinutes = twoDigits(duration.inHours.remainder(24));
     if (duration.inDays > 0) {
-      return "${twoDigitDays}d ${twoDigitMinutes}h ${twoDigitHours}m";
+      return "${twoDigitDays}d ${twoDigitHours}h ${twoDigitMinutes}m";
     }
     if (int.parse(twoDigitMinutes) < 0) {
       DateTime now =
-          DateTime.now().subtract(Duration(minutes: durationMinutes));
+          DateTime.now().subtract(Duration(minutes: -durationMinutes));
+
+      if (now.day == DateTime.now().day &&
+          now.month == DateTime.now().month &&
+          now.year == DateTime.now().year) {
+        return 'Expired from ' + DateFormat.Hm().format(now);
+      }
       return DateFormat.yMMMd().format(now);
     }
     return "${twoDigitMinutes}h ${twoDigitHours}m";
@@ -112,9 +118,7 @@ class _TaskCardState extends State<TaskCard> {
                           value: widget.task.done,
                           activeColor: Color(0xffFFBD11),
                           onChanged: (bool value) async {
-
                             if (this.mounted) {
-
                               if (!value && widget.blockEdit) {
                               } else {
                                 context
@@ -143,28 +147,36 @@ class _TaskCardState extends State<TaskCard> {
                                     shape: BoxShape.circle,
                                   ),
                                 ),
-                                Text(
-                                  widget.task.subject.title,
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
                                 Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      widget.task.subject.title,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                      ),
+                                    )),
+                                Expanded(
+                                    flex: 3,
                                     child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
-                                      Icon(
-                                        Icons.access_time,
-                                        size: 18,
-                                        color: Colors.grey,
-                                      ),
-                                      Text(
-                                          formatTimeLeft(
-                                              int.parse(totalTimeLeft)),
-                                          textAlign: TextAlign.right)
-                                    ]))
+                                          Icon(
+                                            Icons.access_time,
+                                            size: 18,
+                                            color: Colors.grey,
+                                          ),
+                                          Text(
+                                            formatTimeLeft(
+                                                int.parse(totalTimeLeft)),
+                                            textAlign: TextAlign.right,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          )
+                                        ]))
                               ])),
                     ),
                   ],

@@ -23,7 +23,7 @@ class ApiStub {
       }
     });
     List<void>.generate(
-        5,
+        20,
         (i) => this.tasks.add(TaskStub.create(
             params: {'subject': (this.subjects..shuffle()).first})));
 

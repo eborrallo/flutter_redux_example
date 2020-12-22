@@ -22,7 +22,6 @@ class ClassNotifier extends ChangeNotifier {
 
   void addTask(Task _task) {
     List<Class> listClasses = _classes.list.map((Class _cls) {
-      print(_cls.subject.uuid + "==" + _task.subject.uuid);
       if (_cls.subject.uuid == _task.subject.uuid) {
         _cls.tasks.add(_task);
       }

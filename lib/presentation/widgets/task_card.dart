@@ -90,7 +90,6 @@ class _TaskCardState extends State<TaskCard> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.task.title+" "+widget.task.done.toString());
     return IgnorePointer(
         ignoring: widget.blockEdit ? widget.task.done : false,
         child: Container(

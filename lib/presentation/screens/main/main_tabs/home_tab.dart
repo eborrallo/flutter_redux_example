@@ -1,19 +1,20 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/presentation/widgets/all_tasks_done.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/class_card.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/reactive_animated_list.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatelessWidget  {
   final AppNotifier appNotifier;
   final changeTab;
 
-  HomeTab({Key key, this.appNotifier, this.changeTab})
-      : super(key: key);
+  HomeTab({Key key, this.appNotifier, this.changeTab}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -61,7 +62,8 @@ class HomeTab extends StatelessWidget {
 
   Widget _almostDue(List<Task> list) {
     List doneList =
-        list != null ? list.where((element) => !element.done).toList() : [];
+        list != null ? list.where((element) => !element.done).toList() : null;
+
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -77,7 +79,7 @@ class HomeTab extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                doneList.length > 2
+                doneList != null && doneList.length > 2
                     ? FlatButton(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
@@ -102,6 +104,10 @@ class HomeTab extends StatelessWidget {
     );
   }
 
+  Widget _buildGreatJob() {
+    return Container();
+  }
+
   Widget _onProgress(List<SubjectProgress> list) {
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,6 +128,16 @@ class HomeTab extends StatelessWidget {
   }
 
   Widget _buildAlmostDueList(List<Task> list) {
+    if (list != null && list.length == 0) {
+    
+      return Container(
+        //color: Colors.red,
+        margin: EdgeInsets.symmetric(vertical: 21.0),
+        padding: EdgeInsets.symmetric(horizontal: 21.0),
+        height: 230.0,
+        child: AllTasksDone(appNotifier.tasksNotifier.allTasks),
+      );
+    }
     return new Container(
         margin: EdgeInsets.symmetric(vertical: 21.0),
         padding: EdgeInsets.symmetric(horizontal: 21.0),
@@ -131,7 +147,7 @@ class HomeTab extends StatelessWidget {
           (context, element) => new TaskCard(
             element,
           ),
-          length: 2,
+          length: list != null && list.length < 2 ? list.length : 2,
         ));
   }
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
@@ -22,14 +23,16 @@ class _TaskCardState extends State<TaskCard> {
 
   String formatTimeLeft(int durationMinutes) {
     Duration duration = new Duration(minutes: durationMinutes);
+
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitDays = duration.inDays.toString();
-    String twoDigitHours = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitMinutes = twoDigits(duration.inHours.remainder(24));
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitHours = twoDigits(duration.inHours.remainder(24));
+
     if (duration.inDays > 0) {
       return "${twoDigitDays}d ${twoDigitHours}h ${twoDigitMinutes}m";
     }
-    if (int.parse(twoDigitMinutes) < 0) {
+    if (int.parse(twoDigitHours) < 0) {
       DateTime now =
           DateTime.now().subtract(Duration(minutes: -durationMinutes));
 
@@ -40,7 +43,7 @@ class _TaskCardState extends State<TaskCard> {
       }
       return DateFormat.yMMMd().format(now);
     }
-    return "${twoDigitMinutes}h ${twoDigitHours}m";
+    return "${twoDigitHours}h ${twoDigitMinutes}m";
   }
 
   @override
@@ -129,8 +132,10 @@ class _TaskCardState extends State<TaskCard> {
                           },
                         ),
                       ),
-                      title: Text(
+                      title: AutoSizeText(
                         widget.task.title,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
                         style: TextStyle(fontSize: 20),
                       ),
                       subtitle: Padding(
@@ -149,9 +154,10 @@ class _TaskCardState extends State<TaskCard> {
                                 ),
                                 Expanded(
                                     flex: 2,
-                                    child: Text(
+                                    child: AutoSizeText(
                                       widget.task.subject.title,
-                                      maxLines: 2,
+                                      maxLines: 1,
+                                      //maxFontSize: 15,
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
@@ -165,7 +171,9 @@ class _TaskCardState extends State<TaskCard> {
                                             MainAxisAlignment.end,
                                         children: [
                                           Icon(
-                                          int.parse( totalTimeLeft)<0 ?Icons.watch_later:Icons.access_time,
+                                            int.parse(totalTimeLeft) < 0
+                                                ? Icons.watch_later
+                                                : Icons.access_time,
                                             size: 18,
                                             color: Colors.grey,
                                           ),

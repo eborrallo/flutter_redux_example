@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:faker/faker.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:uuid/uuid.dart';
@@ -11,10 +12,11 @@ class TaskStub {
   static Task create({params}) {
     var map = params ?? new Map<String, dynamic>();
     Subject subject = map['subject'] ?? SubjectStub.random();
+    var faker = new Faker();
 
     var _params = {
       'uuid': map['uuid'] ?? Uuid().v4(),
-      'title': map['title'] ?? subject.title + " task",
+      'title': map['title'] ?? faker.lorem.sentence(),
       'subject': subject.toJson(),
       'deliveryDate': map['deliveryDate'] ??
           DateTime.now().subtract(Duration(days: 3))

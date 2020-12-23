@@ -17,7 +17,7 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskStateScreen extends State<AddTaskScreen> {
-  String _title, _setTime, _setDate, _subject;
+  String _title, _setTime, _setDate, _subject, _description;
   File _file;
   DateTime selectedDate = DateTime.now();
   TextEditingController _dateController = TextEditingController();
@@ -31,11 +31,14 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
 
   void save() {
     if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+
       var params = {
-        'title': 'Tarea creada',
+        'title': _title,
+        'deliveryDate': DateTime(selectedDate.year, selectedDate.month,
+            selectedDate.day, int.parse(_hour), int.parse(_minute)),
         'subject':
             _subjects.firstWhere((Subject element) => element.uuid == _subject),
-        'deliveryDate': DateTime.now().add(Duration(minutes: 5)).toString()
       };
       context.read<AppNotifier>().addTask(TaskStub.create(params: params));
       getIt<NavigationService>().navigateBack();
@@ -56,50 +59,49 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: new PlatformAdaptiveAppBar(
-          actions: ([
-            InkWell(
-                onTap: save,
-                child: Container(
-                  margin: EdgeInsets.only(right: 20),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      IconButton(
-                          color: Colors.blue,
-                          icon: Icon(Icons.save),
-                          onPressed: save),
-                      Text(
-                        'SAVE',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue),
-                      )
-                    ],
-                  ),
-                ))
-          ]),
-          title: Text(
-            'Add Task',
-            style: TextStyle(color: Colors.black),
-          ),
-          platform: Theme.of(context).platform,
-          backgroundColor: Color.fromRGBO(245, 245, 245, 1),
-          leading: CloseButton(
-            color: Colors.black,
-          ),
-        ),
-        body: Container(
-            color: Color.fromRGBO(245, 245, 245, 1),
-            padding: EdgeInsets.all(20),
-            child: Form(
-                key: _formKey,
-                autovalidate: true,
-                onChanged: () {
-                  // Form.of(primaryFocus.context).save();
-                },
+    return Form(
+        key: _formKey,
+        onChanged: () {
+          //  Form.of(primaryFocus.context).save();
+        },
+        child: Scaffold(
+            appBar: new PlatformAdaptiveAppBar(
+              actions: ([
+                InkWell(
+                    onTap: save,
+                    child: Container(
+                      margin: EdgeInsets.only(right: 20),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          IconButton(
+                              color: Colors.blue,
+                              icon: Icon(Icons.save),
+                              onPressed: save),
+                          Text(
+                            'SAVE',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue),
+                          )
+                        ],
+                      ),
+                    ))
+              ]),
+              title: Text(
+                'Add Task',
+                style: TextStyle(color: Colors.black),
+              ),
+              platform: Theme.of(context).platform,
+              backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+              leading: CloseButton(
+                color: Colors.black,
+              ),
+            ),
+            body: Container(
+                color: Color.fromRGBO(245, 245, 245, 1),
+                padding: EdgeInsets.all(20),
                 child: Column(children: [
                   ListTile(
                       title: Container(
@@ -124,7 +126,9 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                           ),
                           validator: (val) =>
                               val.isEmpty ? 'Please enter your title.' : null,
-                          onSaved: (val) => _title = val,
+                          onSaved: (val) => setState(() {
+                            _title = val;
+                          }),
                         ),
                       )),
                   ListTile(
@@ -149,10 +153,9 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                             hintText: 'Write some description',
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                           ),
-                          validator: (val) => val.isEmpty
-                              ? 'Please enter your description.'
-                              : null,
-                          onSaved: (val) => _title = val,
+                          onSaved: (val) => setState(() {
+                            _description = val;
+                          }),
                         ),
                       )),
                   Container(
@@ -233,10 +236,6 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                             labelStyle: TextStyle(fontWeight: FontWeight.bold),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                           ),
-                          validator: (val) => val.isEmpty
-                              ? 'Please enter your attachment.'
-                              : null,
-                          onSaved: (val) => _title = val,
                         ),
                       )),
                 ]))));
@@ -360,11 +359,13 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
             keyboardType: TextInputType.text,
             controller: _timeController,
             validator: (val) {
-              Future.delayed(Duration.zero, () async {
-                setState(() {
-                  _timeValidator = 'Please enter your time.';
+              if (val.isEmpty) {
+                Future.delayed(Duration.zero, () async {
+                  setState(() {
+                    _timeValidator = 'Please enter your time.';
+                  });
                 });
-              });
+              }
               return null;
             },
             decoration: InputDecoration(

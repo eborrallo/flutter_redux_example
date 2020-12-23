@@ -16,7 +16,7 @@ class TaskNotifier extends ChangeNotifier {
   TaskCollection _taskCollection;
   bool get showOld => this._showOld;
 
-  List<Task> get allTasks => _taskCollection.list == null
+  List<Task> get allTasks => _taskCollection?.list == null
       ? null
       : List.unmodifiable(_taskCollection.list);
 

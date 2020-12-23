@@ -165,7 +165,7 @@ class _TaskCardState extends State<TaskCard> {
                                             MainAxisAlignment.end,
                                         children: [
                                           Icon(
-                                            Icons.access_time,
+                                          int.parse( totalTimeLeft)<0 ?Icons.watch_later:Icons.access_time,
                                             size: 18,
                                             color: Colors.grey,
                                           ),

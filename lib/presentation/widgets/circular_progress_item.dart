@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_count.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -15,6 +16,7 @@ class CircularProgresItem extends StatefulWidget {
 class _CircularProgresItemState extends State<CircularProgresItem> {
   @override
   Widget build(BuildContext context) {
+
     return Container(
       width: 85,
       alignment: Alignment(0, 0),
@@ -37,15 +39,15 @@ class _CircularProgresItemState extends State<CircularProgresItem> {
         ),
         footer: new Padding(
             padding: EdgeInsets.only(top: 8.0),
-            child: FittedBox(
-                fit: BoxFit.fitWidth,
-                child: Text(widget.text,
-                    textAlign: TextAlign.center,
-                    style: new TextStyle(
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 17.0,
-                    )))),
+            child: AutoSizeText(widget.text,
+                maxLines: widget.text.trim().split(" ").length > 1 ? 2 : 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: new TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 17.0,
+                ))),
         linearGradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,

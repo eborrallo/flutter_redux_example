@@ -28,11 +28,12 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
     }
     oldWidget.list.forEach((element) {
       if (!widget.list.contains(element)) {
-        if (oldWidget.list.indexOf(element) < this.length())
+        if (oldWidget.list.indexOf(element) <= this.length()) {
           _listKey.currentState.removeItem(oldWidget.list.indexOf(element),
               (context, animation) => _buildItem(context, element, animation));
-        deleted = true;
-        return;
+          deleted = true;
+          return;
+        }
       }
     });
     return deleted;
@@ -40,12 +41,16 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
 
   int length() => widget.length ?? widget.list.length;
 
-  void _addItem(index) {
+  void _addItemDelayed(index, list) {
     Future.delayed(Duration(milliseconds: index * 200), () {
-      if (widget.list.asMap().containsKey(index) && this.mounted) {
-        _listKey.currentState.insertItem(index);
-      }
+      this._addItem(index, list);
     });
+  }
+
+  void _addItem(index, list) {
+    if (widget.list.asMap().containsKey(index) && this.mounted) {
+      _listKey.currentState.insertItem(index);
+    }
   }
 
   @override
@@ -54,18 +59,18 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
     if (oldWidget.list != null) {
       if (oldWidget.list.length > widget.list.length) {
         if (_deleteItem(oldWidget)) {
-          _addItem(1);
+          _addItem(1, widget.list);
           isEmty = false;
         }
       } else if (oldWidget.list.length < widget.list.length) {
         if (widget.list.length <= this.length()) {
-          _addItem(0);
+          _addItem(0, widget.list);
           isEmty = false;
         }
       }
     } else if (oldWidget.list == null && oldWidget.list != widget.list) {
       for (var i = 0; i < this.length(); i++) {
-        _addItem(i);
+        _addItemDelayed(i, widget.list);
         isEmty = false;
       }
     }

@@ -10,7 +10,7 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/class_card.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/reactive_animated_list.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
 
-class HomeTab extends StatelessWidget  {
+class HomeTab extends StatelessWidget {
   final AppNotifier appNotifier;
   final changeTab;
 
@@ -129,7 +129,6 @@ class HomeTab extends StatelessWidget  {
 
   Widget _buildAlmostDueList(List<Task> list) {
     if (list != null && list.length == 0) {
-    
       return Container(
         //color: Colors.red,
         margin: EdgeInsets.symmetric(vertical: 21.0),
@@ -147,7 +146,7 @@ class HomeTab extends StatelessWidget  {
           (context, element) => new TaskCard(
             element,
           ),
-          length: list != null && list.length < 2 ? list.length : 2,
+          length: list != null && list.length < 2 ? list.length  : 2,
         ));
   }
 

@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 
 class AllTasksDone extends StatefulWidget {
@@ -12,6 +13,9 @@ class AllTasksDone extends StatefulWidget {
 class _AllTasksDoneState extends State<AllTasksDone>
     with TickerProviderStateMixin {
   AnimationController _animationController;
+  final GlobalKey<InOutAnimationState> inOutAnimation =
+      GlobalKey<InOutAnimationState>();
+  final GlobalKey<AnimatorWidgetState> _key = GlobalKey<AnimatorWidgetState>();
 
   @override
   void initState() {
@@ -29,14 +33,19 @@ class _AllTasksDoneState extends State<AllTasksDone>
   Widget build(BuildContext context) {
     int pendingOldTask =
         widget.tasks.where((element) => !element.done).toList().length;
-    return FadeTransition(
-        opacity: Tween(begin: 0.0, end: 1.0).animate(_animationController),
+
+    return InOutAnimation(
+        key: inOutAnimation,
+        inDefinition: ZoomInAnimation(),
+        outDefinition: ZoomOutAnimation(),
         child: Center(
           child: Column(children: [
-            Text(
-              pendingOldTask > 0 ? '😇' : '😍',
-              style: TextStyle(fontSize: 100),
-            ),
+            Bounce(
+                key: _key,
+                child: Text(
+                  pendingOldTask > 0 ? '😇' : '😍',
+                  style: TextStyle(fontSize: 100),
+                )),
             AutoSizeText(
               (pendingOldTask > 0
                   ? 'All the next task are done.But some of the old tasks haven\'t yet'

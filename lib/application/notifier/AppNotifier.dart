@@ -15,7 +15,7 @@ class AppNotifier extends ChangeNotifier {
   final SubjectNotifier subjectsNotifier;
   final ClassNotifier classNotifier;
   final CalendarNotifier calendarNotifier;
-
+  Task _taskSelected;
   List<SubjectProgress> get onProgress {
     var list = subjectsNotifier.progress(listTask: tasksNotifier.allTasks);
     return list == null ? null : List.unmodifiable(list);
@@ -33,6 +33,11 @@ class AppNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  void selectTask(Task _task) {
+    this._taskSelected = _task;
+    notifyListeners();
+  }
+
   double get weekCompletation {
     List<Task> tasksWeek = tasksNotifier.tasksThisWeek ?? [];
     if (tasksWeek.length == 0) {
@@ -43,6 +48,8 @@ class AppNotifier extends ChangeNotifier {
     return ((tasksWeekDone.length * 100) / tasksWeek.length);
   }
 
+  Task get taskSelected => this._taskSelected;
+  
   String get totalTasksThisWeek =>
       tasksNotifier.tasksThisWeek?.length.toString();
 

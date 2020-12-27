@@ -18,6 +18,7 @@ class TaskStub {
       'uuid': map['uuid'] ?? Uuid().v4(),
       'title': map['title'] ?? faker.lorem.sentence(),
       'subject': subject.toJson(),
+      'description': faker.lorem.sentences(20).join('. '),
       'deliveryDate': map['deliveryDate'] ??
           DateTime.now().subtract(Duration(days: 3))
               .add(new Duration(

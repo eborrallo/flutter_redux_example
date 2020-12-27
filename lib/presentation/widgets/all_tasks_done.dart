@@ -40,12 +40,11 @@ class _AllTasksDoneState extends State<AllTasksDone>
         outDefinition: ZoomOutAnimation(),
         child: Center(
           child: Column(children: [
-            Bounce(
-                key: _key,
-                child: Text(
-                  pendingOldTask > 0 ? '😇' : '😍',
-                  style: TextStyle(fontSize: 100),
-                )),
+            Icon(
+              pendingOldTask > 0 ? Icons.check : Icons.favorite,
+              size: 100,
+              color: pendingOldTask > 0 ? Colors.green : Colors.red,
+            ),
             AutoSizeText(
               (pendingOldTask > 0
                   ? 'All the next task are done.But some of the old tasks haven\'t yet'

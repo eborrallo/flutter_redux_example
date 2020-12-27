@@ -35,8 +35,9 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
 
       var params = {
         'title': _title,
+        'description': _description,
         'deliveryDate': DateTime(selectedDate.year, selectedDate.month,
-            selectedDate.day, int.parse(_hour), int.parse(_minute)),
+            selectedDate.day, int.parse(_hour), int.parse(_minute)).toString(),
         'subject':
             _subjects.firstWhere((Subject element) => element.uuid == _subject),
       };

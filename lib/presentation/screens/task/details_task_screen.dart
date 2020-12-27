@@ -13,9 +13,12 @@ class DetailsTaskScreen extends StatefulWidget {
 class _DetailsTaskScreenState extends State<DetailsTaskScreen> {
   @override
   Widget build(BuildContext context) {
+    //Color background = Color.fromRGBO(245, 245, 245, 1);
+    Color background = Colors.white;
     AppNotifier app = getIt<AppNotifier>();
     bool done = false;
     return Scaffold(
+        backgroundColor: background,
         appBar: new PlatformAdaptiveAppBar(
           actions: [
             Container(
@@ -42,13 +45,13 @@ class _DetailsTaskScreenState extends State<DetailsTaskScreen> {
             )
           ],
           platform: Theme.of(context).platform,
-          backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+          backgroundColor: background,
           leading: CloseButton(
             color: Colors.black,
           ),
         ),
         body: Container(
-            color: Color.fromRGBO(245, 245, 245, 1),
+            color: background,
             padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
             child: SingleChildScrollView(
                 child: Column(

@@ -1,17 +1,11 @@
 import 'dart:async';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
-import 'package:flutter_redux_boilerplate/config/screens.dart';
 import 'package:flutter_redux_boilerplate/domain/extensions/color_extension.dart';
-
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
-import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
-
 import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/task/details_task_screen.dart';
-
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 

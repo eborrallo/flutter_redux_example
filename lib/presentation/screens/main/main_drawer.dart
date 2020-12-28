@@ -48,7 +48,8 @@ class MainDrawer extends StatelessWidget {
             title: new Text('Subjects'),
             onTap: () {
               Navigator.of(context).pop();
-              navigation.navigateToNext(LIST_SUBJECT_SCREEN);
+              navigation.navigateToNext(LIST_SUBJECT_SCREEN,
+                  pageTransition: PageTransitionType.bottomToTop);
             }),
         new ListTile(
             leading: new Icon(Icons.assignment_ind),

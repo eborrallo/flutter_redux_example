@@ -162,6 +162,10 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                     setState(() {
                       if (this.appbarActionIcon.icon == Icons.search) {
                         this.appbarTitle = TextFormField(
+                          onChanged: (value) {
+                            appNotifier.tasksNotifier.searchBy(value);
+                          },
+                          autofocus: true,
                           textAlign: TextAlign.center,
                           cursorColor: Colors.black,
                           decoration: new InputDecoration(
@@ -181,6 +185,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           style: TextStyle(color: Colors.black),
                         );
                         this.appbarActionIcon = Icon(Icons.search);
+                        appNotifier.tasksNotifier.stopSearch();
                       }
                     });
                   },
@@ -243,6 +248,8 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   }
 
   void onTabChanged(int tab) {
+    context.read<AppNotifier>().tasksNotifier.stopSearch();
+
     _controller.reverse();
     setState(() {
       this._index = tab;
@@ -250,6 +257,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         TabItems[tab].text,
         style: TextStyle(color: Colors.black),
       );
+      this.appbarActionIcon = Icon(Icons.search);
     });
   }
 }

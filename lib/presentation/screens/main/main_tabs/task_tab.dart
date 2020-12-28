@@ -20,13 +20,6 @@ class TaskTabState extends State<TaskTab> {
 
   @override
   Widget build(BuildContext context) {
-    var now = new DateTime.now();
-    var tomorrow = now.add(Duration(days: 1));
-    var upcoming = tomorrow.add(Duration(days: 1));
-    List list = widget.taskNotifier.showOld
-        ? (widget.taskNotifier.allTasks ?? [])
-        : widget.taskNotifier.tasks ?? [];
-
     return new Container(
       alignment: Alignment.topLeft,
       color: Color.fromRGBO(245, 245, 245, 1),
@@ -114,7 +107,7 @@ class TaskTabState extends State<TaskTab> {
   }
 
   Widget _buildAlmostDueList(List list) {
-    return  Container(
+    return Container(
         margin: EdgeInsets.symmetric(vertical: 21.0),
         padding: EdgeInsets.symmetric(horizontal: 21.0),
         child: Column(

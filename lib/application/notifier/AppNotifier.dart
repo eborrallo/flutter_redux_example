@@ -17,7 +17,7 @@ class AppNotifier extends ChangeNotifier {
   final ClassNotifier classNotifier;
   final CalendarNotifier calendarNotifier;
   final GlobalKey<FabWithIconsState> floatActionButtonKey =
-      GlobalKey<FabWithIconsState>(); 
+      GlobalKey<FabWithIconsState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   Task _taskSelected;
@@ -54,7 +54,7 @@ class AppNotifier extends ChangeNotifier {
   }
 
   Task get taskSelected => this._taskSelected;
-  
+
   String get totalTasksThisWeek =>
       tasksNotifier.tasksThisWeek?.length.toString();
 

@@ -8,12 +8,14 @@ import 'package:injectable/injectable.dart';
 class TaskNotifier extends ChangeNotifier {
   final TaskRepository taskRepository;
   bool _showOld = false;
+  bool _searching = false;
+  String _searchValue;
+  TaskCollection _taskCollection;
 
   TaskNotifier(this.taskRepository) {
     _updateList();
   }
 
-  TaskCollection _taskCollection;
   bool get showOld => this._showOld;
 
   List<Task> get allTasks => _taskCollection?.list == null
@@ -30,23 +32,31 @@ class TaskNotifier extends ChangeNotifier {
 
   List<Task> get today => _taskCollection.list == null
       ? null
-      : List.unmodifiable(_taskCollection.list
+      : List.unmodifiable((_searching
+              ? _taskCollection.search(_searchValue)
+              : _taskCollection?.list)
           .where((element) =>
               element.deliveryDate.day == DateTime.now().day &&
               element.deliveryDate.month == DateTime.now().month &&
               element.deliveryDate.year == DateTime.now().year)
           .toList());
+
   List<Task> get oldest => _taskCollection.list == null
       ? null
-      : List.unmodifiable(_taskCollection.list
+      : List.unmodifiable((_searching
+              ? _taskCollection.search(_searchValue)
+              : _taskCollection?.list)
           .where((element) =>
               element.deliveryDate.day < DateTime.now().day &&
               element.deliveryDate.month <= DateTime.now().month &&
               element.deliveryDate.year <= DateTime.now().year)
           .toList());
+
   List<Task> get tomorrow => _taskCollection.list == null
       ? null
-      : List.unmodifiable(_taskCollection.list
+      : List.unmodifiable((_searching
+              ? _taskCollection.search(_searchValue)
+              : _taskCollection?.list)
           .where((element) =>
               element.deliveryDate.day ==
                   DateTime.now().add(Duration(days: 1)).day &&
@@ -55,6 +65,7 @@ class TaskNotifier extends ChangeNotifier {
               element.deliveryDate.year ==
                   DateTime.now().add(Duration(days: 1)).year)
           .toList());
+
   List<Task> get upComing => _taskCollection.list == null
       ? null
       : List.unmodifiable(_taskCollection.list
@@ -70,6 +81,18 @@ class TaskNotifier extends ChangeNotifier {
   void addTask(Task task) {
     _taskCollection.add(task);
 
+    notifyListeners();
+  }
+
+  void searchBy(String value) {
+    _searching = true;
+    _searchValue = value;
+    notifyListeners();
+  }
+
+  void stopSearch() {
+    _searching = false;
+    _searchValue = null;
     notifyListeners();
   }
 

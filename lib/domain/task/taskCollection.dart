@@ -33,4 +33,13 @@ class TaskCollection {
   String toString() {
     return jsonEncode(this.toJson());
   }
+
+  List search(String value) {
+    return list
+        .where((Task element) =>
+            element.title.contains(value) ||
+            element.description.contains(value) ||
+            element.subject.title.contains(value))
+        .toList();
+  }
 }

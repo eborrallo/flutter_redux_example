@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/config/screens.dart';
+import 'package:flutter_redux_boilerplate/domain/extensions/color_extension.dart';
 
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
@@ -106,6 +107,7 @@ class _TaskCardState extends State<TaskCard> {
   }
 
   void _displayBottomSheet(BuildContext context) {
+    context.read<AppNotifier>().floatActionButtonKey.currentState.close();
     showModalBottomSheet(
         context: context,
         //isScrollControlled: true,
@@ -180,7 +182,8 @@ class _TaskCardState extends State<TaskCard> {
                                       width: 10,
                                       margin: EdgeInsets.only(right: 10.0),
                                       decoration: new BoxDecoration(
-                                        color: Colors.red,
+                                        color: HexColor.fromHex(
+                                            widget.task.subject.color),
                                         shape: BoxShape.circle,
                                       ),
                                     ),

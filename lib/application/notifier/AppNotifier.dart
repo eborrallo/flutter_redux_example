@@ -6,6 +6,7 @@ import 'package:flutter_redux_boilerplate/application/notifier/ClassNotifier.dar
 import 'package:flutter_redux_boilerplate/application/notifier/SubjectNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/presentation/widgets/fab_with_icons.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
@@ -15,6 +16,10 @@ class AppNotifier extends ChangeNotifier {
   final SubjectNotifier subjectsNotifier;
   final ClassNotifier classNotifier;
   final CalendarNotifier calendarNotifier;
+  final GlobalKey<FabWithIconsState> floatActionButtonKey =
+      GlobalKey<FabWithIconsState>(); 
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   Task _taskSelected;
   List<SubjectProgress> get onProgress {
     var list = subjectsNotifier.progress(listTask: tasksNotifier.allTasks);

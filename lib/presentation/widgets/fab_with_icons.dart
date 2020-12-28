@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 // https://stackoverflow.com/questions/46480221/flutter-floating-action-button-with-speed-dail
 class FabWithIcons extends StatefulWidget {
-  FabWithIcons({this.icons, this.onIconTapped, this.controller});
+  FabWithIcons({this.icons, this.onIconTapped, this.controller, Key key})
+      : super(key: key);
   final List<IconData> icons;
   ValueChanged<int> onIconTapped;
   AnimationController controller;
@@ -13,6 +14,9 @@ class FabWithIcons extends StatefulWidget {
 
 class FabWithIconsState extends State<FabWithIcons>
     with TickerProviderStateMixin {
+  void close() {
+    widget.controller.reverse();
+  }
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -25,7 +25,7 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'uuid': instance.uuid,
       'title': instance.title,
       'description': instance.description,
-      'subject': instance.subject.toJson(),
+      'subject': instance.subject,
       'deliveryDate': instance.deliveryDate?.toIso8601String(),
       'done': instance.done,
     };

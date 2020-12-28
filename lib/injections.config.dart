@@ -46,7 +46,6 @@ GetIt $initGetIt(
   gh.lazySingleton<FirebaseUserMapper>(() => FirebaseUserMapper());
   gh.factory<LoadingScreen>(() => LoadingScreen(key: get<Key>()));
   gh.lazySingleton<NavigationService>(() => NavigationService());
-  gh.factory<SubjectNotifier>(() => SubjectNotifier());
   gh.lazySingleton<SubjectRepository>(() => SubjectRepository());
   gh.lazySingleton<TaskRepository>(() => TaskRepository());
   gh.lazySingleton<Auth>(
@@ -54,6 +53,7 @@ GetIt $initGetIt(
           get<FirebaseAuth>(), get<FirebaseUserMapper>()),
       registerFor: {_dev});
   gh.factory<ClassNotifier>(() => ClassNotifier(get<ClassRepository>()));
+  gh.factory<SubjectNotifier>(() => SubjectNotifier(get<SubjectRepository>()));
   gh.factory<TaskNotifier>(() => TaskNotifier(get<TaskRepository>()));
   gh.lazySingleton<UserNotifier>(() => UserNotifier(auth: get<Auth>()));
   gh.lazySingleton<AppNotifier>(() => AppNotifier(

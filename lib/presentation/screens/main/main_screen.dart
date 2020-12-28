@@ -29,9 +29,9 @@ class MainScreen extends StatefulWidget {
 }
 
 class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<InOutAnimationState> inOutAnimation =
       GlobalKey<InOutAnimationState>();
+
   PageController _tabController;
   AnimationController _controller;
   Widget appbarTitle;
@@ -71,6 +71,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       Icons.assignment_ind,
       Icons.assignment_turned_in
     ];
+    final appNotifier = Provider.of<AppNotifier>(context, listen: true);
 
     return AnchoredOverlay(
         showOverlay: true,
@@ -78,6 +79,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           return CenterAbout(
             position: Offset(offset.dx, offset.dy - icons.length * 35.0),
             child: FabWithIcons(
+              key: appNotifier.floatActionButtonKey,
               icons: icons,
               onIconTapped: (int i) {
                 switch (i) {
@@ -150,7 +152,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     // final subjectNotifier = Provider.of<SubjectNotifier>(context, listen: true);
 
     return new Scaffold(
-      key: _scaffoldKey,
+      key: appNotifier.scaffoldKey,
       appBar: new PlatformAdaptiveAppBar(
         actions: (this._index == 1
             ? [
@@ -204,7 +206,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           color: Colors.black,
           onPressed: () {
             _controller.reverse();
-            _scaffoldKey.currentState.openDrawer();
+            context.read<AppNotifier>().scaffoldKey.currentState.openDrawer();
           },
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
-import 'package:flutter_redux_boilerplate/domain/extensions/week_of_day.dart';
+import 'package:flutter_redux_boilerplate/domain/extensions/date_time_extension.dart';
 
 part 'taskCollection.g.dart';
 

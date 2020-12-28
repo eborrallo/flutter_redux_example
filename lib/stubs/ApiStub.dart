@@ -22,6 +22,7 @@ class ApiStub {
         this.subjects.add(randomSubject);
       }
     });
+    
     List<void>.generate(
         20,
         (i) => this.tasks.add(TaskStub.create(

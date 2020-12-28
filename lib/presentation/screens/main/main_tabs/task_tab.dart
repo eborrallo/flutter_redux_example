@@ -114,7 +114,7 @@ class TaskTabState extends State<TaskTab> {
   }
 
   Widget _buildAlmostDueList(List list) {
-    return new Container(
+    return  Container(
         margin: EdgeInsets.symmetric(vertical: 21.0),
         padding: EdgeInsets.symmetric(horizontal: 21.0),
         child: Column(

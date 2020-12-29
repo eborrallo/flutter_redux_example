@@ -49,7 +49,8 @@ class _SubjectCardState extends State<SubjectCard> {
                                         iconSize: 18,
                                       ),
                                       IconButton(
-                                        onPressed: () => print('caca'),
+                                        onPressed: () =>
+                                            showAlertDialog(context),
                                         icon: Icon(Icons.delete),
                                         color: Colors.red[800],
                                         iconSize: 18,
@@ -67,5 +68,44 @@ class _SubjectCardState extends State<SubjectCard> {
                         )
                       ],
                     )))));
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget remindButton = FlatButton(
+      child: Text("Subject and subtasks"),
+      onPressed: () {},
+    );
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop(); // dismiss dialog
+      },
+    );
+    Widget launchButton = FlatButton(
+      child: Text(
+        "Only subject",
+        style: TextStyle(color: Colors.blue),
+      ),
+      onPressed: () {},
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Delete confirmation"),
+      content:
+          Text("You will delete  this subject , some task may be affected."),
+      actions: [
+        remindButton,
+        cancelButton,
+        launchButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/all_tasks_done.dart';
+import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/class_card.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/reactive_animated_list.dart';
@@ -145,7 +146,7 @@ class HomeTab extends StatelessWidget {
           (context, element) => new TaskCard(
             element,
           ),
-          length: list != null && list.length < 2 ? list.length  : 2,
+          length: list != null && list.length < 2 ? list.length : 2,
         ));
   }
 
@@ -153,14 +154,18 @@ class HomeTab extends StatelessWidget {
     return new Container(
         margin: EdgeInsets.symmetric(vertical: 15),
         height: 101.0,
-        child: new ReactiveAnimatedList(
-          list,
-          (context, element) => new CircularProgresItem(
-            text: element.title,
-            progressValue: element.progress,
-          ),
-          scrollDirection: Axis.horizontal,
-          length: list != null ? list.length : 0,
-        ));
+        child: ListView(
+            padding: EdgeInsets.only(left: 21.0),
+            scrollDirection: Axis.horizontal,
+            children: List.generate(
+                list != null ? list.length : 0,
+                (index) => AnimatedListItem(
+                      index,
+                      CircularProgresItem(
+                        text: list[index].title,
+                        progressValue: list[index].progress,
+                      ),
+                      duration: Duration(milliseconds: 500),
+                    ))));
   }
 }

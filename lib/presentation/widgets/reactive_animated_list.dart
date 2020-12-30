@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:flutter_redux_boilerplate/presentation/widgets/blur_list.dart';
+
 typedef ItemBuilder = Widget Function(BuildContext context, dynamic itemData);
 
 class ReactiveAnimatedList extends StatefulWidget {
@@ -87,64 +89,22 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
   @override
   Widget build(BuildContext context) {
     int _length = widget.length ?? widget.list.length;
-    var blurBorder = widget.scrollDirection == Axis.horizontal
-        ? blurLeftRight
-        : blurTopBottom;
     return Column(
         children: widget.list == null
             ? []
             : [
                 Expanded(
-                    child: blurBorder(AnimatedList(
-                  key: _listKey,
-                  initialItemCount: isEmty ? _length : 0,
-                  itemBuilder: (context, index, animation) {
-                    return _buildItem(context, widget.list[index], animation);
-                  },
-                  scrollDirection: widget.scrollDirection,
-                )))
+                    child: BlurList(
+                        widget.scrollDirection,
+                        AnimatedList(
+                          key: _listKey,
+                          initialItemCount: isEmty ? _length : 0,
+                          itemBuilder: (context, index, animation) {
+                            return _buildItem(
+                                context, widget.list[index], animation);
+                          },
+                          scrollDirection: widget.scrollDirection,
+                        )))
               ]);
-  }
-
-  Widget blurTopBottom(Widget child) {
-    return ShaderMask(
-        shaderCallback: (Rect rect) {
-          return LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.red,
-              Colors.transparent,
-              Colors.transparent,
-              Colors.red
-            ],
-            stops: [
-              0.0,
-              0.02,
-              0.98,
-              1.0
-            ], // 10% purple, 80% transparent, 10% purple
-          ).createShader(rect);
-        },
-        blendMode: BlendMode.dstOut,
-        child: child);
-  }
-
-  Widget blurLeftRight(Widget child) {
-    return ShaderMask(
-        shaderCallback: (Rect bounds) {
-          return LinearGradient(
-            colors: [
-              Colors.white,
-              Colors.transparent,
-              Colors.transparent,
-              Colors.white
-            ],
-            stops: [0, 0.02, 0.98, 1],
-            tileMode: TileMode.mirror,
-          ).createShader(bounds);
-        },
-        blendMode: BlendMode.dstOut,
-        child: child);
   }
 }

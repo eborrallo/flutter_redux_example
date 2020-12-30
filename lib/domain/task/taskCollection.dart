@@ -1,3 +1,4 @@
+import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
@@ -26,6 +27,10 @@ class TaskCollection {
       .toList();
   void add(Task task) {
     list.add(task);
+    _sort();
+  }
+
+  void _sort() {
     list.sort((Task a, Task b) => a.deliveryDate.compareTo(b.deliveryDate));
   }
 
@@ -41,5 +46,18 @@ class TaskCollection {
             element.description.contains(value) ||
             element.subject.title.contains(value))
         .toList();
+  }
+
+  void updateWithSubject(Subject subject) {
+    var jsonSubject = subject.toJson();
+    list.forEach((Task element) {
+      if (element.subject.uuid == subject.uuid) {
+        var jsonTask = element.toJson();
+        jsonTask['subject'] = jsonSubject;
+        list.add(Task.fromJson(jsonTask));
+        list.remove(element);
+      }
+    });
+    _sort();
   }
 }

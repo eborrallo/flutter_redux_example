@@ -7,6 +7,7 @@ import 'package:flutter_redux_boilerplate/presentation/screens/loading/loading_s
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/subject/add_subject_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/subject/subject_list.dart';
+import 'package:flutter_redux_boilerplate/presentation/screens/subject/update_subject_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/task/add_task_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/task/details_task_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/timetable/list_timetable_screen.dart';
@@ -67,6 +68,9 @@ class NavigationService {
         break;
       case LIST_SUBJECT_SCREEN:
         screen = SubjectListScreen();
+        break;
+      case UPDATE_SUBJECT_SCREEN:
+        screen = UpdateSubjectScreen();
         break;
       case LIST_TIMETABLE_SCREEN:
         screen = ListTimetableScreen();

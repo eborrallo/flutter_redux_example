@@ -14,7 +14,7 @@ class Subject {
   final List<Lecturer> lecturers;
   final String color;
 
-  Subject(this.description, this.color, {this.uuid, this.title,this.lecturers});
+  Subject({this.description, this.color, this.uuid, this.title,this.lecturers});
 
   factory Subject.fromJson(Map<String, dynamic> json) => _$SubjectFromJson(json);
   Map<String, dynamic> toJson() => _$SubjectToJson(this);

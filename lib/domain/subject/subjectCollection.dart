@@ -42,4 +42,7 @@ class SubjectCollection {
 
     return listSubjectProgress;
   }
+  void sort() {
+    list.sort((Subject a, Subject b) => a.title.compareTo(b.title));
+  }
 }

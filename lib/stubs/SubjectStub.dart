@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:math';
-
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
@@ -24,11 +22,12 @@ class SubjectStub {
     Colors.yellow.toHex(),
     Colors.blue.toHex(),
   ];
-static Color randomOpaqueColor() {
-  return Color(Random().nextInt(0xffffffff)).withAlpha(0xff);
-}
+  static Color randomOpaqueColor() {
+    return Color(Random().nextInt(0xffffffff)).withAlpha(0xff);
+  }
+
   static Subject create({params}) {
-    var map = params != null ? jsonDecode(params) : new Map<String, dynamic>();
+    var map = params?? new Map<String, dynamic>();
     var _params = {
       'uuid': map['uuid'] ?? Uuid().v4(),
       'title': map['title'] ?? (subjectList..shuffle()).first,

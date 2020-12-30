@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
+import 'package:flutter_redux_boilerplate/application/notifier/SubjectNotifier.dart';
+import 'package:flutter_redux_boilerplate/config/screens.dart';
 import 'package:flutter_redux_boilerplate/domain/extensions/color_extension.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
+import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
+import 'package:flutter_redux_boilerplate/injections.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class SubjectCard extends StatefulWidget {
   final Subject subject;
@@ -12,6 +19,8 @@ class SubjectCard extends StatefulWidget {
 class _SubjectCardState extends State<SubjectCard> {
   @override
   Widget build(BuildContext context) {
+    NavigationService navigatior = getIt<NavigationService>();
+
     return Container(
         height: 200,
         margin: EdgeInsets.only(bottom: 10.0),
@@ -44,7 +53,15 @@ class _SubjectCardState extends State<SubjectCard> {
                                   child: Row(
                                     children: [
                                       IconButton(
-                                        onPressed: () => print('caca'),
+                                        onPressed: () {
+                                          context
+                                              .read<SubjectNotifier>()
+                                              .edit(widget.subject);
+                                          navigatior.navigateToNext(
+                                              UPDATE_SUBJECT_SCREEN,
+                                              pageTransition: PageTransitionType
+                                                  .bottomToTop);
+                                        },
                                         icon: Icon(Icons.edit),
                                         iconSize: 18,
                                       ),
@@ -71,10 +88,17 @@ class _SubjectCardState extends State<SubjectCard> {
   }
 
   showAlertDialog(BuildContext context) {
+    void delete() {
+      context.read<AppNotifier>().deleteSubject(widget.subject.uuid);
+      Navigator.of(context).pop();
+    }
+
     // set up the buttons
-    Widget remindButton = FlatButton(
-      child: Text("Subject and subtasks"),
-      onPressed: () {},
+    Widget subjectAndSubtasct = FlatButton(
+      child: Text("Subject and subtasks", style: TextStyle(color: Colors.blue)),
+      onPressed: () {
+        delete();
+      },
     );
     Widget cancelButton = FlatButton(
       child: Text("Cancel"),
@@ -82,22 +106,15 @@ class _SubjectCardState extends State<SubjectCard> {
         Navigator.of(context).pop(); // dismiss dialog
       },
     );
-    Widget launchButton = FlatButton(
-      child: Text(
-        "Only subject",
-        style: TextStyle(color: Colors.blue),
-      ),
-      onPressed: () {},
-    );
+
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Delete confirmation"),
       content:
           Text("You will delete  this subject , some task may be affected."),
       actions: [
-        remindButton,
         cancelButton,
-        launchButton,
+        subjectAndSubtasct,
       ],
     );
     // show the dialog

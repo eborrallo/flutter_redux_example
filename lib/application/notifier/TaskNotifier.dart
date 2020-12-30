@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/domain/task/taskCollection.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/task/TaskRepository.dart';
@@ -101,6 +102,11 @@ class TaskNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateTasksWithSubject(Subject subject) {
+    _taskCollection.updateWithSubject(subject);
+    notifyListeners();
+  }
+
   void toggleTask(String uuid) {
     Task task =
         _taskCollection.list.firstWhere((Task element) => element.uuid == uuid);
@@ -115,6 +121,11 @@ class TaskNotifier extends ChangeNotifier {
     // }).toList();
 
     // _taskCollection = TaskCollection(list: _list);
+    notifyListeners();
+  }
+
+  void deleteBy(Function callback) {
+    _taskCollection.list.removeWhere(callback);
     notifyListeners();
   }
 

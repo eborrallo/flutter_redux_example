@@ -5,6 +5,7 @@ import 'package:flutter_redux_boilerplate/application/notifier/CalendarNotifier.
 import 'package:flutter_redux_boilerplate/application/notifier/ClassNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/SubjectNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/TaskNotifier.dart';
+import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/fab_with_icons.dart';
 import 'package:injectable/injectable.dart';
@@ -32,6 +33,11 @@ class AppNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteSubject(uuid) {
+    subjectsNotifier.delete(uuid);
+    tasksNotifier.deleteBy((Task task) => task.subject.uuid == uuid);
+  }
+
   void addTask(Task _task) {
     tasksNotifier.addTask(_task);
     classNotifier.addTask(_task);
@@ -40,6 +46,12 @@ class AppNotifier extends ChangeNotifier {
 
   void selectTask(Task _task) {
     this._taskSelected = _task;
+    notifyListeners();
+  }
+
+  void updateSubject(Subject subject) {
+    subjectsNotifier.updateSubject(subject);
+    tasksNotifier.updateTasksWithSubject(subject);
     notifyListeners();
   }
 

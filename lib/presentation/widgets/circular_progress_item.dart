@@ -16,7 +16,6 @@ class CircularProgresItem extends StatefulWidget {
 class _CircularProgresItemState extends State<CircularProgresItem> {
   @override
   Widget build(BuildContext context) {
-
     return Container(
       width: 85,
       alignment: Alignment(0, 0),
@@ -43,11 +42,9 @@ class _CircularProgresItemState extends State<CircularProgresItem> {
                 maxLines: widget.text.trim().split(" ").length > 1 ? 2 : 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
+                maxFontSize: 17.0,
                 style: new TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 17.0,
-                ))),
+                    color: Colors.black54, fontWeight: FontWeight.w600))),
         linearGradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,

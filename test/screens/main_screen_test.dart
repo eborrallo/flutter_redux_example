@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/UserNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/services/Auth.dart';
+import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/domain/user/user.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/main.dart';
@@ -11,20 +12,20 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
 
-import '../mocks/FirebaseAuthMock.dart';
+class FirebaseAuthMock extends Mock implements Auth {}
 
 void main() {
   group('Main screen', () {
     Widget sut;
     configureInjection(Environment.test);
+    AppNotifier appNotifier = getIt<AppNotifier>();
 
     setUp(() {
       var navigationService = getIt<NavigationService>();
       Auth authMock = FirebaseAuthMock();
       when(authMock.getSignedInUser()).thenReturn(new User('email', 'uid'));
-      var userNotifier =
-          new UserNotifier(auth:  authMock);
-      var appNotifier = getIt<AppNotifier>();
+      var userNotifier = new UserNotifier(auth: authMock);
+
       sut = new CalendarApp(
         navigationService: navigationService,
         userNotifier: userNotifier,

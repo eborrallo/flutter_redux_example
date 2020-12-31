@@ -29,7 +29,7 @@ class TaskNotifier extends ChangeNotifier {
 
   List<Task> get tasksThisWeek => _taskCollection.list == null
       ? null
-      : List.unmodifiable(_taskCollection.byWeek());
+      : List.unmodifiable(_taskCollection.thisWeek());
 
   List<Task> get today => _taskCollection.list == null
       ? null
@@ -80,6 +80,7 @@ class TaskNotifier extends ChangeNotifier {
           .toList());
 
   void addTask(Task task) {
+    print(_taskCollection);
     _taskCollection.add(task);
 
     notifyListeners();

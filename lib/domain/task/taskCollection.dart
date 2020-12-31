@@ -21,7 +21,7 @@ class TaskCollection {
           _task.deliveryDate.millisecondsSinceEpoch >
           DateTime.now().millisecondsSinceEpoch)
       .toList();
-  List<Task> byWeek() => list
+  List<Task> thisWeek() => list
       .where((Task _task) =>
           _task.deliveryDate.weekOfYear == DateTime.now().weekOfYear)
       .toList();

@@ -40,7 +40,7 @@ class ClassCollection {
               .format(element.startTime.add(element.duration)),
           message: pendingTasksToday > 0
               ? Intl.plural(
-                  element.tasks.length,
+                 pendingTasksToday,
                   one:
                       'Falta ' + pendingTasksToday.toString() + ' tarea por hacer',
                   other: 'Faltan ' +

@@ -23,7 +23,7 @@ class AppNotifier extends ChangeNotifier {
 
   Task _taskSelected;
   List<SubjectProgress> get onProgress {
-    var list = subjectsNotifier.progress(listTask: tasksNotifier.allTasks);
+    var list =  tasksNotifier.progress();
     return list == null ? null : List.unmodifiable(list);
   }
 

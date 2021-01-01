@@ -22,26 +22,7 @@ class SubjectCollection {
     return jsonEncode(this.toJson());
   }
 
-  static List<SubjectProgress> subjectProgress(List<Task> tasks) {
-    List<SubjectProgress> listSubjectProgress = [];
 
-    tasks.forEach((Task element) {
-      SubjectProgress newSubjectProgress = new SubjectProgress(element.subject);
-      SubjectProgress subjectProgress = listSubjectProgress.firstWhere(
-          (SubjectProgress subElement) =>
-              subElement.title == element.subject.title,
-          orElse: () => null);
-
-      if (subjectProgress != null) {
-        subjectProgress.addTask(element);
-      } else {
-        newSubjectProgress.addTask(element);
-        listSubjectProgress.add(newSubjectProgress);
-      }
-    });
-
-    return listSubjectProgress;
-  }
   void sort() {
     list.sort((Subject a, Subject b) => a.title.compareTo(b.title));
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/domain/services/Clock.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
@@ -25,6 +26,11 @@ class TaskNotifier extends ChangeNotifier {
       ? null
       : List.unmodifiable(_taskCollection.list);
 
+ List<SubjectProgress> progress() {
+    return allTasks == null
+        ? null
+        : _taskCollection.subjectProgress();
+  }
   List<Task> get tasks => _taskCollection == null
       ? null
       : List.unmodifiable(_taskCollection.nexts());
@@ -116,16 +122,6 @@ class TaskNotifier extends ChangeNotifier {
     Task task =
         _taskCollection.list.firstWhere((Task element) => element.uuid == uuid);
     task.done = !task.done;
-
-    //     List<Task> _list = _taskCollection.list.map((Task element) {
-    //   if (element.uuid == uuid) {
-    //     element.done = !element.done;
-    //     print(element);
-    //   }
-    //   return element;
-    // }).toList();
-
-    // _taskCollection = TaskCollection(list: _list);
     notifyListeners();
   }
 

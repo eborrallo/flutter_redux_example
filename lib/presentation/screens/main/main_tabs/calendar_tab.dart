@@ -36,13 +36,15 @@ class _CalendarTabState extends State<CalendarTab>
     _events = Map();
 
     Future.delayed(Duration(milliseconds: 0), () {
-      setState(() {
-        _events = widget.appNotifier.calendarEvents ?? [];
-        _selectedDayTasks = _events != null
-            ? _events[DateTime(
-                DateTime.now().year, DateTime.now().month, DateTime.now().day)]
-            : [];
-      });
+      if (this.mounted) {
+        setState(() {
+          _events = widget.appNotifier.calendarEvents ?? [];
+          _selectedDayTasks = _events != null
+              ? _events[DateTime(DateTime.now().year, DateTime.now().month,
+                  DateTime.now().day)]
+              : [];
+        });
+      }
     });
 
     _calendarController = TableCalendarController();
@@ -184,7 +186,8 @@ class _CalendarTabState extends State<CalendarTab>
                                       width: 10,
                                       margin: EdgeInsets.only(right: 10.0),
                                       decoration: new BoxDecoration(
-                                        color: HexColor.fromHex(_task.subject.color),
+                                        color: HexColor.fromHex(
+                                            _task.subject.color),
                                         shape: BoxShape.circle,
                                       ),
                                     ),

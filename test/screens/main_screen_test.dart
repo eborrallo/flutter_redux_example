@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/UserNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/services/Auth.dart';
-import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/domain/services/Clock.dart';
 import 'package:flutter_redux_boilerplate/domain/user/user.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/main.dart';
@@ -14,10 +14,19 @@ import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart
 
 class FirebaseAuthMock extends Mock implements Auth {}
 
+class ClockMock extends Mock implements Clock {}
+
 void main() {
   group('Main screen', () {
     Widget sut;
+    DateTime date = DateTime(2020, 12, 31, 5, 30);
+
     configureInjection(Environment.test);
+    getIt.registerLazySingleton<Clock>(() {
+      Clock clock = new ClockMock();
+      when(clock.now()).thenReturn(date);
+      return clock;
+    });
     AppNotifier appNotifier = getIt<AppNotifier>();
 
     setUp(() {

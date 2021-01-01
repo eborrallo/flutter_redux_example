@@ -115,7 +115,7 @@ void main() {
     });
     testWidgets('Update task whit Subject', (WidgetTester tester) async {
       await untilCalled(taskRepository.findAll());
-      Subject subject = SubjectStub.random();
+      Subject subject = SubjectStub.create(params: {'title': 'subjectTitle'});
       Task task = TaskStub.create(params: {
         'title': 'testSearch',
         'subject': subject,

@@ -1,3 +1,4 @@
+import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/domain/services/Clock.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
@@ -64,4 +65,26 @@ class TaskCollection {
     });
     _sort();
   }
+
+   List<SubjectProgress> subjectProgress() {
+    List<SubjectProgress> listSubjectProgress = [];
+
+    list.forEach((Task element) {
+      SubjectProgress newSubjectProgress = new SubjectProgress(element.subject);
+      SubjectProgress subjectProgress = listSubjectProgress.firstWhere(
+          (SubjectProgress subElement) =>
+              subElement.title == element.subject.title,
+          orElse: () => null);
+
+      if (subjectProgress != null) {
+        subjectProgress.addTask(element);
+      } else {
+        newSubjectProgress.addTask(element);
+        listSubjectProgress.add(newSubjectProgress);
+      }
+    });
+
+    return listSubjectProgress;
+  }
+
 }

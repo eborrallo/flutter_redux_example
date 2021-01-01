@@ -56,8 +56,7 @@ GetIt $initGetIt(
       registerFor: {_dev});
   gh.factory<ClassNotifier>(() => ClassNotifier(get<ClassRepository>()));
   gh.factory<SubjectNotifier>(() => SubjectNotifier(get<SubjectRepository>()));
-  gh.factory<TaskNotifier>(
-      () => TaskNotifier(get<TaskRepository>(), get<Clock>()));
+  gh.factory<TaskNotifier>(() => TaskNotifier(get<TaskRepository>()));
   gh.lazySingleton<UserNotifier>(() => UserNotifier(auth: get<Auth>()));
   gh.lazySingleton<AppNotifier>(() => AppNotifier(
         get<TaskNotifier>(),

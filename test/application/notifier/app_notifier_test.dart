@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/CalendarNotifier.dart';
@@ -10,8 +9,6 @@ import 'package:flutter_redux_boilerplate/domain/class/classCollection.dart';
 import 'package:flutter_redux_boilerplate/domain/services/Clock.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
-import 'package:flutter_redux_boilerplate/infraestructure/task/ClassRepository.dart';
-import 'package:flutter_redux_boilerplate/infraestructure/task/SubjectRepository.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/task/TaskRepository.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/stubs/ClassStub.dart';
@@ -38,6 +35,7 @@ class ClockMock extends Mock implements Clock {}
 void main() {
   group('AppNotifier', () {
     AppNotifier sut;
+
     configureInjection(Environment.test);
     TaskNotifier taskNotifier = new TaskNotifierMock();
 
@@ -46,6 +44,9 @@ void main() {
     ClassNotifier classNotifier = ClassNotifierMock();
 
     CalendarNotifier calendarNotifier = CalendarNotifierMock();
+    Clock clock;
+    getIt.registerLazySingleton<Clock>(() => clock);
+
     setUp(() {
       sut = new AppNotifier(
           taskNotifier, subjectNotifier, classNotifier, calendarNotifier);
@@ -131,27 +132,26 @@ void main() {
 
     testWidgets('AddTask', (WidgetTester tester) async {
       TaskRepository taskRepository = new TaskRepositoryMock();
-
+      DateTime date = DateTime.now();
       Task task = TaskStub.create(params: {
         'done': false,
-        'deliveryDate': DateTime.now().add(Duration(minutes: 5)).toString()
+        'deliveryDate': date.add(Duration(minutes: 5)).toString()
       });
       when(classNotifier.addTask(task)).thenReturn(null);
       when(taskRepository.findAll()).thenAnswer((_) => Future.value([
             TaskStub.create(params: {
               'done': true,
-              'deliveryDate':
-                  DateTime.now().add(Duration(minutes: 3)).toString()
+              'deliveryDate': date.add(Duration(minutes: 3)).toString()
             }),
             TaskStub.create(params: {
               'done': false,
-              'deliveryDate':
-                  DateTime.now().add(Duration(minutes: 4)).toString()
+              'deliveryDate': date.add(Duration(minutes: 4)).toString()
             })
           ]));
-      Clock clock = new ClockMock();
+      clock = new ClockMock();
+      when(clock.now()).thenReturn(date);
 
-      TaskNotifier taskNotifier = new TaskNotifier(taskRepository, clock);
+      TaskNotifier taskNotifier = new TaskNotifier(taskRepository);
       sut = new AppNotifier(
           taskNotifier, subjectNotifier, classNotifier, calendarNotifier);
       await untilCalled(taskRepository.findAll());

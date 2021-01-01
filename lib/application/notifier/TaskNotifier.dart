@@ -4,6 +4,7 @@ import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/domain/task/taskCollection.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/task/TaskRepository.dart';
+import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -13,9 +14,8 @@ class TaskNotifier extends ChangeNotifier {
   bool _searching = false;
   String _searchValue;
   TaskCollection _taskCollection;
-  final Clock clock;
-
-  TaskNotifier(this.taskRepository, this.clock) {
+  Clock clock = getIt<Clock>();
+  TaskNotifier(this.taskRepository) {
     _updateList();
   }
 

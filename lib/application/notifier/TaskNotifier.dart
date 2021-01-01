@@ -48,9 +48,12 @@ class TaskNotifier extends ChangeNotifier {
               ? _taskCollection.search(_searchValue)
               : _taskCollection?.list)
           .where((element) =>
-              element.deliveryDate.day < DateTime.now().day &&
-              element.deliveryDate.month <= DateTime.now().month &&
-              element.deliveryDate.year <= DateTime.now().year)
+              ((element.deliveryDate.day < DateTime.now().day &&
+                  element.deliveryDate.month <= DateTime.now().month &&
+                  element.deliveryDate.year <= DateTime.now().year)) ||
+              (element.deliveryDate.month < DateTime.now().month &&
+                  element.deliveryDate.year <= DateTime.now().year) ||
+              element.deliveryDate.year < DateTime.now().year)
           .toList());
 
   List<Task> get tomorrow => _taskCollection.list == null
@@ -80,7 +83,6 @@ class TaskNotifier extends ChangeNotifier {
           .toList());
 
   void addTask(Task task) {
-    print(_taskCollection);
     _taskCollection.add(task);
 
     notifyListeners();

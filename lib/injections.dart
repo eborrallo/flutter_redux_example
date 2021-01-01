@@ -7,6 +7,6 @@ final GetIt getIt = GetIt.instance;
 //  flutter packages pub run build_runner build --delete-conflicting-outputs
 //  flutter packages pub run build_runner watch --delete-conflicting-outputs
 
-@injectableInit
+@InjectableInit(generateForDir: ['test','lib'])
 void configureInjection(String env)=>
   $initGetIt(getIt, environment: env);

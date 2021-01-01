@@ -15,6 +15,7 @@ import 'domain/services/Auth.dart';
 import 'application/notifier/CalendarNotifier.dart';
 import 'application/notifier/ClassNotifier.dart';
 import 'infraestructure/task/ClassRepository.dart';
+import 'domain/services/Clock.dart';
 import 'infraestructure/firebase/FirebaseAuthentification.dart';
 import 'infraestructure/firebase/FirebaseInjectableModule.dart';
 import 'infraestructure/firebase/FirebaseUserMapper.dart';
@@ -42,6 +43,7 @@ GetIt $initGetIt(
   gh.lazySingleton<ApiStub>(() => ApiStub());
   gh.factory<CalendarNotifier>(() => CalendarNotifier());
   gh.lazySingleton<ClassRepository>(() => ClassRepository());
+  gh.lazySingleton<Clock>(() => Clock(), registerFor: {_dev});
   gh.lazySingleton<FirebaseAuth>(() => firebaseInjectableModule.firebaseAuth);
   gh.lazySingleton<FirebaseUserMapper>(() => FirebaseUserMapper());
   gh.factory<LoadingScreen>(() => LoadingScreen(key: get<Key>()));
@@ -54,7 +56,8 @@ GetIt $initGetIt(
       registerFor: {_dev});
   gh.factory<ClassNotifier>(() => ClassNotifier(get<ClassRepository>()));
   gh.factory<SubjectNotifier>(() => SubjectNotifier(get<SubjectRepository>()));
-  gh.factory<TaskNotifier>(() => TaskNotifier(get<TaskRepository>()));
+  gh.factory<TaskNotifier>(
+      () => TaskNotifier(get<TaskRepository>(), get<Clock>()));
   gh.lazySingleton<UserNotifier>(() => UserNotifier(auth: get<Auth>()));
   gh.lazySingleton<AppNotifier>(() => AppNotifier(
         get<TaskNotifier>(),

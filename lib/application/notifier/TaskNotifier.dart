@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/domain/services/Clock.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/domain/task/taskCollection.dart';
@@ -12,8 +13,9 @@ class TaskNotifier extends ChangeNotifier {
   bool _searching = false;
   String _searchValue;
   TaskCollection _taskCollection;
+  final Clock clock;
 
-  TaskNotifier(this.taskRepository) {
+  TaskNotifier(this.taskRepository, this.clock) {
     _updateList();
   }
 
@@ -37,9 +39,9 @@ class TaskNotifier extends ChangeNotifier {
               ? _taskCollection.search(_searchValue)
               : _taskCollection?.list)
           .where((element) =>
-              element.deliveryDate.day == DateTime.now().day &&
-              element.deliveryDate.month == DateTime.now().month &&
-              element.deliveryDate.year == DateTime.now().year)
+              element.deliveryDate.day == clock.now().day &&
+              element.deliveryDate.month == clock.now().month &&
+              element.deliveryDate.year == clock.now().year)
           .toList());
 
   List<Task> get oldest => _taskCollection.list == null
@@ -48,12 +50,12 @@ class TaskNotifier extends ChangeNotifier {
               ? _taskCollection.search(_searchValue)
               : _taskCollection?.list)
           .where((element) =>
-              ((element.deliveryDate.day < DateTime.now().day &&
-                  element.deliveryDate.month <= DateTime.now().month &&
-                  element.deliveryDate.year <= DateTime.now().year)) ||
-              (element.deliveryDate.month < DateTime.now().month &&
-                  element.deliveryDate.year <= DateTime.now().year) ||
-              element.deliveryDate.year < DateTime.now().year)
+              ((element.deliveryDate.day < clock.now().day &&
+                  element.deliveryDate.month <= clock.now().month &&
+                  element.deliveryDate.year <= clock.now().year)) ||
+              (element.deliveryDate.month < clock.now().month &&
+                  element.deliveryDate.year <= clock.now().year) ||
+              element.deliveryDate.year < clock.now().year)
           .toList());
 
   List<Task> get tomorrow => _taskCollection.list == null
@@ -63,11 +65,11 @@ class TaskNotifier extends ChangeNotifier {
               : _taskCollection?.list)
           .where((element) =>
               element.deliveryDate.day ==
-                  DateTime.now().add(Duration(days: 1)).day &&
+                  clock.now().add(Duration(days: 1)).day &&
               element.deliveryDate.month ==
-                  DateTime.now().add(Duration(days: 1)).month &&
+                  clock.now().add(Duration(days: 1)).month &&
               element.deliveryDate.year ==
-                  DateTime.now().add(Duration(days: 1)).year)
+                  clock.now().add(Duration(days: 1)).year)
           .toList());
 
   List<Task> get upComing => _taskCollection.list == null
@@ -75,11 +77,11 @@ class TaskNotifier extends ChangeNotifier {
       : List.unmodifiable(_taskCollection.list
           .where((element) =>
               element.deliveryDate.day >
-                  DateTime.now().add(Duration(days: 1)).day &&
+                  clock.now().add(Duration(days: 1)).day &&
               element.deliveryDate.month >=
-                  DateTime.now().add(Duration(days: 1)).month &&
+                  clock.now().add(Duration(days: 1)).month &&
               element.deliveryDate.year >=
-                  DateTime.now().add(Duration(days: 1)).year)
+                  clock.now().add(Duration(days: 1)).year)
           .toList());
 
   void addTask(Task task) {

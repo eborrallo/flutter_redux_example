@@ -1,5 +1,7 @@
+import 'package:flutter_redux_boilerplate/domain/services/Clock.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 import 'package:flutter_redux_boilerplate/domain/extensions/date_time_extension.dart';
@@ -9,8 +11,10 @@ part 'taskCollection.g.dart';
 @JsonSerializable(nullable: true)
 class TaskCollection {
   final List<Task> list;
-
-  TaskCollection({this.list});
+  Clock _clock;
+  TaskCollection({this.list}) {
+    _clock = getIt<Clock>();
+  }
 
   factory TaskCollection.fromJson(Map<String, dynamic> json) =>
       _$TaskCollectionFromJson(json);
@@ -19,11 +23,11 @@ class TaskCollection {
   List<Task> nexts() => list
       .where((Task _task) =>
           _task.deliveryDate.millisecondsSinceEpoch >
-          DateTime.now().millisecondsSinceEpoch)
+          this._clock.now().millisecondsSinceEpoch)
       .toList();
   List<Task> thisWeek() => list
       .where((Task _task) =>
-          _task.deliveryDate.weekOfYear == DateTime.now().weekOfYear)
+          _task.deliveryDate.weekOfYear == _clock.now().weekOfYear)
       .toList();
   void add(Task task) {
     list.add(task);

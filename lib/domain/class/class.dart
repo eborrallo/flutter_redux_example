@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter_redux_boilerplate/domain/lecturer/lecturer.dart';
@@ -10,6 +9,7 @@ part 'class.g.dart';
 
 @JsonSerializable(nullable: true)
 class Class {
+  final String uuid;
   final List<Lecturer> lecturers;
   final List<Task> tasks;
   final Subject subject;
@@ -18,7 +18,8 @@ class Class {
   final String location;
 
   Class(
-      {this.lecturers,
+      {this.uuid,
+      this.lecturers,
       this.tasks,
       this.subject,
       this.duration,
@@ -33,11 +34,11 @@ class Class {
     this.tasks.add(task);
   }
 
-   String warningMessage(){
-     return ''; 
-   }
+  String warningMessage() {
+    return '';
+  }
 
-   factory Class.fromJson(Map<String, dynamic> json) => _$ClassFromJson(json);
+  factory Class.fromJson(Map<String, dynamic> json) => _$ClassFromJson(json);
   Map<String, dynamic> toJson() => _$ClassToJson(this);
 
   @override

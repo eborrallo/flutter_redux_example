@@ -13,6 +13,7 @@ class ClassStub {
     var faker = new Faker();
     var map = params ?? new Map<String, dynamic>();
     var _params = {
+      'uuid': map['uuid'] ?? Uuid().v4(),
       'lecturers': map['lecturers'] ??
           List.generate(
               2,

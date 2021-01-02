@@ -138,16 +138,17 @@ void main() {
         'deliveryDate': date.add(Duration(minutes: 5)).toString()
       });
       when(classNotifier.addTask(task)).thenReturn(null);
-      when(taskRepository.findAll()).thenAnswer((_) => Future.value([
-            TaskStub.create(params: {
-              'done': true,
-              'deliveryDate': date.add(Duration(minutes: 3)).toString()
-            }),
-            TaskStub.create(params: {
-              'done': false,
-              'deliveryDate': date.add(Duration(minutes: 4)).toString()
-            })
-          ]));
+      var repoTasks = [
+        TaskStub.create(params: {
+          'done': true,
+          'deliveryDate': date.add(Duration(minutes: 3)).toString()
+        }),
+        TaskStub.create(params: {
+          'done': false,
+          'deliveryDate': date.add(Duration(minutes: 4)).toString()
+        })
+      ];
+      when(taskRepository.findAll()).thenAnswer((_) => Future.value(repoTasks));
       clock = new ClockMock();
       when(clock.now()).thenReturn(date);
 
@@ -156,7 +157,7 @@ void main() {
           taskNotifier, subjectNotifier, classNotifier, calendarNotifier);
       await untilCalled(taskRepository.findAll());
       sut.addTask(task);
-      expectLater(sut.almostDue.indexOf(task), isNot(-1));
+      expect(sut.almostDue.indexOf(task), isNot(-1));
     });
   });
 }

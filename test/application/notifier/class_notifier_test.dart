@@ -1,11 +1,9 @@
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/ClassNotifier.dart';
-import 'package:flutter_redux_boilerplate/application/notifier/SubjectNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/class/class.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/task/ClassRepository.dart';
-import 'package:flutter_redux_boilerplate/infraestructure/task/SubjectRepository.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/stubs/ClassStub.dart';
 import 'package:flutter_redux_boilerplate/stubs/SubjectStub.dart';

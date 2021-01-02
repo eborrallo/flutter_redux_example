@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/services/Clock.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';

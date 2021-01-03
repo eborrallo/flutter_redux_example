@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
-import 'package:flutter_redux_boilerplate/application/notifier/CalendarNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/ClassNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/config/screens.dart';
@@ -145,8 +144,6 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final appNotifier = Provider.of<AppNotifier>(context, listen: true);
     final classNotifier = Provider.of<ClassNotifier>(context, listen: true);
-    final calendarNotifier =
-        Provider.of<CalendarNotifier>(context, listen: true);
     final taskNotifier = Provider.of<TaskNotifier>(context, listen: true);
 
     // final subjectNotifier = Provider.of<SubjectNotifier>(context, listen: true);

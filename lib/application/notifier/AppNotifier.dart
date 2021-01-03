@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
-import 'package:flutter_redux_boilerplate/application/notifier/CalendarNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/ClassNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/SubjectNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/TaskNotifier.dart';
@@ -16,14 +15,13 @@ class AppNotifier extends ChangeNotifier {
   final TaskNotifier tasksNotifier;
   final SubjectNotifier subjectsNotifier;
   final ClassNotifier classNotifier;
-  final CalendarNotifier calendarNotifier;
   final GlobalKey<FabWithIconsState> floatActionButtonKey =
       GlobalKey<FabWithIconsState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   Task _taskSelected;
   List<SubjectProgress> get onProgress {
-    var list =  tasksNotifier.progress();
+    var list = tasksNotifier.progress();
     return list == null ? null : List.unmodifiable(list);
   }
 
@@ -70,8 +68,7 @@ class AppNotifier extends ChangeNotifier {
   String get totalTasksThisWeek =>
       tasksNotifier.tasksThisWeek?.length.toString();
 
-  Map<DateTime, List<Task>> get calendarEvents =>
-      calendarNotifier.taskByDay(tasksNotifier.allTasks);
+  Map<DateTime, List<Task>> get calendarEvents => tasksNotifier.taskByDay();
 
   List<Task> get almostDue => tasksNotifier.tasks == null
       ? null
@@ -82,6 +79,5 @@ class AppNotifier extends ChangeNotifier {
       ? null
       : List.unmodifiable(classNotifier.todayClasses);
 
-  AppNotifier(this.tasksNotifier, this.subjectsNotifier, this.classNotifier,
-      this.calendarNotifier);
+  AppNotifier(this.tasksNotifier, this.subjectsNotifier, this.classNotifier);
 }

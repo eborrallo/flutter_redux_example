@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class AnimatedListItem extends StatefulWidget {
@@ -21,8 +19,8 @@ class _AnimatedListItemState extends State<AnimatedListItem>
   @override
   void initState() {
     super.initState();
-
-    const Duration _duration = Duration(milliseconds: 1000);
+    const delayMiliseconds = 10000;
+    const Duration _duration = Duration(milliseconds: delayMiliseconds);
     controller = AnimationController(
         duration: widget.duration ?? _duration,
         reverseDuration: widget.duration ?? _duration,
@@ -33,7 +31,7 @@ class _AnimatedListItemState extends State<AnimatedListItem>
                 ? widget.duration.inMilliseconds
                 : _duration.inMilliseconds) *
             200) /
-        1000;
+        delayMiliseconds;
     animation.addStatusListener((status) {});
     Future.delayed(Duration(milliseconds: widget.index * scaleDuration.round()),
         () {
@@ -45,7 +43,7 @@ class _AnimatedListItemState extends State<AnimatedListItem>
 
   @override
   void dispose() {
-    controller.dispose(); // you need this
+    controller.dispose(); 
 
     super.dispose();
   }

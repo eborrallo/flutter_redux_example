@@ -34,6 +34,7 @@ class SubjectStub {
       'description':
           map['description'] ?? (new Faker()).lorem.sentences(25).join('. '),
       'color': map['color'] ?? randomOpaqueColor().toHex(),
+      'classes': map['classes'] ?? [],
     };
 
     return Subject.fromJson(_params);

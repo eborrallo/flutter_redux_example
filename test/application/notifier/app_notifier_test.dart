@@ -1,6 +1,5 @@
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
-import 'package:flutter_redux_boilerplate/application/notifier/CalendarNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/ClassNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/SubjectNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/TaskNotifier.dart';
@@ -28,8 +27,6 @@ class SubjectNotifierMock extends Mock implements SubjectNotifier {}
 
 class ClassNotifierMock extends Mock implements ClassNotifier {}
 
-class CalendarNotifierMock extends Mock implements CalendarNotifier {}
-
 class ClockMock extends Mock implements Clock {}
 
 void main() {
@@ -43,13 +40,12 @@ void main() {
 
     ClassNotifier classNotifier = ClassNotifierMock();
 
-    CalendarNotifier calendarNotifier = CalendarNotifierMock();
     Clock clock;
     getIt.registerLazySingleton<Clock>(() => clock);
 
     setUp(() {
       sut = new AppNotifier(
-          taskNotifier, subjectNotifier, classNotifier, calendarNotifier);
+          taskNotifier, subjectNotifier, classNotifier);
     });
     testWidgets('Week Completation', (WidgetTester tester) async {
       List<Task> tasks = [
@@ -153,8 +149,7 @@ void main() {
       when(clock.now()).thenReturn(date);
 
       TaskNotifier taskNotifier = new TaskNotifier(taskRepository);
-      sut = new AppNotifier(
-          taskNotifier, subjectNotifier, classNotifier, calendarNotifier);
+      sut = new AppNotifier(taskNotifier, subjectNotifier, classNotifier);
       await untilCalled(taskRepository.findAll());
       sut.addTask(task);
       expect(sut.almostDue.indexOf(task), isNot(-1));

@@ -26,11 +26,10 @@ class TaskNotifier extends ChangeNotifier {
       ? null
       : List.unmodifiable(_taskCollection.list);
 
- List<SubjectProgress> progress() {
-    return allTasks == null
-        ? null
-        : _taskCollection.subjectProgress();
+  List<SubjectProgress> progress() {
+    return allTasks == null ? null : _taskCollection.subjectProgress();
   }
+
   List<Task> get tasks => _taskCollection == null
       ? null
       : List.unmodifiable(_taskCollection.nexts());
@@ -89,6 +88,8 @@ class TaskNotifier extends ChangeNotifier {
               element.deliveryDate.year >=
                   clock.now().add(Duration(days: 1)).year)
           .toList());
+
+  Map<DateTime, List<Task>> taskByDay() => _taskCollection.taskByDay();
 
   void addTask(Task task) {
     _taskCollection.add(task);

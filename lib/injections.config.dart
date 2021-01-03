@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'stubs/ApiStub.dart';
 import 'application/notifier/AppNotifier.dart';
 import 'domain/services/Auth.dart';
-import 'application/notifier/CalendarNotifier.dart';
 import 'application/notifier/ClassNotifier.dart';
 import 'infraestructure/task/ClassRepository.dart';
 import 'domain/services/Clock.dart';
@@ -41,7 +40,6 @@ GetIt $initGetIt(
   final gh = GetItHelper(get, environment, environmentFilter);
   final firebaseInjectableModule = _$FirebaseInjectableModule();
   gh.lazySingleton<ApiStub>(() => ApiStub());
-  gh.factory<CalendarNotifier>(() => CalendarNotifier());
   gh.lazySingleton<ClassRepository>(() => ClassRepository());
   gh.lazySingleton<Clock>(() => Clock(), registerFor: {_dev});
   gh.lazySingleton<FirebaseAuth>(() => firebaseInjectableModule.firebaseAuth);
@@ -62,7 +60,6 @@ GetIt $initGetIt(
         get<TaskNotifier>(),
         get<SubjectNotifier>(),
         get<ClassNotifier>(),
-        get<CalendarNotifier>(),
       ));
   return get;
 }

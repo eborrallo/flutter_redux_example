@@ -35,6 +35,20 @@ class TaskCollection {
     _sort();
   }
 
+  Map<DateTime, List<Task>> taskByDay() {
+    Map<DateTime, List<Task>> _calendarEvents = Map();
+    list == null
+        ? []
+        : list.forEach((Task _task) {
+            DateTime _datetime = new DateTime(_task.deliveryDate.year,
+                _task.deliveryDate.month, _task.deliveryDate.day);
+            _calendarEvents.putIfAbsent(_datetime, () => []).add(_task);
+
+            // _calendarEvents[_datetime].add(_task);
+          });
+    return _calendarEvents;
+  }
+
   void _sort() {
     list.sort((Task a, Task b) => a.deliveryDate.compareTo(b.deliveryDate));
   }
@@ -66,7 +80,7 @@ class TaskCollection {
     _sort();
   }
 
-   List<SubjectProgress> subjectProgress() {
+  List<SubjectProgress> subjectProgress() {
     List<SubjectProgress> listSubjectProgress = [];
 
     list.forEach((Task element) {
@@ -86,5 +100,4 @@ class TaskCollection {
 
     return listSubjectProgress;
   }
-
 }

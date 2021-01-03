@@ -10,7 +10,6 @@ part 'class.g.dart';
 @JsonSerializable(nullable: true)
 class Class {
   final String uuid;
-  final List<Lecturer> lecturers;
   final List<Task> tasks;
   final Subject subject;
   final Duration duration;
@@ -19,23 +18,14 @@ class Class {
 
   Class(
       {this.uuid,
-      this.lecturers,
       this.tasks,
       this.subject,
       this.duration,
       this.startTime,
       this.location});
 
-  addLecturer(Lecturer lecturer) {
-    this.lecturers.add(lecturer);
-  }
-
   addTask(Task task) {
     this.tasks.add(task);
-  }
-
-  String warningMessage() {
-    return '';
   }
 
   factory Class.fromJson(Map<String, dynamic> json) => _$ClassFromJson(json);

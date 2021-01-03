@@ -9,10 +9,6 @@ part of 'class.dart';
 Class _$ClassFromJson(Map<String, dynamic> json) {
   return Class(
     uuid: json['uuid'] as String,
-    lecturers: (json['lecturers'] as List)
-        ?.map((e) =>
-            e == null ? null : Lecturer.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
     tasks: (json['tasks'] as List)
         ?.map(
             (e) => e == null ? null : Task.fromJson(e as Map<String, dynamic>))
@@ -32,7 +28,6 @@ Class _$ClassFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ClassToJson(Class instance) => <String, dynamic>{
       'uuid': instance.uuid,
-      'lecturers': instance.lecturers,
       'tasks': instance.tasks,
       'subject': instance.subject,
       'duration': instance.duration?.inMicroseconds,

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 extension DateWeekExtensions on DateTime {
   /// The ISO 8601 week of year [1..53].
   ///
@@ -36,5 +38,19 @@ extension DateWeekExtensions on DateTime {
   /// True if this date is on a leap year.
   bool get isLeapYear {
     return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+  }
+
+  static List<String> getDaysOfWeek([String locale]) {
+    final now = DateTime.now();
+    final firstDayOfWeek = now.subtract(Duration(days: now.weekday - 1));
+    return List.generate(7, (index) => index)
+        .map((value) => DateFormat(DateFormat.WEEKDAY, locale)
+            .format(firstDayOfWeek.add(Duration(days: value))))
+        .toList();
+  }
+
+  static String dayOfWeek(int numDay, [String locale]) {
+    final now = new DateTime(2021, 2, numDay);
+    return DateFormat(DateFormat.WEEKDAY, locale).format(now);
   }
 }

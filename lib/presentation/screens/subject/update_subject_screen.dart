@@ -22,7 +22,7 @@ class _UpdateSubjectScreenState extends State<UpdateSubjectScreen> {
     subject = context.read<SubjectNotifier>().subjectToEdit;
   }
 
-  void save(Map<String, String> params) {
+  void save(Map<String, dynamic> params) {
     params['uuid'] = subject.uuid;
     context
         .read<AppNotifier>()
@@ -34,8 +34,7 @@ class _UpdateSubjectScreenState extends State<UpdateSubjectScreen> {
   Widget build(BuildContext context) {
     return FormSubject(
       callback: save,
-      title: subject.title,
-      description: subject.description,
+      subject: subject,
     );
   }
 }

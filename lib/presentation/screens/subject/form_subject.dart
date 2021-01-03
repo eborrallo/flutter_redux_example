@@ -34,6 +34,9 @@ class _FormSubjectState extends State<FormSubject> {
 
   void initState() {
     super.initState();
+    widget.subject?.classes.forEach((Class element) {
+      values[element.dayOfWeek] = true;
+    });
   }
 
   Widget build(BuildContext context) {
@@ -65,6 +68,7 @@ class _FormSubjectState extends State<FormSubject> {
                                 .difference(selectedTimeTo[entry.key]);
                             listClass.add(Class(
                                     duration: duration,
+                                    dayOfWeek: entry.key,
                                     startTime: selectedTimeFrom[entry.key]
                                         .toDateTime())
                                 .toJson());

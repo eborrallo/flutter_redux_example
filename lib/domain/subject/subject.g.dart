@@ -6,19 +6,25 @@ part of 'subject.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Subject _$SubjectFromJson(Map<String, dynamic> json) {
+Subject _$SubjectFromJson(Map json) {
   return Subject(
     (json['classes'] as List)
-        ?.map(
-            (e) => e == null ? null : Class.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : Class.fromJson((e as Map)?.map(
+                (k, e) => MapEntry(k as String, e),
+              )))
         ?.toList(),
     description: json['description'] as String,
     color: json['color'] as String,
     uuid: json['uuid'] as String,
     title: json['title'] as String,
     lecturers: (json['lecturers'] as List)
-        ?.map((e) =>
-            e == null ? null : Lecturer.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : Lecturer.fromJson((e as Map)?.map(
+                (k, e) => MapEntry(k as String, e),
+              )))
         ?.toList(),
   );
 }

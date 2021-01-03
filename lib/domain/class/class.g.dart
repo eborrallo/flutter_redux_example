@@ -23,6 +23,7 @@ Class _$ClassFromJson(Map<String, dynamic> json) {
         ? null
         : DateTime.parse(json['startTime'] as String),
     location: json['location'] as String,
+    dayOfWeek: json['dayOfWeek'] as int,
   );
 }
 
@@ -33,4 +34,5 @@ Map<String, dynamic> _$ClassToJson(Class instance) => <String, dynamic>{
       'duration': instance.duration?.inMicroseconds,
       'startTime': instance.startTime?.toIso8601String(),
       'location': instance.location,
+      'dayOfWeek': instance.dayOfWeek,
     };

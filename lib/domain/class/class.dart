@@ -15,6 +15,7 @@ class Class {
   final Duration duration;
   final DateTime startTime;
   final String location;
+  final int dayOfWeek;
 
   Class(
       {this.uuid,
@@ -22,7 +23,9 @@ class Class {
       this.subject,
       this.duration,
       this.startTime,
-      this.location});
+      this.location,
+      this.dayOfWeek,
+      });
 
   addTask(Task task) {
     this.tasks.add(task);

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
-
 import 'package:flutter_redux_boilerplate/presentation/widgets/blur_list.dart';
 
 typedef ItemBuilder = Widget Function(BuildContext context, dynamic itemData);
@@ -31,10 +29,18 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
     }
     oldWidget.list.forEach((element) {
       if (!widget.list.contains(element)) {
-        if (oldWidget.list.indexOf(element) <= this.length()) {
-          _listKey.currentState.removeItem(oldWidget.list.indexOf(element),
-              (context, animation) => _buildItem(context, element, animation));
-          deleted = true;
+        var oldElementIndex = oldWidget.list.indexOf(element);
+        if (oldElementIndex < this.length() && oldElementIndex != -1) {
+          try {
+            _listKey.currentState.removeItem(
+                oldWidget.list.indexOf(element),
+                (context, animation) =>
+                    _buildItem(context, element, animation));
+            deleted = true;
+          } on Exception catch (_) {
+            throw Exception(_);
+          }
+
           return;
         }
       }
@@ -88,7 +94,6 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
 
   @override
   Widget build(BuildContext context) {
-    int _length = widget.length ?? widget.list.length;
     return Column(
         children: widget.list == null
             ? []
@@ -98,10 +103,12 @@ class _ReactiveAnimatedListState extends State<ReactiveAnimatedList> {
                         widget.scrollDirection,
                         AnimatedList(
                           key: _listKey,
-                          initialItemCount: isEmty ? _length : 0,
+                          initialItemCount: isEmty ? this.length() : 0,
                           itemBuilder: (context, index, animation) {
-                            return _buildItem(
-                                context, widget.list[index], animation);
+                            if (index < this.length()) {
+                              return _buildItem(
+                                  context, widget.list[index], animation);
+                            }
                           },
                           scrollDirection: widget.scrollDirection,
                         )))

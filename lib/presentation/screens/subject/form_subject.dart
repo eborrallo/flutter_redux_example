@@ -33,10 +33,24 @@ class _FormSubjectState extends State<FormSubject> {
       List.generate(7, (index) => TextEditingController()).asMap();
 
   void initState() {
-    super.initState();
-    widget.subject?.classes.forEach((Class element) {
+    widget.subject?.classes?.forEach((Class element) {
       values[element.dayOfWeek] = true;
+
+      selectedTimeFrom[element.dayOfWeek] = TimeOfDay(
+          hour: element.startTime.hour, minute: element.startTime.minute);
+      _timeControllerFrom[element.dayOfWeek].text =
+          formatHour(selectedTimeFrom[element.dayOfWeek]);
+
+      selectedTimeTo[element.dayOfWeek] =
+          TimeOfDay(hour: element.endTime.hour, minute: element.endTime.minute);
+      _timeControllerTo[element.dayOfWeek].text =
+          formatHour(selectedTimeTo[element.dayOfWeek]);
     });
+    super.initState();
+  }
+
+  String formatHour(TimeOfDay time) {
+    return time.hour.toString() + ':' + time.minute.toString();
   }
 
   Widget build(BuildContext context) {
@@ -67,10 +81,12 @@ class _FormSubjectState extends State<FormSubject> {
                             Duration duration = selectedTimeFrom[entry.key]
                                 .difference(selectedTimeTo[entry.key]);
                             listClass.add(Class(
-                                    duration: duration,
+                                    //duration: duration,
                                     dayOfWeek: entry.key,
                                     startTime: selectedTimeFrom[entry.key]
-                                        .toDateTime())
+                                        .toDateTime(),
+                                    endTime:
+                                        selectedTimeTo[entry.key].toDateTime())
                                 .toJson());
                           }
                         });
@@ -265,11 +281,7 @@ class _FormSubjectState extends State<FormSubject> {
     if (picked != null)
       setState(() {
         selectedTimeFrom[index] = picked;
-
-        _timeControllerFrom[index].text =
-            selectedTimeFrom[index].hour.toString() +
-                ':' +
-                selectedTimeFrom[index].minute.toString();
+        _timeControllerFrom[index].text = formatHour(selectedTimeFrom[index]);
       });
   }
 
@@ -283,9 +295,7 @@ class _FormSubjectState extends State<FormSubject> {
       setState(() {
         selectedTimeTo[index] = picked;
 
-        _timeControllerTo[index].text = selectedTimeTo[index].hour.toString() +
-            ':' +
-            selectedTimeTo[index].minute.toString();
+        _timeControllerTo[index].text = formatHour(selectedTimeTo[index]);
       });
   }
 

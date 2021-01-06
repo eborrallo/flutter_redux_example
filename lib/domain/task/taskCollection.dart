@@ -12,10 +12,8 @@ part 'taskCollection.g.dart';
 @JsonSerializable(nullable: true)
 class TaskCollection {
   final List<Task> list;
-  Clock _clock;
-  TaskCollection({this.list}) {
-    _clock = getIt<Clock>();
-  }
+  Clock _clock = getIt<Clock>();
+  TaskCollection({this.list});
 
   factory TaskCollection.fromJson(Map<String, dynamic> json) =>
       _$TaskCollectionFromJson(json);
@@ -32,7 +30,7 @@ class TaskCollection {
       .toList();
   void add(Task task) {
     list.add(task);
-    _sort();
+    sort();
   }
 
   Map<DateTime, List<Task>> taskByDay() {
@@ -49,8 +47,13 @@ class TaskCollection {
     return _calendarEvents;
   }
 
-  void _sort() {
-    list.sort((Task a, Task b) => a.deliveryDate.compareTo(b.deliveryDate));
+  void sort({bool asc = true}) {
+    list.sort((Task a, Task b) {
+      if (asc) {
+        return a.deliveryDate.compareTo(b.deliveryDate);
+      }
+      return b.deliveryDate.compareTo(a.deliveryDate);
+    });
   }
 
   @override
@@ -77,7 +80,7 @@ class TaskCollection {
         list.remove(element);
       }
     });
-    _sort();
+    sort();
   }
 
   List<SubjectProgress> subjectProgress() {
@@ -99,5 +102,11 @@ class TaskCollection {
     });
 
     return listSubjectProgress;
+  }
+
+  void toggleTask(String uuid) {
+    Task task =
+        list.firstWhere((Task element) => element.uuid == uuid, orElse: null);
+    task.done = !task.done;
   }
 }

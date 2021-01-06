@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
+import 'package:flutter_redux_boilerplate/domain/class/class.dart';
+import 'package:flutter_redux_boilerplate/domain/class/classCollection.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subjectCollection.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/task/SubjectRepository.dart';
@@ -13,8 +16,6 @@ class SubjectNotifier extends ChangeNotifier {
     _updateList();
   }
 
- 
-
   List<Subject> get allSubjects =>
       _collection?.list == null ? null : List.unmodifiable(_collection.list);
 
@@ -24,6 +25,26 @@ class SubjectNotifier extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void toggleTask(String uuid) {
+   // _collection.toggelTask(uuid);
+
+    notifyListeners();
+  }
+
+  List<TodayClass> _todayClasses(List<Subject> subjects) {
+    List<TodayClass> todayClasses = [];
+    subjects.forEach((Subject subject) {
+      ClassCollection classCollection =
+          new ClassCollection(list: subject.classes);
+      todayClasses.addAll(classCollection.todayClasses(subject));
+    });
+    return todayClasses;
+  }
+
+  List<TodayClass> get todayClasses => _collection?.list == null
+      ? null
+      : List.unmodifiable(_todayClasses(_collection?.list));
 
   void updateSubject(Subject _subject) {
     _collection.list.removeWhere((element) => element.uuid == _subject.uuid);

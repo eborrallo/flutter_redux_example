@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
+import 'package:flutter_redux_boilerplate/stubs/ClassStub.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_redux_boilerplate/domain/extensions/color_extension.dart';
 
@@ -27,14 +28,23 @@ class SubjectStub {
   }
 
   static Subject create({params}) {
-    var map = params?? new Map<String, dynamic>();
+    var map = params ?? new Map<String, dynamic>();
+    var list = List.generate(7, (index) => index)..shuffle();
+    var daysOfweek = list.take(3).toList();
+
     var _params = {
       'uuid': map['uuid'] ?? Uuid().v4(),
       'title': map['title'] ?? (subjectList..shuffle()).first,
       'description':
-          map['description'] ?? (new Faker()).lorem.sentences(25).join('. '),
+          map['description'] ?? (new Faker()).lorem.sentences(3).join('. '),
       'color': map['color'] ?? randomOpaqueColor().toHex(),
-      'classes': map['classes'] ?? [],
+      'tasks': map['tasks'] ?? [],
+      'classes': map['classes'] ??
+          List.generate(
+              3,
+              (index) =>
+                  ClassStub.create(params: {'dayOfWeek': daysOfweek[index]})
+                      .toJson()),
     };
 
     return Subject.fromJson(_params);

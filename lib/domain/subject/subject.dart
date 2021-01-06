@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_redux_boilerplate/domain/class/class.dart';
 import 'package:flutter_redux_boilerplate/domain/lecturer/lecturer.dart';
+import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'subject.g.dart';
@@ -9,26 +10,39 @@ part 'subject.g.dart';
 @JsonSerializable(nullable: true, anyMap: true)
 class Subject {
   final String uuid;
+  final List<Task> tasks;
   final String title;
   final String description;
   final List<Lecturer> lecturers;
   final List<Class> classes;
   final String color;
 
-  Subject(this.classes,
-      {this.description, this.color, this.uuid, this.title, this.lecturers});
+  Subject(
+      {this.description,
+      this.color,
+      this.uuid,
+      this.title,
+      this.lecturers,
+      this.classes,
+      this.tasks});
 
   factory Subject.fromJson(Map<String, dynamic> json) => _$SubjectFromJson({
         'uuid': json['uuid'],
         'title': json['title'],
         'description': json['description'],
         'lecturers': json['lecturers'],
-        'classes': json['classes'].map((e) {
+        'classes': json['classes']?.map((e) {
           if (!(e is Map)) {
             return e.toJson();
           }
           return e;
-        }).toList(),
+        })?.toList(),
+        'tasks': json['tasks']?.map((e) {
+          if (!(e is Map)) {
+            return e.toJson();
+          }
+          return e;
+        })?.toList(),
         'color': json['color'],
       });
 

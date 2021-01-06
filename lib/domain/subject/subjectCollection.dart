@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -22,6 +21,15 @@ class SubjectCollection {
     return jsonEncode(this.toJson());
   }
 
+  void toggelTask(String uuid) {
+    list.forEach((Subject _subject) {
+      _subject.tasks.forEach((Task _task) {
+        if (_task.uuid == uuid) {
+          _task.done = !_task.done;
+        }
+      });
+    });
+  }
 
   void sort() {
     list.sort((Subject a, Subject b) => a.title.compareTo(b.title));

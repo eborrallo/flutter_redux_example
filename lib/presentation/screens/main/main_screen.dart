@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
-import 'package:flutter_redux_boilerplate/application/notifier/ClassNotifier.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/config/screens.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
@@ -14,7 +13,6 @@ import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/ta
 import 'package:flutter_redux_boilerplate/presentation/widgets/fab_bottom_app_bar.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/fab_with_icons.dart';
 import 'dart:math';
-
 import 'package:flutter_redux_boilerplate/presentation/widgets/layout.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive.dart';
 import 'package:page_transition/page_transition.dart';
@@ -143,7 +141,6 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final appNotifier = Provider.of<AppNotifier>(context, listen: true);
-    final classNotifier = Provider.of<ClassNotifier>(context, listen: true);
     final taskNotifier = Provider.of<TaskNotifier>(context, listen: true);
 
     // final subjectNotifier = Provider.of<SubjectNotifier>(context, listen: true);

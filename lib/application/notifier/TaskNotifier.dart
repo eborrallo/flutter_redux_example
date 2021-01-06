@@ -120,9 +120,7 @@ class TaskNotifier extends ChangeNotifier {
   }
 
   void toggleTask(String uuid) {
-    Task task =
-        _taskCollection.list.firstWhere((Task element) => element.uuid == uuid);
-    task.done = !task.done;
+    _taskCollection.toggleTask(uuid);
     notifyListeners();
   }
 

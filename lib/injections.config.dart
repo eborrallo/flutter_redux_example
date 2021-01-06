@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'stubs/ApiStub.dart';
 import 'application/notifier/AppNotifier.dart';
 import 'domain/services/Auth.dart';
-import 'application/notifier/ClassNotifier.dart';
 import 'infraestructure/task/ClassRepository.dart';
 import 'domain/services/Clock.dart';
 import 'infraestructure/firebase/FirebaseAuthentification.dart';
@@ -52,15 +51,11 @@ GetIt $initGetIt(
       () => FirebaseAuthentification(
           get<FirebaseAuth>(), get<FirebaseUserMapper>()),
       registerFor: {_dev});
-  gh.factory<ClassNotifier>(() => ClassNotifier(get<ClassRepository>()));
   gh.factory<SubjectNotifier>(() => SubjectNotifier(get<SubjectRepository>()));
   gh.factory<TaskNotifier>(() => TaskNotifier(get<TaskRepository>()));
   gh.lazySingleton<UserNotifier>(() => UserNotifier(auth: get<Auth>()));
-  gh.lazySingleton<AppNotifier>(() => AppNotifier(
-        get<TaskNotifier>(),
-        get<SubjectNotifier>(),
-        get<ClassNotifier>(),
-      ));
+  gh.lazySingleton<AppNotifier>(
+      () => AppNotifier(get<TaskNotifier>(), get<SubjectNotifier>()));
   return get;
 }
 

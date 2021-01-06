@@ -11,8 +11,9 @@ import 'package:provider/provider.dart';
 
 class TaskCard extends StatefulWidget {
   final Task task;
+  Function callback;
   bool blockEdit;
-  TaskCard(this.task, {this.blockEdit = true});
+  TaskCard(this.task, {this.blockEdit = true, this.callback});
 
   @override
   _TaskCardState createState() => _TaskCardState();
@@ -127,9 +128,8 @@ class _TaskCardState extends State<TaskCard> {
           // navigation.navigateToNext(DETAILS_TASK_SCREEN);
           _displayBottomSheet(context);
         },
-        child: IgnorePointer(
-            ignoring: widget.blockEdit ? widget.task.done : false,
-            child: Container(
+        child: //widget.blockEdit ? widget.task.done : false,
+            Container(
                 height: 100,
                 margin: EdgeInsets.only(bottom: 10.0),
                 child: Center(
@@ -152,9 +152,10 @@ class _TaskCardState extends State<TaskCard> {
                                 if (this.mounted) {
                                   if (!value && widget.blockEdit) {
                                   } else {
-                                    context
-                                        .read<AppNotifier>()
-                                        .toggleTask(widget.task.uuid);
+                                    app.toggleTask(widget.task.uuid);
+                                    if (widget.callback != null) {
+                                      widget.callback();
+                                    }
                                   }
                                 }
                               },
@@ -219,6 +220,6 @@ class _TaskCardState extends State<TaskCard> {
                       ],
                     ),
                   ),
-                ))));
+                )));
   }
 }

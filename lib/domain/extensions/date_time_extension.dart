@@ -53,4 +53,5 @@ extension DateWeekExtensions on DateTime {
     final now = new DateTime(2021, 2, numDay);
     return DateFormat(DateFormat.WEEKDAY, locale).format(now);
   }
+ 
 }

@@ -3,6 +3,7 @@ import 'package:flutter_redux_boilerplate/application/dto/SubjectProgres.dart';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/presentation/screens/class/detail_class_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/all_tasks_done.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
@@ -10,22 +11,31 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/class_card.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/reactive_animated_list.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   final AppNotifier appNotifier;
   final changeTab;
 
   HomeTab({Key key, this.appNotifier, this.changeTab}) : super(key: key);
+
+  @override
+  _HomeTabState createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return new Container(
         alignment: Alignment.topLeft,
         color: Color.fromRGBO(245, 245, 245, 1),
-        child: new ListView(children: [
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            _onProgress(appNotifier.onProgress),
-            _almostDue(appNotifier.almostDue),
-            _todayClass(appNotifier.todayClasses)
-          ])
+        child: Stack(children: [
+          new ListView(children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              _onProgress(widget.appNotifier.onProgress),
+              _almostDue(widget.appNotifier.almostDue),
+              _todayClass(widget.appNotifier.todayClasses),
+            ])
+          ]),
+         
         ]));
   }
 
@@ -86,7 +96,7 @@ class HomeTab extends StatelessWidget {
                         ),
                         color: Colors.transparent,
                         onPressed: () {
-                          this.changeTab(1);
+                          this.widget.changeTab(1);
                         },
                         child: new Text(
                           'Show all',
@@ -134,7 +144,7 @@ class HomeTab extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 21.0),
         padding: EdgeInsets.symmetric(horizontal: 21.0),
         height: 230.0,
-        child: AllTasksDone(appNotifier.tasksNotifier.allTasks),
+        child: AllTasksDone(widget.appNotifier.tasksNotifier.allTasks),
       );
     }
     return new Container(

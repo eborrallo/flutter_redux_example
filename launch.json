@@ -1,0 +1,6 @@
+{
+	"name": "All Tests",
+	"type": "dart",
+	"request": "launch",
+	"program": "tests/" // or tests/foo for a subset of tests
+}

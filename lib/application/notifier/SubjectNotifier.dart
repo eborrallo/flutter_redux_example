@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
-import 'package:flutter_redux_boilerplate/domain/class/class.dart';
 import 'package:flutter_redux_boilerplate/domain/class/classCollection.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subjectCollection.dart';
@@ -27,9 +26,18 @@ class SubjectNotifier extends ChangeNotifier {
   }
 
   void toggleTask(String uuid) {
-   // _collection.toggelTask(uuid);
+    // _collection.toggelTask(uuid);
 
     notifyListeners();
+  }
+
+  List<TodayClass> get classes {
+    List<TodayClass> _classes = [];
+    _collection.list.forEach((Subject _subject) {
+      ClassCollection classCollection = ClassCollection(list: _subject.classes);
+      _classes.addAll(classCollection.classes(_subject));
+    });
+    return _classes.toList();
   }
 
   List<TodayClass> _todayClasses(List<Subject> subjects) {

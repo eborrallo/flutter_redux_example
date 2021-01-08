@@ -6,7 +6,6 @@ import 'package:flutter_redux_boilerplate/domain/class/class.dart';
 import 'package:flutter_redux_boilerplate/domain/class/classCollection.dart';
 import 'package:flutter_redux_boilerplate/domain/services/Clock.dart';
 import 'package:flutter_redux_boilerplate/domain/subject/subject.dart';
-import 'package:flutter_redux_boilerplate/domain/subject/subjectCollection.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/task/TaskRepository.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';

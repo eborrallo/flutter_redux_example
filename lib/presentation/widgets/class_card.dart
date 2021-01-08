@@ -45,8 +45,8 @@ class _ClassCardState extends State<ClassCard> {
                   }),
               DraggableScrollableSheet(
                   minChildSize: 0,
-                  initialChildSize: 0.4,
-                  maxChildSize: 0.9,
+                  initialChildSize: 0.6,
+                  maxChildSize: 0.95,
                   expand: true,
                   builder: (sheetContext, scrollController) {
                     

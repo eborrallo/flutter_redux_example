@@ -22,40 +22,55 @@ class ClassCollection {
     return jsonEncode(this.toJson());
   }
 
+  TodayClass _todayClass(Subject subject, Class element) {
+    int pendingTasksToday = subject.tasks
+        ?.where((elementTasks) =>
+            !elementTasks.done &&
+            elementTasks.deliveryDate.day == DateTime.now().day &&
+            elementTasks.deliveryDate.month == DateTime.now().month &&
+            elementTasks.deliveryDate.year == DateTime.now().year)
+        ?.length;
+    TaskCollection taskCollection = TaskCollection(list: subject.tasks);
+    taskCollection.sort(asc: false);
+    return new TodayClass(
+        title: subject.title,
+        location: element.location,
+        timeIn: DateFormat(DateFormat.HOUR24_MINUTE, 'es_ES')
+            .format(element.startTime),
+        timeOut: DateFormat(DateFormat.HOUR24_MINUTE, 'es_ES')
+            .format(element.endTime),
+        description: subject.description,
+        tasks: taskCollection.list,
+        dayOfWeek: element.dayOfWeek,
+        message: pendingTasksToday != null && pendingTasksToday > 0
+            ? Intl.plural(
+                pendingTasksToday,
+                one: 'Falta ' +
+                    pendingTasksToday.toString() +
+                    ' tarea por hacer',
+                other: 'Tareas pendientes del total ' +
+                    pendingTasksToday.toString(),
+              )
+            : null);
+  }
+
   List<TodayClass> todayClasses(Subject subject) {
     List<TodayClass> listTodayClass = [];
 
     list.forEach((Class element) {
       if (element.dayOfWeek == DateTime.now().weekday % 7) {
-        int pendingTasksToday = subject.tasks
-            ?.where((elementTasks) =>
-                !elementTasks.done &&
-                elementTasks.deliveryDate.day == DateTime.now().day &&
-                elementTasks.deliveryDate.month == DateTime.now().month &&
-                elementTasks.deliveryDate.year == DateTime.now().year)
-            ?.length;
-        TaskCollection taskCollection = TaskCollection(list: subject.tasks);
-        taskCollection.sort(asc: false);
-        listTodayClass.add(new TodayClass(
-            title: subject.title,
-            location: element.location,
-            timeIn: DateFormat(DateFormat.HOUR24_MINUTE, 'es_ES')
-                .format(element.startTime),
-            timeOut: DateFormat(DateFormat.HOUR24_MINUTE, 'es_ES')
-                .format(element.endTime),
-            description: subject.description,
-            tasks: taskCollection.list,
-            message: pendingTasksToday != null && pendingTasksToday > 0
-                ? Intl.plural(
-                    pendingTasksToday,
-                    one: 'Falta ' +
-                        pendingTasksToday.toString() +
-                        ' tarea por hacer',
-                    other: 'Tareas pendientes del total ' +
-                        pendingTasksToday.toString(),
-                  )
-                : null));
+        listTodayClass.add(_todayClass(subject, element));
       }
+    });
+
+    return listTodayClass;
+  }
+
+  List<TodayClass> classes(Subject subject) {
+    List<TodayClass> listTodayClass = [];
+
+    list.forEach((Class element) {
+      listTodayClass.add(_todayClass(subject, element));
     });
 
     return listTodayClass;

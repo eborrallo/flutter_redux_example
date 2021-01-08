@@ -5,6 +5,7 @@ import 'package:flutter_redux_boilerplate/domain/task/taskCollection.dart';
 @immutable
 class TodayClass {
   final String title;
+  final int dayOfWeek;
   final String location;
   final String timeIn;
   final String timeOut;
@@ -14,6 +15,7 @@ class TodayClass {
 
   TodayClass(
       {this.title,
+      this.dayOfWeek,
       this.location,
       this.timeIn,
       this.timeOut,

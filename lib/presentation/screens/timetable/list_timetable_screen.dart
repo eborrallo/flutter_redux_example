@@ -7,6 +7,7 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive
 import 'package:flutter_redux_boilerplate/presentation/widgets/timetable_card.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class ListTimetableScreen extends StatefulWidget {
   @override
@@ -20,6 +21,11 @@ class _ListTimetableScreenState extends State<ListTimetableScreen> {
   Widget build(BuildContext context) {
     subjectNotifier = context.watch<SubjectNotifier>();
 
+    ItemScrollController _scrollController = ItemScrollController();
+    Future.delayed(Duration(milliseconds: 50), () {
+      _scrollController.scrollTo(
+          index: DateTime.now().weekday, duration: Duration(milliseconds: 500));
+    });
     return Scaffold(
         appBar: new PlatformAdaptiveAppBar(
           actions: ([
@@ -46,10 +52,13 @@ class _ListTimetableScreenState extends State<ListTimetableScreen> {
         body: Container(
             color: Color.fromRGBO(245, 245, 245, 1),
             padding: EdgeInsets.all(20),
-            child: ListView(
-                children: DateWeekExtensions.getDaysOfWeek()
-                    .map((date) => loadDay(date))
-                    .toList())));
+            child: ScrollablePositionedList.builder(
+              itemScrollController: _scrollController,
+              itemCount: DateWeekExtensions.getDaysOfWeek().length,
+              itemBuilder: (context, index) {
+                return loadDay(DateWeekExtensions.getDaysOfWeek()[index]);
+              },
+            )));
   }
 
   List<Widget> loadItemsDay(List<TodayClass> _classes) {

@@ -65,7 +65,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   Widget _buildFab(BuildContext context) {
     final icons = [
       Icons.assignment,
-      Icons.assignment_ind,
+    //  Icons.assignment_ind,
       Icons.assignment_turned_in
     ];
     final appNotifier = Provider.of<AppNotifier>(context, listen: true);
@@ -86,13 +86,13 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                         pageTransition: PageTransitionType.bottomToTop);
 
                     break;
-                  case 1:
+               /*    case 1:
                     getIt<NavigationService>().navigateToNext(
                         ADD_LECTURER_SCREEN,
                         pageTransition: PageTransitionType.bottomToTop);
                     break;
-
-                  case 2:
+ */
+                  case 1:
                     getIt<NavigationService>().navigateToNext(ADD_TASK_SCREEN,
                         pageTransition: PageTransitionType.bottomToTop);
 

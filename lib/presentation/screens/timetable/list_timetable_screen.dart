@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/SubjectNotifier.dart';
-import 'package:flutter_redux_boilerplate/domain/class/class.dart';
 import 'package:flutter_redux_boilerplate/domain/extensions/date_time_extension.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/timetable_card.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 

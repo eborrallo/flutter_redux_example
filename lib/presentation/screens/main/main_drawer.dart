@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/config/screens.dart';
 import 'package:flutter_redux_boilerplate/config/styles/colors.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
 
 class MainDrawer extends StatelessWidget {
   MainDrawer({Key key}) : super(key: key);
@@ -31,10 +29,10 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
         ),
-        new ListTile(
+    /*     new ListTile(
             leading: new Icon(Icons.home),
             title: new Text('Home'),
-            onTap: () => Navigator.of(context).pop()),
+            onTap: () => Navigator.of(context).pop()), */
         new ListTile(
             leading: new Icon(Icons.timeline),
             title: new Text('Timetable'),
@@ -51,10 +49,10 @@ class MainDrawer extends StatelessWidget {
               navigation.navigateToNext(LIST_SUBJECT_SCREEN,
                   pageTransition: PageTransitionType.bottomToTop);
             }),
-        new ListTile(
+      /*   new ListTile(
             leading: new Icon(Icons.assignment_ind),
             title: new Text('Lecturers'),
-            onTap: () => print('you pressed about')),
+            onTap: () => print('you pressed about')), */
         new Divider(),
         new ListTile(
             leading: new Icon(Icons.exit_to_app),

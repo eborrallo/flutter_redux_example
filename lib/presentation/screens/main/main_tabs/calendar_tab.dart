@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/extensions/color_extension.dart';
 import 'package:flutter_redux_boilerplate/domain/task/task.dart';
+import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/profile_tab.dart';
+import 'package:flutter_redux_boilerplate/presentation/screens/task/details_task_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/calendar.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/calendar.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/cu
 import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/customization/days_of_week_style.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/customization/header_style.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CalendarTab extends StatefulWidget {
   CalendarTab({
@@ -117,93 +120,125 @@ class _CalendarTabState extends State<CalendarTab>
     );
   }
 
-  Widget buildListTask(Task _task) {
+  Widget _tag(bool done) {
     return Container(
-        width: 280,
-        margin: EdgeInsets.only(bottom: 10.0),
-        child: Center(
-            child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.blueAccent.shade100,
-                          borderRadius:
-                              new BorderRadius.all(Radius.circular(10.0))),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            'Due Time',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white),
-                          ),
-                          Text(
-                            _task.deliveryDate.hour.toString() +
-                                ":" +
-                                _task.deliveryDate.minute.toString(),
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white),
-                          )
-                        ],
-                      ),
+      margin: EdgeInsets.all(4),
+      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+      decoration: BoxDecoration(
+          color: done ? Colors.green : Colors.orange,
+          borderRadius: new BorderRadius.all(Radius.circular(5))),
+      child: Text(
+        (done ? 'done' : 'pending').toUpperCase(),
+        style: TextStyle(
+          fontSize: 11,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  Widget buildListTask(Task _task) {
+    AppNotifier app = getIt<AppNotifier>();
+
+    return GestureDetector(
+        onTap: () {
+          app.selectTask(_task);
+          _displayBottomSheet(context);
+        },
+        child: Container(
+            width: 280,
+            margin: EdgeInsets.only(bottom: 10.0),
+            child: Center(
+                child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                              flex: 1,
-                              child: Center(
-                                  child: Text(
-                                _task.title,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.grey,
-                                    fontSize: 18),
-                              ))),
-                          Expanded(
-                              flex: 1,
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      height: 10,
-                                      width: 10,
-                                      margin: EdgeInsets.only(right: 10.0),
-                                      decoration: new BoxDecoration(
-                                        color: HexColor.fromHex(
-                                            _task.subject.color),
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                    Flexible(
-                                        child: Text(
-                                      _task.subject.title.toString(),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.grey),
-                                    ))
-                                  ]))
-                        ],
+                    child: Row(children: [
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.blueAccent.shade100,
+                                borderRadius: new BorderRadius.all(
+                                    Radius.circular(10.0))),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  'Due Time',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white),
+                                ),
+                                Text(
+                                  _task.deliveryDate.hour.toString() +
+                                      ":" +
+                                      _task.deliveryDate.minute.toString(),
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white),
+                                ),
+                              ],
+                            )),
                       ),
-                    ),
-                  )
-                ]))));
+                      Expanded(
+                        flex: 2,
+                        child: Stack(
+                          alignment: Alignment.topRight,
+                          children: [
+                            _tag(_task.done),
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                      flex: 1,
+                                      child: Center(
+                                          child: Text(
+                                        _task.title,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.grey,
+                                            fontSize: 18),
+                                      ))),
+                                  Expanded(
+                                      flex: 1,
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: 10,
+                                              width: 10,
+                                              margin:
+                                                  EdgeInsets.only(right: 10.0),
+                                              decoration: new BoxDecoration(
+                                                color: HexColor.fromHex(
+                                                    _task.subject.color),
+                                                shape: BoxShape.circle,
+                                              ),
+                                            ),
+                                            Flexible(
+                                                child: Text(
+                                              _task.subject.title.toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Colors.grey),
+                                            ))
+                                          ]))
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ])))));
   }
 
   buildTableCalendar() {
@@ -338,7 +373,25 @@ class _CalendarTabState extends State<CalendarTab>
     );
   }
 
+  void _displayBottomSheet(BuildContext context) {
+
+    context.read<AppNotifier>().floatActionButtonKey.currentState.close();
+    showModalBottomSheet(
+        context: context,
+        //isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(20),
+          ),
+        ),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        builder: (ctx) {
+          return DetailsTaskScreen();
+        });
+  }
+
   Widget _buildEventsMarker(DateTime date, List events) {
+    bool pendignEvents = events.where((element) => !element.done).length > 0;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       decoration: BoxDecoration(
@@ -347,7 +400,7 @@ class _CalendarTabState extends State<CalendarTab>
             ? Colors.black
             : _calendarController.isToday(date)
                 ? Colors.black
-                : Colors.blue[400],
+                : ((pendignEvents) ? Colors.orange[400] : Colors.green[400]),
       ),
       width: 16.0,
       height: 16.0,

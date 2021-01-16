@@ -124,8 +124,6 @@ class _TaskCardState extends State<TaskCard> {
     return GestureDetector(
         onTap: () {
           app.selectTask(widget.task);
-          // NavigationService navigation = getIt<NavigationService>();
-          // navigation.navigateToNext(DETAILS_TASK_SCREEN);
           _displayBottomSheet(context);
         },
         child: //widget.blockEdit ? widget.task.done : false,

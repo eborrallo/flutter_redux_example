@@ -1,8 +1,8 @@
 # flutter_redux_boilerplate [FORKED FROM https://github.com/FranPitri/flutter_redux_boilerplate]
  
 A Flutter application boilerplate, with Redux included.
+_Carisa Jodiendo
 
-## Motivation
 
 Coming from a React Native background, using Redux in dart feels rather awkward. This project's purpose is to provide a well-structured starter project, with an architeture that resembles Redux.js'.
 

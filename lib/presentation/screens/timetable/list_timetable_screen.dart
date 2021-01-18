@@ -22,7 +22,7 @@ class _ListTimetableScreenState extends State<ListTimetableScreen> {
     ItemScrollController _scrollController = ItemScrollController();
     Future.delayed(Duration(milliseconds: 50), () {
       _scrollController.scrollTo(
-          index: DateTime.now().weekday, duration: Duration(milliseconds: 500));
+          index: DateTime.now().weekday-1, duration: Duration(milliseconds: 500));
     });
     return Scaffold(
         appBar: new PlatformAdaptiveAppBar(

@@ -15,7 +15,7 @@ class ProfileTab extends StatelessWidget {
         child: ListView(
           //physics: NeverScrollableScrollPhysics(),
           children: [
-            Container(
+           /*  Container(
                 height: 150,
                 width: 150,
                 child: CircleAvatar(
@@ -36,7 +36,7 @@ class ProfileTab extends StatelessWidget {
             new Center(
                 child: Container(
               child: Text('adam.b@email.com'),
-            )),
+            )), */
             new ClipPath(
               clipper: new CustomHalfCircleClipper(),
               child: Container(

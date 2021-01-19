@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/dto/TodayClass.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/SubjectNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/extensions/date_time_extension.dart';
-import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive.dart';
+
 import 'package:flutter_redux_boilerplate/presentation/widgets/timetable_card.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-class ListTimetableScreen extends StatefulWidget {
-  @override
-  _ListTimetableScreenState createState() => _ListTimetableScreenState();
-}
 
-class _ListTimetableScreenState extends State<ListTimetableScreen> {
+class TimetableTab extends StatelessWidget  {
   SubjectNotifier subjectNotifier;
 
   @override
@@ -24,7 +20,8 @@ class _ListTimetableScreenState extends State<ListTimetableScreen> {
       _scrollController.scrollTo(
           index: DateTime.now().weekday-1, duration: Duration(milliseconds: 500));
     });
-    return Scaffold(
+    return 
+   /*  Scaffold(
         appBar: new PlatformAdaptiveAppBar(
           actions: ([
             IconButton(
@@ -47,16 +44,18 @@ class _ListTimetableScreenState extends State<ListTimetableScreen> {
             },
           ),
         ),
-        body: Container(
+        body: */ 
+        Container(
             color: Color.fromRGBO(245, 245, 245, 1),
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: ScrollablePositionedList.builder(
               itemScrollController: _scrollController,
               itemCount: DateWeekExtensions.getDaysOfWeek().length,
               itemBuilder: (context, index) {
                 return loadDay(DateWeekExtensions.getDaysOfWeek()[index]);
               },
-            )));
+            ));
+            //);
   }
 
   List<Widget> loadItemsDay(List<TodayClass> _classes) {

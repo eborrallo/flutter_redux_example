@@ -1,21 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
+import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive.dart';
+import 'package:provider/provider.dart';
 
 class ProfileTab extends StatelessWidget {
-  final AppNotifier appNotifier;
-
-  ProfileTab({Key key, this.appNotifier}) : super(key: key);
+  AppNotifier appNotifier;
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-        padding: EdgeInsets.only(top: 20),
-        color: Color.fromRGBO(245, 245, 245, 1),
-        child: ListView(
-          //physics: NeverScrollableScrollPhysics(),
-          children: [
-           /*  Container(
+    appNotifier = Provider.of<AppNotifier>(context, listen: true);
+
+    return Scaffold(
+        appBar: new PlatformAdaptiveAppBar(
+          title: Text(
+            'Analytics',
+            style: TextStyle(color: Colors.black),
+          ),
+          platform: Theme.of(context).platform,
+          backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+          leading: BackButton(
+            color: Colors.black,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        body: new Container(
+            padding: EdgeInsets.only(top: 20),
+            color: Color.fromRGBO(245, 245, 245, 1),
+            child: ListView(
+              //physics: NeverScrollableScrollPhysics(),
+              children: [
+                /*  Container(
                 height: 150,
                 width: 150,
                 child: CircleAvatar(
@@ -37,113 +54,170 @@ class ProfileTab extends StatelessWidget {
                 child: Container(
               child: Text('adam.b@email.com'),
             )), */
-            new ClipPath(
-              clipper: new CustomHalfCircleClipper(),
-              child: Container(
-                margin: EdgeInsets.only(top: 20),
-                height: 470,
-                width: 400,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ListTile(
-                        title: Center(
-                      child: Text(
-                        'Weekly Stat',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    )),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                            flex: 1,
-                            child: CircularProgresItem(
-                              text: 'Completation Rate',
-                              progressValue: appNotifier.weekCompletation ?? 0,
-                              radius: 80,
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                    child: Text(
-                                  appNotifier.totalTasksThisWeek ?? 0,
-                                  style: TextStyle(fontSize: 40),
-                                )),
-                                Container(
-                                    child: Text('Total Task',
-                                        textAlign: TextAlign.center,
-                                        style: new TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 17.0,
-                                        )))
-                              ],
-                            ))
-                      ],
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 30, top: 100),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                              height: 30,
-                              width: 30,
-                              margin: EdgeInsets.only(right: 40),
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Icon(
-                                Icons.lightbulb_outline,
-                                color: Colors.white,
-                                size: 20,
+                new ClipPath(
+                    child: Container(
+                        margin: EdgeInsets.only(top: 20, left: 7, right: 7),
+                        height: 200,
+                        width: 400,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ListTile(
+                                  title: Center(
+                                child: Text(
+                                  'Total Stat',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               )),
-                          Column(
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                      flex: 1,
+                                      child: CircularProgresItem(
+                                        text: 'Completation Rate',
+                                        progressValue:
+                                            appNotifier.weekCompletation ?? 0,
+                                        radius: 80,
+                                      )),
+                                  Expanded(
+                                      flex: 1,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Container(
+                                              child: Text(
+                                            appNotifier.totalTasksThisWeek ?? 0,
+                                            style: TextStyle(fontSize: 40),
+                                          )),
+                                          Container(
+                                              child: Text('Total Task',
+                                                  textAlign: TextAlign.center,
+                                                  style: new TextStyle(
+                                                    color: Colors.black54,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 17.0,
+                                                  )))
+                                        ],
+                                      ))
+                                ],
+                              ),
+                            ]))),
+                new ClipPath(
+                 // clipper: new CustomHalfCircleClipper(),
+                  child: Container(
+                    margin: EdgeInsets.only(top: 20, left: 7, right: 7),
+                    height: 500,
+                    width: 400,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ListTile(
+                            title: Center(
+                          child: Text(
+                            'Weekly Stat',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        )),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                                flex: 1,
+                                child: CircularProgresItem(
+                                  text: 'Completation Rate',
+                                  progressValue:
+                                      appNotifier.weekCompletation ?? 0,
+                                  radius: 80,
+                                )),
+                            Expanded(
+                                flex: 1,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                        child: Text(
+                                      appNotifier.totalTasksThisWeek ?? 0,
+                                      style: TextStyle(fontSize: 40),
+                                    )),
+                                    Container(
+                                        child: Text('Total Task',
+                                            textAlign: TextAlign.center,
+                                            style: new TextStyle(
+                                              color: Colors.black54,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 17.0,
+                                            )))
+                                  ],
+                                ))
+                          ],
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 30, top: 100),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                  width: 250,
-                                  child: Text(
-                                    'Insight',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Colors.purple,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 17.0,
-                                    ),
+                                  height: 30,
+                                  width: 30,
+                                  margin: EdgeInsets.only(right: 40),
+                                  decoration: BoxDecoration(
+                                    color: Colors.purple,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Icon(
+                                    Icons.lightbulb_outline,
+                                    color: Colors.white,
+                                    size: 20,
                                   )),
-                              Container(
-                                  margin: EdgeInsets.only(top: 10),
-                                  width: 250,
-                                  child: Text(
-                                    'You can raise your completation rate by finish your task ontime',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ))
+                              Column(
+                                children: [
+                                  Container(
+                                      width: 250,
+                                      child: Text(
+                                        'Insight',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: Colors.purple,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 17.0,
+                                        ),
+                                      )),
+                                  Container(
+                                      margin: EdgeInsets.only(top: 10),
+                                      width: 250,
+                                      child: Text(
+                                        'You can raise your completation rate by finish your task ontime',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ))
+                                ],
+                              )
                             ],
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            )
-          ],
-        ));
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            )));
   }
 }
 

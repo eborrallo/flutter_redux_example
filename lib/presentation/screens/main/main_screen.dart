@@ -5,10 +5,9 @@ import 'package:flutter_redux_boilerplate/application/notifier/TaskNotifier.dart
 import 'package:flutter_redux_boilerplate/config/screens.dart';
 import 'package:flutter_redux_boilerplate/infraestructure/NavigationService.dart';
 import 'package:flutter_redux_boilerplate/injections.dart';
-import 'package:flutter_redux_boilerplate/presentation/screens/main/main_drawer.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/calendar_tab.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/home_tab.dart';
-import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/profile_tab.dart';
+import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/timetable_tab.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/task_tab.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/fab_bottom_app_bar.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/fab_with_icons.dart';
@@ -65,7 +64,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   Widget _buildFab(BuildContext context) {
     final icons = [
       Icons.assignment,
-    //  Icons.assignment_ind,
+      //  Icons.assignment_ind,
       Icons.assignment_turned_in
     ];
     final appNotifier = Provider.of<AppNotifier>(context, listen: true);
@@ -86,7 +85,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                         pageTransition: PageTransitionType.bottomToTop);
 
                     break;
-               /*    case 1:
+                  /*    case 1:
                     getIt<NavigationService>().navigateToNext(
                         ADD_LECTURER_SCREEN,
                         pageTransition: PageTransitionType.bottomToTop);
@@ -142,6 +141,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final appNotifier = Provider.of<AppNotifier>(context, listen: true);
     final taskNotifier = Provider.of<TaskNotifier>(context, listen: true);
+    NavigationService navigation = getIt<NavigationService>();
 
     // final subjectNotifier = Provider.of<SubjectNotifier>(context, listen: true);
 
@@ -187,25 +187,27 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               ]
             : [])
           ..addAll([
-            Container(
-              width: 60,
-              height: 60,
-              padding: EdgeInsets.only(right: 21),
-              child: CircleAvatar(
-                backgroundColor: Colors.blue,
-                child: Text('AH'),
-              ),
+            IconButton(
+              icon: Icon(Icons.leaderboard),
+              color: Colors.black,
+              onPressed: () {
+                //Navigator.of(context).pop();
+                navigation.navigateToNext(ANALITICS_SCREEN,
+                    pageTransition: PageTransitionType.rightToLeftWithFade);
+                // _controller.reverse();
+                //  context.read<AppNotifier>().scaffoldKey.currentState.openDrawer();
+              },
             )
           ]),
         title: appbarTitle,
         platform: Theme.of(context).platform,
         backgroundColor: Color.fromRGBO(245, 245, 245, 1),
         leading: IconButton(
-          icon: Icon(Icons.menu),
+          icon: Icon(Icons.settings),
           color: Colors.black,
           onPressed: () {
-            _controller.reverse();
-            context.read<AppNotifier>().scaffoldKey.currentState.openDrawer();
+            // _controller.reverse();
+            //  context.read<AppNotifier>().scaffoldKey.currentState.openDrawer();
           },
         ),
       ),
@@ -225,15 +227,12 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         children: <Widget>[
           new HomeTab(appNotifier: appNotifier, changeTab: onTap),
           new TaskTab(taskNotifier: taskNotifier),
-          new CalendarTab(
-            appNotifier: appNotifier,
-          ),
-          new ProfileTab(
-            appNotifier: appNotifier,
-          ),
+          new CalendarTab(appNotifier: appNotifier),
+          // new ProfileTab(appNotifier: appNotifier),
+          new TimetableTab(),
         ],
       ),
-      drawer: new MainDrawer(),
+      // drawer: new MainDrawer(),
     );
   }
 
@@ -258,10 +257,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
 List<FABBottomAppBarItem> TabItems = <FABBottomAppBarItem>[
   FABBottomAppBarItem(text: 'Home', iconData: Icons.home),
-  FABBottomAppBarItem(
-    text: 'Task',
-    iconData: Icons.work,
-  ),
+  FABBottomAppBarItem(text: 'Task', iconData: Icons.work),
   FABBottomAppBarItem(text: 'Calendar', iconData: Icons.calendar_today),
-  FABBottomAppBarItem(text: 'Profile', iconData: Icons.person),
+  FABBottomAppBarItem(text: 'Timeline', iconData: Icons.timeline),
 ];

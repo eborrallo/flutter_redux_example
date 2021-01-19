@@ -5,12 +5,13 @@ import 'package:flutter_redux_boilerplate/presentation/screens/auth/sign_up/sign
 import 'package:flutter_redux_boilerplate/presentation/screens/lecturer/add_lecturer_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/loading/loading_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_screen.dart';
+import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/profile_tab.dart';
+import 'package:flutter_redux_boilerplate/presentation/screens/main/main_tabs/timetable_tab.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/subject/add_subject_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/subject/subject_list.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/subject/update_subject_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/task/add_task_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/task/details_task_screen.dart';
-import 'package:flutter_redux_boilerplate/presentation/screens/timetable/list_timetable_screen.dart';
 import 'package:injectable/injectable.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -73,7 +74,10 @@ class NavigationService {
         screen = UpdateSubjectScreen();
         break;
       case LIST_TIMETABLE_SCREEN:
-        screen = ListTimetableScreen();
+        screen = TimetableTab();
+        break;
+      case ANALITICS_SCREEN:
+        screen = ProfileTab();
         break;
       case DETAILS_TASK_SCREEN:
         screen = DetailsTaskScreen();

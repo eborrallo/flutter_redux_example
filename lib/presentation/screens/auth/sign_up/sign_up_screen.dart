@@ -17,7 +17,7 @@ class SignUpScreen extends StatelessWidget {
                             new Expanded(
                                 child: new Center(
                                     child: new FlutterLogo(
-                                        colors: colorStyles['primary'],
+                                        textColor: colorStyles['primary'],
                                         size: 200.0,
                                     ),
                                 ),

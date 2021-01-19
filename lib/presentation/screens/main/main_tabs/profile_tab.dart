@@ -82,7 +82,7 @@ class ProfileTab extends StatelessWidget {
                                       child: CircularProgresItem(
                                         text: 'Completation Rate',
                                         progressValue:
-                                            appNotifier.weekCompletation ?? 0,
+                                            appNotifier.totalCompletation ?? 0,
                                         radius: 80,
                                       )),
                                   Expanded(
@@ -93,7 +93,7 @@ class ProfileTab extends StatelessWidget {
                                         children: [
                                           Container(
                                               child: Text(
-                                            appNotifier.totalTasksThisWeek ?? 0,
+                                            appNotifier.totalTasks ?? 0,
                                             style: TextStyle(fontSize: 40),
                                           )),
                                           Container(
@@ -110,7 +110,7 @@ class ProfileTab extends StatelessWidget {
                               ),
                             ]))),
                 new ClipPath(
-                 // clipper: new CustomHalfCircleClipper(),
+                  // clipper: new CustomHalfCircleClipper(),
                   child: Container(
                     margin: EdgeInsets.only(top: 20, left: 7, right: 7),
                     height: 500,

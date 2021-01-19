@@ -57,14 +57,22 @@ class AppNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  double get weekCompletation {
-    List<Task> tasksWeek = tasksNotifier.tasksThisWeek ?? [];
-    if (tasksWeek.length == 0) {
+  double _completation(List<Task> tasks) {
+    if (tasks.length == 0) {
       return 0;
     }
-    List<Task> tasksWeekDone =
-        tasksWeek.where((Task _taks) => _taks.done).toList();
-    return ((tasksWeekDone.length * 100) / tasksWeek.length);
+    List<Task> tasksWeekDone = tasks.where((Task _taks) => _taks.done).toList();
+    return ((tasksWeekDone.length * 100) / tasks.length);
+  }
+
+  double get weekCompletation {
+    List<Task> tasksWeek = tasksNotifier.tasksThisWeek ?? [];
+    return _completation(tasksWeek);
+  }
+
+  double get totalCompletation {
+    List<Task> tasks = tasksNotifier.allTasks ?? [];
+    return _completation(tasks);
   }
 
   Task get taskSelected => this._taskSelected;
@@ -72,6 +80,7 @@ class AppNotifier extends ChangeNotifier {
 
   String get totalTasksThisWeek =>
       tasksNotifier.tasksThisWeek?.length.toString();
+  String get totalTasks => tasksNotifier.allTasks?.length.toString();
 
   Map<DateTime, List<Task>> get calendarEvents => tasksNotifier.taskByDay();
 

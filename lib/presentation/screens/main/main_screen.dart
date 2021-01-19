@@ -189,7 +189,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           ..addAll([
             IconButton(
               icon: Icon(Icons.leaderboard),
-              color: Colors.black,
+              color: Colors.purple,
               onPressed: () {
                 //Navigator.of(context).pop();
                 navigation.navigateToNext(ANALITICS_SCREEN,
@@ -204,7 +204,7 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         backgroundColor: Color.fromRGBO(245, 245, 245, 1),
         leading: IconButton(
           icon: Icon(Icons.settings),
-          color: Colors.black,
+          color: Colors.grey,
           onPressed: () {
             // _controller.reverse();
             //  context.read<AppNotifier>().scaffoldKey.currentState.openDrawer();

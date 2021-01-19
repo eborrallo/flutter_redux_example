@@ -16,27 +16,18 @@ class _SubjectListScreenState extends State<SubjectListScreen> {
   Widget build(BuildContext context) {
     var list = context.watch<SubjectNotifier>().allSubjects;
 
-    return Scaffold(
-        appBar: new PlatformAdaptiveAppBar(
-          actions: [],
-          title: Text(
-            'Subjects',
-            style: TextStyle(color: Colors.black),
-          ),
-          platform: Theme.of(context).platform,
-          backgroundColor: Color.fromRGBO(245, 245, 245, 1),
-          leading: CloseButton(color: Colors.black),
-        ),
-        body: Container(
-            color: Color.fromRGBO(245, 245, 245, 1),
-            padding: EdgeInsets.only(left: 21.0, right: 21),
-            child: BlurList(Axis.vertical, ListView(
+    return Container(
+        color: Color.fromRGBO(245, 245, 245, 1),
+        padding: EdgeInsets.only(left: 21.0, right: 21, top: 21),
+        child: BlurList(
+            Axis.vertical,
+            ListView(
                 children: List.generate(
                     list.length ?? 0,
                     (i) => AnimatedListItem(
                           i,
                           SubjectCard(subject: list[i]),
                           duration: Duration(milliseconds: 400),
-                        ))))));
+                        )))));
   }
 }

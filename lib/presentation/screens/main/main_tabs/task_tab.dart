@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/TaskNotifier.dart';
+import 'package:flutter_redux_boilerplate/presentation/screens/subject/subject_list.dart';
 
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
@@ -20,22 +21,47 @@ class TaskTabState extends State<TaskTab> {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      alignment: Alignment.topLeft,
-      color: Color.fromRGBO(245, 245, 245, 1),
-      padding: EdgeInsets.only(top: 20),
-      child: new ListView(
-        controller: _scrollController,
-        children: [
-          widget.taskNotifier.showOld
-              ? _oldest(widget.taskNotifier.oldest)
-              : Container(),
-          _today(widget.taskNotifier.today),
-          _tomorrow(widget.taskNotifier.tomorrow),
-          _upcomming(widget.taskNotifier.upComing)
-        ],
-      ),
-    );
+    return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+              flexibleSpace: new Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  new TabBar(
+                    indicatorColor: Colors.blue,
+                    labelColor: Colors.blue,
+                    unselectedLabelColor: Colors.grey,
+                    tabs: [
+                      new Tab(icon: new Icon(Icons.assignment_turned_in)),
+                      new Tab(icon: new Icon(Icons.assignment)),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            body: TabBarView(children: [
+              new Container(
+                alignment: Alignment.topLeft,
+                color: Color.fromRGBO(245, 245, 245, 1),
+                padding: EdgeInsets.only(top: 20),
+                child: new ListView(
+                  controller: _scrollController,
+                  children: [
+                    widget.taskNotifier.showOld
+                        ? _oldest(widget.taskNotifier.oldest)
+                        : Container(),
+                    _today(widget.taskNotifier.today),
+                    _tomorrow(widget.taskNotifier.tomorrow),
+                    _upcomming(widget.taskNotifier.upComing)
+                  ],
+                ),
+              ),
+              new Container(
+                child: SubjectListScreen(),
+              )
+            ])));
   }
 
   Widget _tackCollection(String title, List list, {Widget widget}) {

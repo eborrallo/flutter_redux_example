@@ -7,6 +7,7 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive
 import 'package:flutter_redux_boilerplate/presentation/widgets/week_day_selector/week_day_selector.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/date_symbols.dart';
+import 'package:flutter_redux_boilerplate/config/i18n.dart';
 
 class FormSubject extends StatefulWidget {
   Subject subject;
@@ -107,7 +108,7 @@ class _FormSubjectState extends State<FormSubject> {
                               icon: Icon(Icons.save),
                               onPressed: () {}),
                           Text(
-                            'SAVE',
+                            'save'.i18n.toUpperCase(),
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -118,7 +119,7 @@ class _FormSubjectState extends State<FormSubject> {
                     ))
               ]),
               title: Text(
-                'Add Subject',
+                'Add Subject'.i18n,
                 style: TextStyle(color: Colors.black),
               ),
               platform: Theme.of(context).platform,
@@ -134,7 +135,7 @@ class _FormSubjectState extends State<FormSubject> {
                           title: Container(
                               margin: EdgeInsets.only(bottom: 10),
                               child: Text(
-                                'Title',
+                                'title'.i18n.inCaps,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               )),
                           subtitle: Container(
@@ -150,12 +151,15 @@ class _FormSubjectState extends State<FormSubject> {
                                     borderSide: BorderSide.none),
                                 labelStyle:
                                     TextStyle(fontWeight: FontWeight.bold),
-                                hintText: 'Write subject title',
+                                hintText: 'Write some '.i18n.gender(Gender.male)+'title'.i18n,
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
                               ),
                               validator: (val) => val.isEmpty
-                                  ? 'Please enter your subject title.'
+                                  ? 'Please enter some'
+                                          .i18n
+                                          .gender(Gender.male) +
+                                      'title'.i18n
                                   : null,
                               onSaved: (val) => title = val,
                             ),
@@ -164,7 +168,7 @@ class _FormSubjectState extends State<FormSubject> {
                           title: Container(
                               margin: EdgeInsets.only(bottom: 10),
                               child: Text(
-                                'Description',
+                                'description'.i18n.inCaps,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               )),
                           subtitle: Container(
@@ -181,12 +185,15 @@ class _FormSubjectState extends State<FormSubject> {
                                     borderSide: BorderSide.none),
                                 labelStyle:
                                     TextStyle(fontWeight: FontWeight.bold),
-                                hintText: 'Write some description',
+                                hintText: 'Write some '.i18n.gender(Gender.female)+ 'description'.i18n,
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
                               ),
                               validator: (val) => val.isEmpty
-                                  ? 'Please enter your subject title.'
+                                  ? 'Please enter some'
+                                          .i18n
+                                          .gender(Gender.female) +
+                                      'description'.i18n
                                   : null,
                               onSaved: (val) => description = val,
                             ),
@@ -212,7 +219,7 @@ class _FormSubjectState extends State<FormSubject> {
                                             margin: EdgeInsets.only(left: 20),
                                             child: Text(
                                               DateWeekExtensions.dayOfWeek(
-                                                  entry.key),
+                                                  entry.key).inCaps,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 16),
@@ -249,7 +256,7 @@ class _FormSubjectState extends State<FormSubject> {
     };
 
     return dateTimePicker(index, _timeControllerFrom[index], validator,
-        _selectTimeFrom, onSave, 'From', _timeValidatorTo[index]);
+        _selectTimeFrom, onSave, 'from'.i18n.inCaps, _timeValidatorTo[index]);
   }
 
   Widget dateTimePickerTo(int index) {
@@ -257,7 +264,8 @@ class _FormSubjectState extends State<FormSubject> {
       if (val.isEmpty) {
         Future.delayed(Duration.zero, () async {
           setState(() {
-            _timeValidatorTo[index] = 'Please enter your time.';
+            _timeValidatorTo[index] =  'Please enter some'.i18n.gender(Gender.male) +
+                                'time'.i18n;;
           });
         });
       }
@@ -267,7 +275,7 @@ class _FormSubjectState extends State<FormSubject> {
       _setTimeTo[index] = val;
     };
     return dateTimePicker(index, _timeControllerTo[index], validator,
-        _selectTimeTo, onSave, 'To', _timeValidatorTo[index]);
+        _selectTimeTo, onSave, 'to'.i18n.inCaps, _timeValidatorTo[index]);
   }
 
   Future<Null> _selectTimeFrom(BuildContext context, int index) async {

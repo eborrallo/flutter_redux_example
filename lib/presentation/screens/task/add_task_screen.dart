@@ -10,6 +10,7 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive
 import 'package:flutter_redux_boilerplate/stubs/TaskStub.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_redux_boilerplate/config/i18n.dart';
 
 class AddTaskScreen extends StatefulWidget {
   @override
@@ -37,7 +38,8 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
         'title': _title,
         'description': _description,
         'deliveryDate': DateTime(selectedDate.year, selectedDate.month,
-            selectedDate.day, int.parse(_hour), int.parse(_minute)).toString(),
+                selectedDate.day, int.parse(_hour), int.parse(_minute))
+            .toString(),
         'subject':
             _subjects.firstWhere((Subject element) => element.uuid == _subject),
       };
@@ -80,7 +82,7 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                               icon: Icon(Icons.save),
                               onPressed: save),
                           Text(
-                            'SAVE',
+                            'save'.i18n.toUpperCase(),
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -91,7 +93,7 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                     ))
               ]),
               title: Text(
-                'Add Task',
+                'Add Task'.i18n,
                 style: TextStyle(color: Colors.black),
               ),
               platform: Theme.of(context).platform,
@@ -108,7 +110,7 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                       title: Container(
                           margin: EdgeInsets.only(bottom: 10),
                           child: Text(
-                            'Title',
+                            'title'.i18n.inCaps,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                       subtitle: Container(
@@ -122,11 +124,15 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                                     BorderRadius.all(Radius.circular(10.0)),
                                 borderSide: BorderSide.none),
                             labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                            hintText: 'Write subject title',
+                            hintText: 'Write some '.gender(Gender.male) +
+                                'title'.i18n,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                           ),
-                          validator: (val) =>
-                              val.isEmpty ? 'Please enter your title.' : null,
+                          validator: (val) => val.isEmpty
+                              ? 'Please enter some'
+                                  .i18n.gender(Gender.male)
+                                  +'title'.i18n
+                              : null,
                           onSaved: (val) => setState(() {
                             _title = val;
                           }),
@@ -136,7 +142,7 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                       title: Container(
                           margin: EdgeInsets.only(bottom: 10),
                           child: Text(
-                            'Description',
+                            'description'.i18n.inCaps,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                       subtitle: Container(
@@ -151,7 +157,8 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                                     BorderRadius.all(Radius.circular(10.0)),
                                 borderSide: BorderSide.none),
                             labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                            hintText: 'Write some description',
+                            hintText: 'Write some '.gender(Gender.female) +
+                                'description'.i18n,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                           ),
                           onSaved: (val) => setState(() {
@@ -163,7 +170,7 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                       alignment: Alignment.centerLeft,
                       margin: EdgeInsets.only(left: 20),
                       child: Text(
-                        'Date & Time',
+                        'Date & Time'.i18n,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16),
                       )),
@@ -175,7 +182,7 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                       title: Container(
                           margin: EdgeInsets.only(bottom: 10),
                           child: Text(
-                            'Subject',
+                            'subject'.i18n.inCaps,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                       subtitle: Container(
@@ -194,7 +201,9 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                               });
                             },
                             validator: (val) => val == null
-                                ? 'Please enter your Subject.'
+                                ? 'Please select a %s.'
+                                    .i18n
+                                    .fill(['subject'.i18n])
                                 : null,
                             decoration: InputDecoration(
                               filled: true,
@@ -209,7 +218,7 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                       title: Container(
                           margin: EdgeInsets.only(bottom: 10),
                           child: Text(
-                            'Attachment',
+                            'attachment'.i18n.inCaps,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                       subtitle: Container(
@@ -279,7 +288,10 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                   if (val.isEmpty) {
                     Future.delayed(Duration.zero, () async {
                       setState(() {
-                        _dateValidator = 'Please enter your date.';
+                        _dateValidator =
+                            'Please enter some'.i18n.gender(Gender.female) +
+                                'date'.i18n;
+                        ;
                       });
                     });
                   }
@@ -290,7 +302,6 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
                     Icons.calendar_today,
                     color: Colors.grey,
                   ),
-                  hintText: 'Pick date',
                   disabledBorder:
                       UnderlineInputBorder(borderSide: BorderSide.none),
                 )),
@@ -363,14 +374,14 @@ class _AddTaskStateScreen extends State<AddTaskScreen> {
               if (val.isEmpty) {
                 Future.delayed(Duration.zero, () async {
                   setState(() {
-                    _timeValidator = 'Please enter your time.';
+                    _timeValidator =
+                        'Please enter some'.i18n.gender(Gender.male) + 'time'.i18n;
                   });
                 });
               }
               return null;
             },
             decoration: InputDecoration(
-              hintText: 'Set time',
               prefixIcon: Icon(
                 Icons.access_time,
                 color: Colors.grey,

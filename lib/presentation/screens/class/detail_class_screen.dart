@@ -4,6 +4,7 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/expandable_text.d
 import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/reactive_animated_list.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
+import 'package:flutter_redux_boilerplate/config/i18n.dart';
 
 class DetailClassScreen extends StatefulWidget {
   final TodayClass todayClass;
@@ -56,7 +57,7 @@ class _DetailClassScreenState extends State<DetailClassScreen> {
                                 padding: EdgeInsets.all(20),
                                 child: Text(
                                   widget.todayClass.timeIn +
-                                      ' to ' +
+                                      ' '+'to'.i18n+' ' +
                                       widget.todayClass.timeOut,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -89,7 +90,7 @@ class _DetailClassScreenState extends State<DetailClassScreen> {
                               ),
                               child: Column(children: [
                                 Text(
-                                  'Tasks',
+                                  'tasks'.i18n.inCaps,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18),

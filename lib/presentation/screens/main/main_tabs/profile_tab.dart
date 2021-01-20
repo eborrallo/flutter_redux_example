@@ -3,6 +3,7 @@ import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart'
 import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_redux_boilerplate/config/i18n.dart';
 
 class ProfileTab extends StatelessWidget {
   AppNotifier appNotifier;
@@ -14,7 +15,7 @@ class ProfileTab extends StatelessWidget {
     return Scaffold(
         appBar: new PlatformAdaptiveAppBar(
           title: Text(
-            'Analytics',
+            'analytics'.i18n.inCaps,
             style: TextStyle(color: Colors.black),
           ),
           platform: Theme.of(context).platform,
@@ -69,7 +70,7 @@ class ProfileTab extends StatelessWidget {
                               ListTile(
                                   title: Center(
                                 child: Text(
-                                  'Total Stat',
+                                  'Total'.i18n,
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               )),
@@ -80,7 +81,7 @@ class ProfileTab extends StatelessWidget {
                                   Expanded(
                                       flex: 1,
                                       child: CircularProgresItem(
-                                        text: 'Completation Rate',
+                                        text: 'Completation Rate'.i18n,
                                         progressValue:
                                             appNotifier.totalCompletation ?? 0,
                                         radius: 80,
@@ -97,7 +98,7 @@ class ProfileTab extends StatelessWidget {
                                             style: TextStyle(fontSize: 40),
                                           )),
                                           Container(
-                                              child: Text('Total Task',
+                                              child: Text('Total Task'.i18n,
                                                   textAlign: TextAlign.center,
                                                   style: new TextStyle(
                                                     color: Colors.black54,
@@ -125,7 +126,7 @@ class ProfileTab extends StatelessWidget {
                         ListTile(
                             title: Center(
                           child: Text(
-                            'Weekly Stat',
+                            'Weekly'.i18n,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         )),
@@ -135,7 +136,7 @@ class ProfileTab extends StatelessWidget {
                             Expanded(
                                 flex: 1,
                                 child: CircularProgresItem(
-                                  text: 'Completation Rate',
+                                  text: 'Completation Rate'.i18n,
                                   progressValue:
                                       appNotifier.weekCompletation ?? 0,
                                   radius: 80,
@@ -152,7 +153,7 @@ class ProfileTab extends StatelessWidget {
                                       style: TextStyle(fontSize: 40),
                                     )),
                                     Container(
-                                        child: Text('Total Task',
+                                        child: Text('Total Task'.i18n,
                                             textAlign: TextAlign.center,
                                             style: new TextStyle(
                                               color: Colors.black54,
@@ -187,7 +188,7 @@ class ProfileTab extends StatelessWidget {
                                   Container(
                                       width: 250,
                                       child: Text(
-                                        'Insight',
+                                        'Insight'.i18n,
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                           color: Colors.purple,
@@ -199,7 +200,7 @@ class ProfileTab extends StatelessWidget {
                                       margin: EdgeInsets.only(top: 10),
                                       width: 250,
                                       child: Text(
-                                        'You can raise your completation rate by finish your task ontime',
+                                        'You can raise your completation rate by finish your task ontime'.i18n,
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                           color: Colors.grey,

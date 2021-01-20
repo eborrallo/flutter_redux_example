@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/AppNotifier.dart';
 import 'package:flutter_redux_boilerplate/domain/extensions/color_extension.dart';
@@ -15,6 +17,7 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/cu
 import 'package:flutter_redux_boilerplate/presentation/widgets/table_calendar/customization/header_style.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_redux_boilerplate/config/i18n.dart';
 
 class CalendarTab extends StatefulWidget {
   CalendarTab({
@@ -88,7 +91,7 @@ class _CalendarTabState extends State<CalendarTab>
                         margin: EdgeInsets.only(left: 20, top: 20),
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Your Task',
+                          'Your task'.i18n,
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -128,7 +131,7 @@ class _CalendarTabState extends State<CalendarTab>
           color: done ? Colors.green : Colors.orange,
           borderRadius: new BorderRadius.all(Radius.circular(5))),
       child: Text(
-        (done ? 'done' : 'pending').toUpperCase(),
+        (done ? 'done'.i18n : 'pending'.i18n).toUpperCase(),
         style: TextStyle(
           fontSize: 11,
           color: Colors.white,
@@ -165,7 +168,7 @@ class _CalendarTabState extends State<CalendarTab>
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                  'Due Time',
+                                  'Due Time'.i18n,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                       color: Colors.white),
@@ -243,7 +246,7 @@ class _CalendarTabState extends State<CalendarTab>
 
   buildTableCalendar() {
     return Calendar(
-      locale: 'es_ES',
+      locale: Platform.localeName,
       events: _events,
       calendarController: _calendarController,
       onDaySelected: _onDaySelected,

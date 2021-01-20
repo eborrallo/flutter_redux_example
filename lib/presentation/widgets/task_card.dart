@@ -8,6 +8,7 @@ import 'package:flutter_redux_boilerplate/injections.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/task/details_task_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_redux_boilerplate/config/i18n.dart';
 
 class TaskCard extends StatefulWidget {
   final Task task;
@@ -22,6 +23,35 @@ class TaskCard extends StatefulWidget {
 class _TaskCardState extends State<TaskCard> {
   Timer _timer;
   String totalTimeLeft;
+
+  int totalTimeLeftWith(int durationMinutes) {
+    Duration duration = new Duration(minutes: durationMinutes);
+
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitDays = duration.inDays.toString();
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitHours = twoDigits(duration.inHours.remainder(24));
+
+    if (duration.inDays > 0) {
+      return 2;
+    }
+    if (int.parse(twoDigitHours) <= 0 &&
+        int.parse(twoDigitDays) <= 0 &&
+        int.parse(twoDigitMinutes) <= 0) {
+      DateTime now =
+          DateTime.now().subtract(Duration(minutes: -durationMinutes));
+
+      if (now.day == DateTime.now().day &&
+          now.month == DateTime.now().month &&
+          now.year == DateTime.now().year) {
+        return 3;
+      }
+
+      return 2;
+    }
+
+    return 2;
+  }
 
   String formatTimeLeft(int durationMinutes) {
     Duration duration = new Duration(minutes: durationMinutes);
@@ -43,10 +73,12 @@ class _TaskCardState extends State<TaskCard> {
       if (now.day == DateTime.now().day &&
           now.month == DateTime.now().month &&
           now.year == DateTime.now().year) {
-        return 'Expired from ' + DateFormat.Hm().format(now);
+        return 'Expired from '.i18n + DateFormat.Hm().format(now);
       }
+
       return DateFormat.yMMMd().format(now);
     }
+
     return "${twoDigitHours}h ${twoDigitMinutes}m";
   }
 
@@ -59,7 +91,7 @@ class _TaskCardState extends State<TaskCard> {
   @override
   void initState() {
     startTimer();
-
+    formatTimeLeft(9999);
     super.initState();
   }
 
@@ -185,15 +217,17 @@ class _TaskCardState extends State<TaskCard> {
                                         child: AutoSizeText(
                                           widget.task.subject.title,
                                           maxLines: 1,
-                                          //maxFontSize: 15,
+                                          maxFontSize: 15,
+                                          minFontSize: 10,
                                           overflow: TextOverflow.ellipsis,
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
-                                            fontSize: 15,
-                                          ),
+                                              //  fontSize: 15,
+                                              ),
                                         )),
                                     Expanded(
-                                        flex: 3,
+                                        flex: totalTimeLeftWith(
+                                            int.parse(totalTimeLeft)),
                                         child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,

@@ -16,6 +16,7 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/layout.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/platform_adaptive.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_redux_boilerplate/config/i18n.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key}) : super(key: key);
@@ -256,8 +257,8 @@ class MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 }
 
 List<FABBottomAppBarItem> TabItems = <FABBottomAppBarItem>[
-  FABBottomAppBarItem(text: 'Home', iconData: Icons.home),
-  FABBottomAppBarItem(text: 'Task', iconData: Icons.work),
-  FABBottomAppBarItem(text: 'Calendar', iconData: Icons.calendar_today),
-  FABBottomAppBarItem(text: 'Timeline', iconData: Icons.timeline),
+  FABBottomAppBarItem(text: 'Home'.i18n, iconData: Icons.home),
+  FABBottomAppBarItem(text: 'Work'.i18n, iconData: Icons.work),
+  FABBottomAppBarItem(text: 'Calendar'.i18n, iconData: Icons.calendar_today),
+  FABBottomAppBarItem(text: 'Timeline'.i18n, iconData: Icons.timeline),
 ];

@@ -9,6 +9,7 @@ import 'package:flutter_redux_boilerplate/presentation/screens/auth/login/login_
 import 'package:flutter_redux_boilerplate/presentation/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/loading/loading_screen.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/main/main_screen.dart';
+import 'package:i18n_extension/i18n_widget.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -31,9 +32,7 @@ class CalendarApp extends StatelessWidget {
   final AppNotifier appNotifier;
   CalendarApp(
       {Key key, this.navigationService, this.userNotifier, this.appNotifier})
-      : super(key: key){
-      }
-
+      : super(key: key) {}
 
   @override
   Widget build(BuildContext context) {
@@ -60,14 +59,16 @@ class CalendarApp extends StatelessWidget {
             ),
             // theme: defaultTargetPlatform == TargetPlatform.iOS? kIOSTheme                : kDefaultTheme,
             navigatorKey: navigationService.navigatorKey,
-            home: FutureBuilder(
-              future: userNotifier.init(),
-              builder: (context, AsyncSnapshot snapshot) {
-                return snapshot.data != null
-                    ? MainScreen()
-                    : MainScreen(); //LoadingScreen();
-              },
-            ),
+            home: I18n(
+              //  initialLocale: Locale("es", "ES"),
+                child: FutureBuilder(
+                  future: userNotifier.init(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    return snapshot.data != null
+                        ? MainScreen()
+                        : MainScreen(); //LoadingScreen();
+                  },
+                )),
             routes: <String, WidgetBuilder>{
               'home': (BuildContext context) => new LoadingScreen(),
               'login': (BuildContext context) => new LoginScreen(),

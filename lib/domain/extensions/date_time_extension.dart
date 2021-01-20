@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:intl/intl.dart';
 
 extension DateWeekExtensions on DateTime {
@@ -40,7 +42,8 @@ extension DateWeekExtensions on DateTime {
     return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
   }
 
-  static List<String> getDaysOfWeek([String locale]) {
+  static List<String> getDaysOfWeek() {
+    final locale = Platform.localeName;
     final now = DateTime.now();
     final firstDayOfWeek = now.subtract(Duration(days: now.weekday - 1));
     return List.generate(7, (index) => index)
@@ -49,9 +52,9 @@ extension DateWeekExtensions on DateTime {
         .toList();
   }
 
-  static String dayOfWeek(int numDay, [String locale]) {
+  static String dayOfWeek(int numDay) {
+    final locale = Platform.localeName;
     final now = new DateTime(2021, 2, numDay);
     return DateFormat(DateFormat.WEEKDAY, locale).format(now);
   }
- 
 }

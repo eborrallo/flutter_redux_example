@@ -7,8 +7,12 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/timetable_card.da
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+class TimetableTab extends StatefulWidget {
+  @override
+  _TimetableTabState createState() => _TimetableTabState();
+}
 
-class TimetableTab extends StatelessWidget  {
+class _TimetableTabState extends State<TimetableTab> {
   SubjectNotifier subjectNotifier;
 
   @override
@@ -17,11 +21,14 @@ class TimetableTab extends StatelessWidget  {
 
     ItemScrollController _scrollController = ItemScrollController();
     Future.delayed(Duration(milliseconds: 50), () {
-      _scrollController.scrollTo(
-          index: DateTime.now().weekday-1, duration: Duration(milliseconds: 500));
+      if (this.mounted) {
+        _scrollController.scrollTo(
+            index: DateTime.now().weekday - 1,
+            duration: Duration(milliseconds: 500));
+      }
     });
-    return 
-   /*  Scaffold(
+    return
+        /*  Scaffold(
         appBar: new PlatformAdaptiveAppBar(
           actions: ([
             IconButton(
@@ -44,7 +51,7 @@ class TimetableTab extends StatelessWidget  {
             },
           ),
         ),
-        body: */ 
+        body: */
         Container(
             color: Color.fromRGBO(245, 245, 245, 1),
             padding: EdgeInsets.symmetric(horizontal: 20),
@@ -55,7 +62,7 @@ class TimetableTab extends StatelessWidget  {
                 return loadDay(DateWeekExtensions.getDaysOfWeek()[index]);
               },
             ));
-            //);
+    //);
   }
 
   List<Widget> loadItemsDay(List<TodayClass> _classes) {

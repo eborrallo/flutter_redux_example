@@ -10,6 +10,7 @@ import 'package:flutter_redux_boilerplate/presentation/widgets/circular_progress
 import 'package:flutter_redux_boilerplate/presentation/widgets/class_card.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/reactive_animated_list.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
+import 'package:flutter_redux_boilerplate/config/i18n.dart';
 
 class HomeTab extends StatefulWidget {
   final AppNotifier appNotifier;
@@ -46,7 +47,7 @@ class _HomeTabState extends State<HomeTab> with SingleTickerProviderStateMixin {
         new Padding(
           padding: EdgeInsets.only(left: 21.0, top: 0),
           child: new Text(
-            'Today Class',
+            'Today Class'.i18n,
             style: TextStyle(
               fontSize: 21,
               fontWeight: FontWeight.bold,
@@ -83,7 +84,7 @@ class _HomeTabState extends State<HomeTab> with SingleTickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 new Text(
-                  'Nexts almost Due',
+                  'Nexts almost Due'.i18n,
                   style: TextStyle(
                     fontSize: 21,
                     fontWeight: FontWeight.bold,
@@ -99,7 +100,7 @@ class _HomeTabState extends State<HomeTab> with SingleTickerProviderStateMixin {
                           this.widget.changeTab(1);
                         },
                         child: new Text(
-                          'Show all',
+                          'Show all'.i18n,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -125,7 +126,7 @@ class _HomeTabState extends State<HomeTab> with SingleTickerProviderStateMixin {
         new Padding(
           padding: EdgeInsets.only(left: 21.0, top: 21),
           child: new Text(
-            'On progress',
+            'On progress'.i18n,
             style: TextStyle(
               fontSize: 21,
               fontWeight: FontWeight.bold,

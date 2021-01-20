@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_boilerplate/application/notifier/TaskNotifier.dart';
 import 'package:flutter_redux_boilerplate/presentation/screens/subject/subject_list.dart';
-
 import 'package:flutter_redux_boilerplate/presentation/widgets/animated_list_item.dart';
 import 'package:flutter_redux_boilerplate/presentation/widgets/task_card.dart';
+import 'package:flutter_redux_boilerplate/config/i18n.dart';
 
 class TaskTab extends StatefulWidget {
   TaskTab({
@@ -107,7 +107,7 @@ class TaskTabState extends State<TaskTab> {
             );
           },
           label: new Text(
-            widget.taskNotifier.showOld ? 'Hidde old' : 'Show old',
+            widget.taskNotifier.showOld ? 'Hidde old'.i18n : 'Show old'.i18n,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -117,19 +117,19 @@ class TaskTabState extends State<TaskTab> {
   }
 
   Widget _oldest(List list) {
-    return _tackCollection('Oldest', list, widget: showHideOldest());
+    return _tackCollection('Oldest'.i18n, list, widget: showHideOldest());
   }
 
   Widget _today(List list) {
-    return _tackCollection('Today', list, widget: showHideOldest());
+    return _tackCollection('Today'.i18n, list, widget: showHideOldest());
   }
 
   Widget _tomorrow(List list) {
-    return _tackCollection('Tomorrow', list);
+    return _tackCollection('Tomorrow'.i18n, list);
   }
 
   Widget _upcomming(List list) {
-    return _tackCollection('Upcomming', list);
+    return _tackCollection('Upcomming'.i18n, list);
   }
 
   Widget _buildAlmostDueList(List list) {
